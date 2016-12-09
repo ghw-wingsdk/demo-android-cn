@@ -75,7 +75,7 @@
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:label="@string/payment" />
 
-        <!--360 分享微信需要
+        <!--360 分享微信、微信登录需要
         微信相关的 activity,如需接入,请直接使用 demo 中的 WXEntryActivity 类的代码实现, 类的全名为:“应用包名.wxapi.WXEntryActivity”。
         注意 1: 除非游戏打算以后永远不会支持微信分享,否则建议游戏把这个 actvity 的配置加上。
         此版本的 SDK 支持从服务端配置微信分享的 appid。
@@ -91,15 +91,9 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
-        <activity
-            android:name="com.ddtankfcb.angame.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <!-- 微信支付渠道需要 -->
         <activity
-            android:name="com.ddtankfcb.angame.wxapi.WXPayEntryActivity"
+            android:name="com.ghw.sdk.democn.wxapi.WXPayEntryActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />

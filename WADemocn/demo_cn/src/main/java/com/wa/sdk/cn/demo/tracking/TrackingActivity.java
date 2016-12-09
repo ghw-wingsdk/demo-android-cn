@@ -72,11 +72,10 @@ public class TrackingActivity extends BaseActivity implements OnPageChangeListen
         tb.setTitleTextColor(R.color.color_white);
 
         tabBarView = (TabBarView) findViewById(R.id.tbv);
-        tabBarView.setTitles(new String[]{"WA", "AppsFlyer", "Chartboost", "360", "百度"});
+        tabBarView.setTitles(new String[]{"WA", "360", "百度"});
         tabBarView.setOnItemSelectedListener(this);
 
-        events = new Event[]{new EventWA(), new EventAF(), new EventCB(),
-                new Event360(),  new EventBaidu()};
+        events = new Event[]{new EventWA(), new Event360(),  new EventBaidu()};
 
         viewList = new ArrayList<>();
         ListView listView = null;

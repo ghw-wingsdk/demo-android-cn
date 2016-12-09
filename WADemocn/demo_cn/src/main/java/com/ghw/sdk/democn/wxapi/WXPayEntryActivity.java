@@ -1,4 +1,4 @@
-package com.ddtankfcb.angame.wxapi;
+package com.ghw.sdk.democn.wxapi;
 
 import android.app.Activity;
 import android.os.Bundle;
