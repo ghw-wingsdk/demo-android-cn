@@ -61,8 +61,13 @@ public class TabBarView extends HorizontalScrollView implements View.OnClickList
     }
 
     private void initData() {
+        int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
+        if (itemWidth * titleList.size() < screenWidth)
+            itemWidth = screenWidth / titleList.size();
+
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 itemWidth, LayoutParams.MATCH_PARENT);
+
         llContent.removeAllViews();
 
         Button button = null;

@@ -16,18 +16,18 @@ public class EventWA extends Event {
     public EventWA() {
         if (eventModels == null) {
             eventModels = new ArrayList<>();
-            eventModels.add(new EventModel("", WAEventType.LOGIN));
-            eventModels.add(new EventModel("", WAEventType.INITIATED_PAYMENT));
-            eventModels.add(new EventModel("", WAEventType.COMPLETE_PAYMENT));
-            eventModels.add(new EventModel("", WAEventType.INITIATED_PURCHASE));
-            eventModels.add(new EventModel("", WAEventType.COMPLETE_PURCHASE));
-            eventModels.add(new EventModel("", WAEventType.LEVEL_ACHIEVED));
-            eventModels.add(new EventModel("", WAEventType.USER_CREATED));
-            eventModels.add(new EventModel("", WAEventType.USER_INFO_UPDATE));
-            eventModels.add(new EventModel("", WAEventType.TASK_UPDATE));
-            eventModels.add(new EventModel("", WAEventType.GOLD_UPDATE));
-            eventModels.add(new EventModel("", WAEventType.IMPORT_USER));
-            eventModels.add(new EventModel("", WAEventType.CUSTOM_EVENT_PREFIX));
+            eventModels.add(new EventModel("登录游戏", WAEventType.LOGIN));
+            eventModels.add(new EventModel("点击充值", WAEventType.INITIATED_PAYMENT));
+            eventModels.add(new EventModel("充值完成", WAEventType.COMPLETE_PAYMENT));
+            eventModels.add(new EventModel("点击购买", WAEventType.INITIATED_PURCHASE));
+            eventModels.add(new EventModel("充值购买", WAEventType.COMPLETE_PURCHASE));
+            eventModels.add(new EventModel("玩家等级增长", WAEventType.LEVEL_ACHIEVED));
+            eventModels.add(new EventModel("创建游戏角色", WAEventType.USER_CREATED));
+            eventModels.add(new EventModel("更新用户资料", WAEventType.USER_INFO_UPDATE));
+            eventModels.add(new EventModel("玩家任务信息", WAEventType.TASK_UPDATE));
+            eventModels.add(new EventModel("玩家货币状况变更", WAEventType.GOLD_UPDATE));
+            eventModels.add(new EventModel("导入用户", WAEventType.IMPORT_USER));
+            eventModels.add(new EventModel("自定义事件", WAEventType.CUSTOM_EVENT_PREFIX));
         }
     }
 

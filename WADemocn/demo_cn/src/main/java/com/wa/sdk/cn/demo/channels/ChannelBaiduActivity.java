@@ -225,7 +225,7 @@ public class ChannelBaiduActivity extends BaseActivity {
      */
     private void tracking() {
         Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra("channel", 4);
+        intent.putExtra("channel", 2);
         startActivity(intent);
     }
 

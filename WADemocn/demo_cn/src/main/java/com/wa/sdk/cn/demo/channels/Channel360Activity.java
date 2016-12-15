@@ -309,7 +309,7 @@ public class Channel360Activity extends BaseActivity {
      */
     private void tracking() {
         Intent intent = new Intent(this, TrackingActivity.class);
-        intent.putExtra("channel", 3);
+        intent.putExtra("channel", 1);
         startActivity(intent);
     }
 
