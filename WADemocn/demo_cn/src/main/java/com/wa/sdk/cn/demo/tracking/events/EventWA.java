@@ -43,7 +43,7 @@ public class EventWA extends Event {
         eventModel.setEventName(eventModels.get(position).getEventName());
 
         if (position == 0) {            // TODO LOGIN
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 140);
+
         } else if (position == 1) {     // INITIATED_PAYMENT
 
         } else if (position == 2) {     // COMPLETE_PAYMENT
@@ -56,16 +56,13 @@ public class EventWA extends Event {
             eventModel.addEventValue(WAEventParameterName.IAP_ID, "1111111");
             eventModel.addEventValue(WAEventParameterName.IAP_NAME, "GGGGGG");
             eventModel.addEventValue(WAEventParameterName.IAP_AMOUNT, 20);
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 120);
         } else if (position == 3) {     // TODO INITIATED_PURCHASE
 
         } else if (position == 4) {     // TODO COMPLETE_PURCHASE
             eventModel.addEventValue(WAEventParameterName.ITEM_NAME, "GGGGG");
             eventModel.addEventValue(WAEventParameterName.ITEM_AMOUNT, 20);
             eventModel.addEventValue(WAEventParameterName.PRICE, 50);
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 120);
         } else if (position == 5) {     // TODO LEVEL_ACHIEVED
-            eventModel.addEventValue(WAEventParameterName.LEVEL, "120");
             eventModel.addEventValue(WAEventParameterName.SCORE, 3241234);
             eventModel.addEventValue(WAEventParameterName.FIGHTING, 1230020);
         } else if (position == 6) {     // TODO USER_CREATED
@@ -76,7 +73,6 @@ public class EventWA extends Event {
             eventModel.addEventValue(WAEventParameterName.VIP, 8);
             eventModel.addEventValue(WAEventParameterName.BINDED_GAME_GOLD, 100000);
             eventModel.addEventValue(WAEventParameterName.GAME_GOLD, 10000);
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 100);
             eventModel.addEventValue(WAEventParameterName.FIGHTING, 1230020);
         } else if (position == 7) {     // TODO USER_INFO_UPDATE
             eventModel.addEventValue(WAEventParameterName.ROLE_TYPE, 1);
@@ -95,7 +91,6 @@ public class EventWA extends Event {
         } else if (position == 10) {    // TODO IMPORT_USER
 
         } else if (position == 11) {    // TODO CUSTOM_EVENT_PREFIX
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 140);
             eventModel.addEventValue("to_level", 141);
             eventModel.addEventValue("fight_force", 1232320);
             eventModel.addEventValue("to_fight_force", 1220020);

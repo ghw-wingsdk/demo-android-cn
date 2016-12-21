@@ -66,14 +66,12 @@ public class Event360 extends Event {
             eventModel.addEventValue(WAEventParameterName.CURRENCY_AMOUNT, 15.0f);      // 支付金额
             eventModel.addEventValue(WAEventParameterName.CURRENCY_TYPE, "CNY");     // 支付货币类型
             eventModel.addEventValue(WAEventParameterName.PAYMENT_TYPE, WAConstants.CHANNEL_QIHU360);          // 支付方式（游戏自定义，给每个支付渠道定义的整型值）
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 11);              // 玩家等级
             eventModel.addEventValue(WAEventParameterName.VERTUAL_COIN_AMOUNT, 150l); // 金币数量
             eventModel.addEventValue(WAEventParameterName.CHAPTER, "关卡1");           // 关卡
         } else if (position == 7) { // TODO 支付道具统计 COMPLETE_PAYMENT
             eventModel.addEventValue(WAEventParameterName.CURRENCY_AMOUNT, 15.0f);  // 支付金额
             eventModel.addEventValue(WAEventParameterName.CURRENCY_TYPE, "CNY"); // 支付货币类型
             eventModel.addEventValue(WAEventParameterName.PAYMENT_TYPE, WAConstants.CHANNEL_QIHU360);      // 支付方式（游戏自定义，给每个支付渠道定义的整型值）
-            eventModel.addEventValue(WAEventParameterName.LEVEL, 11);          // 玩家等级
             eventModel.addEventValue(WAEventParameterName.IAP_NAME, "道具名称");  // 道具名称
             eventModel.addEventValue(WAEventParameterName.IAP_AMOUNT, 1);        // 道具数量
             eventModel.addEventValue(WAEventParameterName.CHAPTER, "关卡1");       // 关卡
@@ -93,8 +91,6 @@ public class Event360 extends Event {
             eventModel.addEventValue(WAEventParameterName.AGE, 20);                  // 年龄
             eventModel.addEventValue(WAEventParameterName.GENDER, 0);                // 性别
             eventModel.addEventValue(WAEventParameterName.SOURCE, "qihoo360");       // 玩家来源（游戏自定义，给每个渠道用户定义的字符串类型值，如:”qihoo360”,”weibo”）
-            eventModel.addEventValue(WAEventParameterName.LEVEL, "15");              // 玩家等级
-            eventModel.addEventValue(WAEventParameterName.SERVER_ID, "服务器名称");   // 区域服务器名称
             eventModel.addEventValue(WAEventParameterName.DESCRIPTION, "服务器名称"); // 其他备注信息
         } else if (position == 11) { // TODO 角色统计 USER_CREATED
             eventModel.addEventValue(WAEventParameterName.NICKNAME, "玩家昵称"); // 玩家昵称

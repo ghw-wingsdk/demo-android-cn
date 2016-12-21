@@ -53,7 +53,8 @@ public class MainActivity extends BaseActivity {
         WACoreProxy.setDebugMode(true);
 
         WACoreProxy.initialize(this);
-
+        WACoreProxy.setServerId("China");
+        WACoreProxy.setLevel(10);
         WACoreProxy.setSDKType(WAConstants.WA_SDK_TYPE_CN);
         WACommonProxy.enableLogcat(this);
         WAUserProxy.setLoginFlowType(WAConstants.LOGIN_FLOW_TYPE_REBIND);
@@ -222,8 +223,8 @@ public class MainActivity extends BaseActivity {
     /** TODO WA 登录 */
     private void login(final Button button) {
         if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
+            || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
+            || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
             showShortToast("不支持WA登录");
             return;
         }
@@ -258,7 +259,7 @@ public class MainActivity extends BaseActivity {
         if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
                 || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
                 || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            showShortToast("不支持WA切换账号");
+            showShortToast("不支持WA登录");
             return;
         }
 
