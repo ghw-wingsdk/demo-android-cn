@@ -36,18 +36,6 @@ public class Tracking360Activity extends BaseActivity implements OnItemClickList
         initViews();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        WATrackProxy.startHeartBeat(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        WATrackProxy.stopHeartBeat(this);
-    }
-
     private void initViews() {
         mTitleBar = (TitleBar)findViewById(R.id.tb_tracking);
         mTitleBar.setTitleTextColor(R.color.color_white);
@@ -73,10 +61,6 @@ public class Tracking360Activity extends BaseActivity implements OnItemClickList
         datas.add("玩家统计");
         datas.add("角色统计");
         datas.add("自定义事件统计");
-
-//        listView = (ListView) findViewById(R.id.lv_events);
-//        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, datas));
-//        listView.setOnItemClickListener(this);
     }
 
     @Override

@@ -12,6 +12,8 @@ import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
+import com.wa.sdk.common.WAActivityAdPage;
+import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.core.WACoreProxy;
@@ -33,12 +35,15 @@ import java.util.HashMap;
  */
 public class Channel360Activity extends BaseActivity {
     private TitleBar mTitlebar = null;
+    private WAActivityAdPage activityAdPage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_360);
 
+        // 游戏 activity 生命周期接口 (必接)
+        activityAdPage = WACommonProxy.getActivityAdPage(this, WAUserProxy.getCurrChannel(), null);
         initViews();
     }
 
@@ -98,32 +103,62 @@ public class Channel360Activity extends BaseActivity {
                 cancelLoadingDialog();
                 showShortToast(message);
 
-                /*
-                 * TODO 游戏角色信息上传 (必接)
-                * @param _id 当前情景，支持 enterServer（登录），levelUp（升级），createRole（创建角色）
-                * @param roleId 当前登录的玩家角色 ID，若无，可传入 userid
-                * @param roleName 当前登录的玩家角色名，不能为空，不能为 null，若无，传入“游戏名称+username”，
-                如“皇室战争大名鼎鼎”
-                * @param roleLevel 当前登录的玩家角色等级，必须为数字，且不能为 0，若无，传入 1
-                * @param zoneId 当前登录的游戏区服 ID，必须为数字，且不能为 0，若无，传入 1
-                * @param zoneName 当前登录的游戏区服名称，不能为空，不能为 null，若无，传入游戏名称+”1 区”，如“梦
-                幻西游 1 区”
-                * @param balance 当前用户游戏币余额，必须为数字，若无，传入 0
-                * @param vip 当前用户 VIP 等级，必须为数字，若无，传入 1
-                * @param partyName 当前用户所属帮派，不能为空，不能为 null，若无，传入”无帮派”
-                * */
+                /**
+                 * TODO 游戏角色信息上传 (必接) 必填必须传，选填可不传
+                 * 上传数据时角色状态更新 type 必填 string 数据可根据场景定义随时上传，以下场 景必传: enterServer(登录)，levelUp(升级)，createRole(创建角色)， exitServer(退出)
+                 * 当前登录的游戏区服ID zoneid 必填 int 不能为空，必须为数字，若无，传入 0
+                 * 当前登录的游戏区服名称 zonename 必填 string 不能为空，区服名称，要求与游戏界面 展示的服务器名保持一致,长度不超过 50，不能为 null，若无，传入“无”
+                 * 当前登录的玩家角色ID roleid 必填 string 角色 ID，一个角色同一个服 ID 保持唯 一,长度不超过 50
+                 * 当前登录的玩家角色名 rolename 必填 string 不能为空，角色昵称,长度不超过 50，不 能为 null，若无，传入“无”
+                 * 当前登录玩家的职业ID professionid 必填 int 不能为空，必须为数字，若无，传入 0
+                 * 当前登录玩家的职业名称 profession 必填 string 不能为空，不能为 null，若无，传入“无”
+                 * 当前登录玩家的性别 gender 必填 string 不能为空，不能为 null，可传入参数 “男、女、无”
+                 * 当前登录的玩家角色等级 rolelevel 必填 int 不能为空，必须为数字，且不能为 null， 若无，传入0, 如游戏存在转生，转职等， 等级需累加，长度不超过 10
+                 * 战力值数值 power 必填 int 不能为空，必须为数字,不能为 null，若 无，传入 0
+                 * 当前用户VIP等级 vip 必填 int 不能为空，必须为数字,若无，传入 0
+                 * 当前用户所属帮派帮派ID partyid 必填 int 不能为空，必须为数字,不能为 null，若 无，传入 0
+                 * 当前用户所属帮派名称 partyname 必填 string 不能为空，不能为 null，若无，传入 “无”
+                 * 帮派称号ID partyroleid 必填 int 帮派会长/帮主必传 1，其他可自定义， 不能为空，不能为 null，若无，传入 0
+                 * 帮派称号名称 partyrolename 必填 string 不能为空，不能为 null，若无，传入 “无”
+                 * 他的好友 friendlist 必填
+                   关系角色 ID(roleid) int 传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
+                   亲密度(intimacy) int 必须为数字，不能为空，不能为 null，若无，传入 0
+                   关系 ID(nexusid) int 必须为数字，不能为空，不能为 null，若无，传入 0
+                   关系名称 (nexusname) string 预定字段:以下对应方式为 nexusid:nexusnam: 1:夫妻，2:结拜，3:情侣，4:师徒 ，5: 仇人;其余关系从 6 开始自定义编号
+                   传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
+                   示例: [{"roleid":1,"intimacy":"0","nexusid": "600","nexusname":"情侣 "},{"roleid":2,"intimacy":"0","nexusid ":"200","nexusname":"仇人"}]
+                 *
+                 * 职业称号ID professionroleid 选填 int 不能为空，不能为 null，若无，传入 0
+                 * 职业称号 rofessionrolename 选填 string 不能为空，不能为 null，若无，传入"无"
+                 * 账号余额 balance 选填
+                   货币 ID(balanceid) int、货币名称 (balancename) string、货币数额 (balancenum) int，
+                   不能为空，不能为 null，若无，传入 0 int 的传参必须为数字
+                   示例: [{"balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"},{" balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"}]
+                 * 排行榜列表 ranking 选填
+                   榜单 ID(listid) int、榜单名称 (listname) string、传入角色当前排名 (num) int、排名指标 ID (coin) int、排名指标名称 Value(cost) string
+                   不能为空，int 必须为数字，不能为 null， 若无，传入 “无”
+                   示例: [{"listid":1,"listname":"\u91d1\u5e01 ","num":"600","coin":"XX","cost":"XX "},{"listid":1,"listname":"\u91d1\u5e01","num":"600","coin":"XX","cost":"XX"}]
+                 */
                 HashMap<String, Object> dataMap = new HashMap();
-                dataMap.put("id", "enterServer");
-                dataMap.put("roleId", UserModel.getInstance().getUserId());
-                dataMap.put("roleName", "角色名");
-                dataMap.put("roleLevel", "1");
-                dataMap.put("zoneId", "1");
-                dataMap.put("zoneName", "服区");
-                dataMap.put("balance", "10");
-                dataMap.put("vip", "1");
-                dataMap.put("partyName", "无帮派");
+                dataMap.put("type", "enterServer");         // 上传数据时角色状态更新
+                dataMap.put("zoneid", 123456);              // 游戏区服ID
+                dataMap.put("rolename", "服区");             // 游戏区服名称
+                dataMap.put("roleid", "1234567890");        // 玩家角色ID
+                dataMap.put("rolename", "角色名");           // 玩家角色名
+                dataMap.put("professionid", 123652);        // 玩家的职业ID
+                dataMap.put("profession", "职业名称");       // 玩家的职业名称
+                dataMap.put("gender", "男");                // 玩家的性别
+                dataMap.put("rolelevel", 11);               // 玩家角色等级
+                dataMap.put("power", 9999);                 // 战力值数值
+                dataMap.put("vip", 1);                      // VIP等级
+                dataMap.put("partyid", 123456789);          // 所属帮派帮派ID
+                dataMap.put("partyName", "帮派名称");        // 所属帮派名称
+                dataMap.put("partyroleid", 123456789);      // 帮派称号ID
+                dataMap.put("partyrolename", "帮派称号名称"); // 帮派称号名称
+                dataMap.put("friendlist", "[{'roleid':1,'intimacy':'0','nexusid': '600','nexusname':'情侣'}," +
+                        "{'roleid':2,'intimacy':'0','nexusid':'200','nexusname':'仇人'}]");    // 他的好友
 
-                WAUserProxy.submitExtendData(WAUserProxy.getCurrChannel(), "statEvent", dataMap);
+                WAUserProxy.submitRoleData(WAUserProxy.getCurrChannel(), Channel360Activity.this, dataMap);
             }
 
             @Override
@@ -372,7 +407,7 @@ public class Channel360Activity extends BaseActivity {
     /** TODO 退出账号 */
     private void logout() {
         UserModel.getInstance().clear();
-        WAUserProxy.logout();
+        WAUserProxy.logout(this);
     }
 
     /** TODO 退出游戏 */
@@ -394,5 +429,47 @@ public class Channel360Activity extends BaseActivity {
                 showShortToast(message);
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        activityAdPage.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        activityAdPage.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        activityAdPage.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        activityAdPage.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        activityAdPage.onRestart();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        activityAdPage.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        activityAdPage.onNewIntent(intent);
     }
 }

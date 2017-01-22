@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
         WACoreProxy.setDebugMode(true);
 
         WACoreProxy.initialize(this);
-        WACoreProxy.setServerId("China");
+        WACoreProxy.setServerId("12345");
         WACoreProxy.setLevel(10);
         WACoreProxy.setSDKType(WAConstants.WA_SDK_TYPE_CN);
         WACommonProxy.enableLogcat(this);
@@ -103,25 +103,6 @@ public class MainActivity extends BaseActivity {
         } catch (NoSuchAlgorithmException e) {
         }
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "---onResume---");
-        WATrackProxy.startHeartBeat(this);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "---onPause---");
-        WATrackProxy.stopHeartBeat(this);
     }
 
     @Override
@@ -212,7 +193,7 @@ public class MainActivity extends BaseActivity {
         } else if (v.getId() == R.id.btn_logout) {  // 登出
             if (userModel.isLogin()) {
                 userModel.clear();
-                WAUserProxy.logout();
+                WAUserProxy.logout(this);
                 showShortToast("退出登录成功");
             } else {
                 showShortToast("请先登录");
@@ -222,12 +203,10 @@ public class MainActivity extends BaseActivity {
 
     /** TODO WA 登录 */
     private void login(final Button button) {
-        if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
-            || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
-            || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            showShortToast("不支持WA登录");
-            return;
-        }
+//        if (! WAConstants.CHANNEL_WA.equals(WAUserProxy.getCurrChannel())) {
+//            showShortToast("不支持WA登录");
+//            return;
+//        }
 
         button.setEnabled(false);
 
@@ -256,12 +235,10 @@ public class MainActivity extends BaseActivity {
 
     /** TODO 切换账号 */
     private void switchAccount(final Button button) {
-        if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            showShortToast("不支持WA登录");
-            return;
-        }
+//        if (! WAConstants.CHANNEL_WA.equals(WAUserProxy.getCurrChannel())) {
+//            showShortToast("不支持WA切换账号");
+//            return;
+//        }
 
         WAUserProxy.switchAccount(this, WAConstants.CHANNEL_WA, new WACallback<WALoginResult>() {
             @Override

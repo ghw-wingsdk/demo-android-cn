@@ -1,7 +1,6 @@
 package com.wa.sdk.cn.demo.channels;
 
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Process;
 import android.view.View;
@@ -232,7 +231,7 @@ public class ChannelBaiduActivity extends BaseActivity {
     /** TODO 显示/隐藏悬浮框 */
     private void floatView() {
         Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
-        WACommonProxy.floatView(this, WAUserProxy.getCurrChannel(), new Point(10, 10), !btnFloatView.isSelected());
+        WACommonProxy.floatView(this, WAUserProxy.getCurrChannel(), !btnFloatView.isSelected());
         btnFloatView.setSelected(! btnFloatView.isSelected());
 
         btnFloatView.setText(getResources().getText(btnFloatView.isSelected() ? R.string.hidden_float_view : R.string.show_float_view));
@@ -241,7 +240,7 @@ public class ChannelBaiduActivity extends BaseActivity {
     /** TODO 退出账号 */
     private void logout() {
         UserModel.getInstance().clear();
-        WAUserProxy.logout();
+        WAUserProxy.logout(this);
     }
 
     /** TODO 退出游戏 */
