@@ -18,7 +18,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 18
         versionCode 13
-        versionName "1.1.1"
+        versionName "1.1.2"
         signingConfig signingConfigs.config
         multiDexEnabled true
     }
@@ -91,10 +91,10 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
 
     compile 'com.wa.sdk:wa-sdk-base:1.1.1'
-    compile 'com.wa.sdk:wa-sdk-core:1.1.1'
+    compile 'com.wa.sdk:wa-sdk-core:1.1.2'
     compile 'com.wa.sdk:wa-sdk-webpay:1.1.1'
-//    compile 'com.wa.sdk:wa-sdk-wechat:1.1.0'
+    compile 'com.wa.sdk:wa-sdk-wechat:1.1.0'
 //    compile 'com.wa.sdk:wa-sdk-360:1.1.1'
-    compile 'com.wa.sdk:wa-sdk-baidu:1.1.1'
+//    compile 'com.wa.sdk:wa-sdk-baidu:1.1.1'
 //    compile 'com.wa.sdk:wa-sdk-uc:1.1.1'
 }
