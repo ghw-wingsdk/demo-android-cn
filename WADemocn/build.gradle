@@ -16,7 +16,6 @@ allprojects {
     repositories {
         jcenter()
         maven {
-            // 正式环境
             url "http://git.wingsdk.cn:8081/repository/winga-cn-group/"
         }
     }
