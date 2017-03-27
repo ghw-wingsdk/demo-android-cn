@@ -33,6 +33,10 @@
     <string name="send">Send</string>
     <string name="event_send">Event Send</string>
 
+    <!-- 登录 -->
+    <string name="rebind_account_with_device">Rebind the login account with device</string>
+    <string name="do_not_rebind_account_with_device">Do not rebind device on login</string>
+
     <!-- payUI -->
     <string name="pay_ui_title">Web Pay</string>
 

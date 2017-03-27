@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -19,7 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.wa.sdk.WAConstants;
-import com.wa.sdk.appwall.WAApwProxy;
+import com.wa.sdk.apw.WAApwProxy;
 import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.channels.Channel360Activity;
 import com.wa.sdk.cn.demo.channels.ChannelBaiduActivity;
@@ -32,7 +31,6 @@ import com.wa.sdk.common.WASharedPrefHelper;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.core.WACoreProxy;
-import com.wa.sdk.track.WATrackProxy;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WALoginResult;
 
@@ -51,14 +49,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         WACoreProxy.setDebugMode(true);
-        
 //        WACoreProxy.setClientId("123456789");
+
         WACoreProxy.initialize(this);
         WACoreProxy.setServerId("12345");
         WACoreProxy.setLevel(10);
         WACoreProxy.setSDKType(WAConstants.WA_SDK_TYPE_CN);
         WACommonProxy.enableLogcat(this);
-        WAUserProxy.setLoginFlowType(WAConstants.LOGIN_FLOW_TYPE_REBIND);
 
         // Demo的初始化，跟SDK无关
         WASdkDemo.getInstance().initialize(this);
@@ -191,12 +188,10 @@ public class MainActivity extends BaseActivity {
 
     /** TODO WA 登录 */
     private void login(final Button button) {
-        if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            showShortToast("不支持WA登录");
-            return;
-        }
+//        if (! WAConstants.CHANNEL_WA.equals(WAUserProxy.getCurrChannel())) {
+//            showShortToast("不支持WA登录");
+//            return;
+//        }
 
         button.setEnabled(false);
 
@@ -225,12 +220,10 @@ public class MainActivity extends BaseActivity {
 
     /** TODO 切换账号 */
     private void switchAccount(final Button button) {
-        if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())
-                || WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            showShortToast("不支持WA切换账号");
-            return;
-        }
+//        if (! WAConstants.CHANNEL_WA.equals(WAUserProxy.getCurrChannel())) {
+//            showShortToast("不支持WA切换账号");
+//            return;
+//        }
 
         WAUserProxy.switchAccount(this, WAConstants.CHANNEL_WA, new WACallback<WALoginResult>() {
             @Override
@@ -307,6 +300,11 @@ public class MainActivity extends BaseActivity {
         tbtnLoginCache.setChecked(enableLoginCache);
         tbtnLoginCache.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
+        ToggleButton tbtnLoginFlowType = (ToggleButton) findViewById(R.id.tbtn_login_flow_type);
+        boolean enableLoginFlowType = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_LOGIN_FLOW_TYPE, true);
+        tbtnLoginFlowType.setChecked(enableLoginFlowType);
+        tbtnLoginFlowType.setOnCheckedChangeListener(mOnCheckedChangeListener);
+
         if (mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_LOGCAT, true)) {
             WACommonProxy.enableLogcat(this);
         }
@@ -320,7 +318,7 @@ public class MainActivity extends BaseActivity {
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             switch (buttonView.getId()) {
                 case R.id.tbtn_logcat:
-                    mSharedPrefHelper.saveBoolean("enable_logcat", isChecked);
+                    mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_ENABLE_LOGCAT, isChecked);
                     if (isChecked) {
                         WACommonProxy.enableLogcat(MainActivity.this);
                     } else {
@@ -328,7 +326,7 @@ public class MainActivity extends BaseActivity {
                     }
                     break;
                 case R.id.tbtn_app_wall:
-                    mSharedPrefHelper.saveBoolean("enable_app_wall", isChecked);
+                    mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_ENABLE_APW, isChecked);
                     if (isChecked) {
                         WAApwProxy.showEntryFlowIcon(MainActivity.this);
                     } else {
@@ -337,6 +335,13 @@ public class MainActivity extends BaseActivity {
                     break;
                 case R.id.tbtn_login_cache:
                     mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_ENABLE_LOGIN_CACHE, isChecked);
+                    break;
+                case R.id.tbtn_login_flow_type:
+                    mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_LOGIN_FLOW_TYPE, isChecked);
+                    if (isChecked)
+                        WAUserProxy.setLoginFlowType(WAConstants.LOGIN_FLOW_TYPE_REBIND);
+                    else
+                        WAUserProxy.setLoginFlowType(WAConstants.LOGIN_FLOW_TYPE_DEFAULT);
                     break;
                 default:
                     break;

@@ -7,8 +7,8 @@ import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.hotupdate.WAHupProxy;
-import com.wa.sdk.hotupdate.model.WAUpdateInfo;
+import com.wa.sdk.hup.WAHupProxy;
+import com.wa.sdk.hup.model.WAUpdateInfo;
 import com.wa.sdk.cn.demo.R;
 
 /**
