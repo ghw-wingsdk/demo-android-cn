@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wa.sdk.cn.demo">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:debuggable="true"
+        android:label="@string/app_name"
+        android:name=".WADemoApp"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/app_name"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <!-- 统计 -->
+        <activity
+            android:name=".tracking.TrackingActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".tracking.TrackingSendActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <!-- 360 -->
+        <activity android:name=".channels.Channel360Activity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/a360" />
+
+        <!-- Baidu -->
+        <activity android:name=".channels.ChannelBaiduActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/a360" />
+
+        <!-- UC -->
+        <activity android:name=".channels.ChannelUCActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/a360" />
+
+        <!-- Hot Update -->
+        <activity android:name=".HotUpdateActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/app_name" />
+
+        <!-- 支付 -->
+        <activity android:name=".PaymentActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/payment" />
+
+        <!-- 排行 -->
+        <activity android:name=".channels.Rank360Activity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:label="@string/payment" />
+
+        <!--360 分享微信、微信登录需要
+        微信相关的 activity,如需接入,请直接使用 demo 中的 WXEntryActivity 类的代码实现, 类的全名为:“应用包名.wxapi.WXEntryActivity”。
+        注意 1: 除非游戏打算以后永远不会支持微信分享,否则建议游戏把这个 actvity 的配置加上。
+        此版本的 SDK 支持从服务端配置微信分享的 appid。
+        Manifest 中的 QHOPENSDK_WEIXIN_APPID 字段可以先不配,后续申请到微信的 appid 可以在服务端配置。
+        注意 2:不要修改此 actitiy 的 android:name 属性。
+        例如:如果游戏的包名为 com.a.b.c,那么应该将 demo 中的 WXEntryActivity.java 放到
+        “${工程目录}/src/com/a/b/c/wxapi/WXEntryActivity.java”这个路径下。
+        并将此 java 文件中的第一行 package 声明修改为“package com.a.b.c.wxapi;”
+        -->
+        <activity
+            android:name="com.ghw.sdk.democn.wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 微信支付渠道需要 -->
+        <activity
+            android:name="com.ghw.sdk.democn.wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- sdk的appid -->
+        <meta-data
+            android:name="com.wa.sdk.APP_ID"
+            android:value="f7f9a9d18da611e5a0be000d3a906774" />
+        <!-- sdk的appkey -->
+        <meta-data
+            android:name="com.wa.sdk.APP_KEY"
+            android:value="CFHF7nQCCaojCX6Sm4eT1GEIWRprimgX" />
+
+        <!-- sdk平台请求的host地址，所有请求的前面公共部分 -->
+        <meta-data
+            android:name="com.wa.sdk.HTTP_BASE_URL"
+            android:value="${SDK_HTTP_BASE_URL}" />
+        <!-- PCL request http url（PCL数据收集相关请求的url，这个必须配置，以支持不同版本的api请求） -->
+        <meta-data
+            android:name="com.wa.sdk.track.BASE_URL"
+            android:value="${SDK_TRACKING_HTTP_BASE_URL}" />
+
+        <!-- 360 SDK START -->
+        <!-- 添加 360SDK 必需的 meta-data:QHOPENSDK_APPID。此处 value 为 APPID。请在 360 应用开放平台注册 申请-->
+        <meta-data
+            android:name="QHOPENSDK_APPID"
+            android:value="203234201" />
+        <!--添加 360SDK 必需的 meta-data:QHOPENSDK_APPKEY。此处 value 为 APPKEY。请在 360 应用开放平台注册 申请-->
+        <meta-data
+            android:name="QHOPENSDK_APPKEY"
+            android:value="48dfdb7c71a0987057f32d8af9c69c3e" />
+        <!--必需的 meta-data:QHOPENSDK_PRIVATEKEY。此处 value 为 PRIVATEKEY 不是 APPSECRET,而是 md5(app_secret +”#”+ app_key),
+        全小写,APPSECRET不允许保存在客户端!详见重要提醒-->
+        <meta-data
+            android:name="QHOPENSDK_PRIVATEKEY"
+            android:value="28683a70051effdf0b6f249ff6536f64" />
+        <!-- 从微信分享相关的 meta-data:QHOPENSDK_WEIXIN_APPID。此处 value 为在微信开放平台申请的 APPID。 请在微信开放平台申请 -->
+        <meta-data
+            android:name="QHOPENSDK_WEIXIN_APPID"
+            android:value="wx8b397e6b3e85775c" />
+
+        <!--注意:此处的微信 appid 申请只与微信分享有关,微信支付功能无需 appid 即可使用 -->
+        <!-- 360 SDK END -->
+
+        <!-- 微信 START -->
+        <!-- 微信 app id -->
+        <meta-data
+            android:name="com.wa.sdk.WEIXIN_APP_ID"
+            android:value="wx8b397e6b3e85775c" />
+        <!-- 微信 secret -->
+        <meta-data
+            android:name="com.wa.sdk.WEIXIN_SECRET"
+            android:value="ff8e4c91da1a616b1fdd0b08015a2b6f" />
+         微信支付 START
+        <!-- 微信 END -->
+
+        <!-- Baidu SDK START -->
+        <!-- Baidu app id -->
+        <meta-data
+            android:name="com.wa.sdk.BAIDU_APP_ID"
+            android:value="8651956" />
+        <!-- Baidu app key -->
+        <meta-data
+            android:name="com.wa.sdk.BAIDU_APP_KEY"
+            android:value="vmj8lyZmEcyfCkCUWA9z2TDc" />
+        <!-- Baidu SDK END -->
+
+        <!-- UC SDK START -->
+        <!-- UC game id -->
+        <meta-data
+            android:name="com.wa.sdk.UC_GAME_ID"
+            android:value="735518" />
+        <!-- UC SDK END -->
+
+        <!-- AppsFlyer SDK START -->
+        <!-- AppsFlyer AppKey(需要自己申请) -->
+        <meta-data
+            android:name="com.wa.sdk.track.APPSFLYER_APP_KEY"
+            android:value="922wXRJwEns6Qj4MfMt4Gg" />
+        <!-- AppsFlyer Channel -->
+        <meta-data
+            android:name="CHANNEL"
+            android:value="GOOGLE" />
+        <!-- AppsFlyer SDK END -->
+
+        <!-- Chartboost SDK START -->
+        <!-- Chartboost app id -->
+        <meta-data
+            android:name="com.wa.sdk.track.CHARTBOOST_APP_ID"
+            android:value="55b74c74c909a66b8af388a7" />
+        <!-- Chartboost app signature -->
+        <meta-data
+            android:name="com.wa.sdk.track.CHARTBOOST_APP_SIGNATURE"
+            android:value="2b7b5cbc8c5d0429c9498dd3484d84fb4974a206" />
+        <!-- Chartboost SDK END -->
+    </application>
+
+</manifest>
