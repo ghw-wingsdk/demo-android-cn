@@ -54,13 +54,14 @@
 -dontwarn com.ta.**
 -dontwarn com.ut.**
 -dontwarn org.json.**
+-dontwarn org.apache.**
 -dontwarn org.apache.http.conn.ssl.SSLSocketFactory
 
 -keep class com.squareup.** { *; }
+
 -keep class com.taobao.android.dexposed.** { *; }
+
 -keep class android.support.** { *; }
-# WingA
--keep class com.wa.sdk.** { *; }
 
 # Activity、BroadCastReceiver、Service等需排除，否则配置将无法找到
 -keep class * extends android.app.Activity {
@@ -70,8 +71,10 @@
     public *;
 }
 
+# 排除微信SDK
+-keep class com.tencent.mm.opensdk.* { *; }
+
 # 百度360
--keep class a.a.a.** { *; }
 -keep class cn.pp.** { *; }
 -keep class com.alipay.** {*;}
 -keep class com.qihoo.** {*;}
@@ -84,10 +87,15 @@
 -keep class com.ipaynow.** {*;}
 -keep class com.junnet.heepay.** {*;}
 -keep class com.tencent.mm.** {*;}
+-keep class com.coolcloud.uac.android.** {*;}
+-keep class tv.cjump.jni.** {*;}
+-keep class HttpUtils.** {*;}
+-keep class com.a.a.** {*;}
+-keep class com.emoji.** {*;}
+-keep class com.google.android.exoplayer.** {*;}
 -keep class com.ta.utdid2.** {*;}
 -keep class com.ut.device.** {*;}
--keep class com.qihoo.sdkplugging.host.** {*;}
--keep public class com.qihoo.gamecenter.sdk.matrix.PluggingHostProxy {*;}
+-keep class com.master.flame.danmaku.** {*;}
 
 # 百度
 -keep public class com.baidu.** { *; }
