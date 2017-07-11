@@ -3,7 +3,6 @@ package com.wa.sdk.cn.demo.channels;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.view.View;
 
 import com.wa.sdk.cn.demo.PaymentActivity;
@@ -13,6 +12,7 @@ import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
+import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WALoginResult;
@@ -68,7 +68,6 @@ public class ChannelUCActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 UserModel.getInstance().setDatas(result);
-                showShortToast(message);
 
                 // TODO 提交游戏角色数据信息 (必接)
                 long time = Long.parseLong(String.valueOf(new Date().getTime()).substring(0, 10));
@@ -81,6 +80,22 @@ public class ChannelUCActivity extends BaseActivity {
                 dataMap.put("zoneName", "区服名称");    // String 必填 区服名称
 
                 WAUserProxy.submitRoleData(WAUserProxy.getCurrChannel(), ChannelUCActivity.this, dataMap);
+                String text = "code:" + code + "\nmessage:" + message;
+                if (null == result) {
+                    text = "Login failed->" + text;
+                } else {
+                    text = "Login success->" + text
+                            + "\nplatform:" + result.getPlatform()
+                            + "\nuserId:" + result.getUserId()
+                            + "\ntoken:" + result.getToken()
+                            + "\nplatformUserId:" + result.getPlatformUserId()
+                            + "\nplatformToken:" + result.getPlatformToken()
+                            + "\nisBindMobile: " + result.isBindMobile()
+                            + "\nisFistLogin: " + result.isFirstLogin();
+                }
+                showShortToast(text);
+
+                LogUtil.i(LogUtil.TAG, text);
             }
 
             @Override

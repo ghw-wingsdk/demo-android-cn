@@ -17,6 +17,7 @@ import com.wa.sdk.common.WAActivityAdPage;
 import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
+import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WALoginResult;
@@ -78,32 +79,53 @@ public class ChannelBaiduActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        activityAdPage.onResume();
-        activityAnalytics.onResume();
+        if(null != activityAdPage) {
+            activityAdPage.onResume();
+        }
+        if(null != activityAnalytics) {
+            activityAnalytics.onResume();
+        }
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        activityAdPage.onPause();
-        activityAnalytics.onPause();
+        if(null != activityAdPage) {
+            activityAdPage.onPause();
+        }
+        if(null != activityAnalytics) {
+            activityAnalytics.onPause();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        activityAdPage.onStop();
+        if(null != activityAdPage) {
+            activityAdPage.onStop();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        activityAdPage.onDestroy();
+
+        if(null != activityAdPage) {
+            activityAdPage.onDestroy();
+        }
 
         Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
         if (btnFloatView.isSelected()) { // 如果打开了百度悬浮框 就需要关闭
             floatView();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(null != activityAdPage) {
+            activityAdPage.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -131,9 +153,24 @@ public class ChannelBaiduActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 UserModel.getInstance().setDatas(result);
-                showShortToast(message);
                 setSuspendWindowChangeAccountListener();
                 setSessionInvalidListener();
+                String text = "code:" + code + "\nmessage:" + message;
+                if (null == result) {
+                    text = "Login failed->" + text;
+                } else {
+                    text = "Login success->" + text
+                            + "\nplatform:" + result.getPlatform()
+                            + "\nuserId:" + result.getUserId()
+                            + "\ntoken:" + result.getToken()
+                            + "\nplatformUserId:" + result.getPlatformUserId()
+                            + "\nplatformToken:" + result.getPlatformToken()
+                            + "\nisBindMobile: " + result.isBindMobile()
+                            + "\nisFistLogin: " + result.isFirstLogin();
+                }
+
+                showShortToast(text);
+                LogUtil.i(LogUtil.TAG, text);
             }
 
             @Override
@@ -176,27 +213,48 @@ public class ChannelBaiduActivity extends BaseActivity {
 
     /** TODO 设置切换账号结果通知 */
     private void setSuspendWindowChangeAccountListener() {
-        WAUserProxy.setSuspendWindowChangeAccountListener(WAUserProxy.getCurrChannel(), new WACallback<WAResult>() {
+        WAUserProxy.setSuspendWindowChangeAccountListener(WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
-            public void onSuccess(int code, String message, WAResult result) {
+            public void onSuccess(int code, String message, WALoginResult result) {
                 // 登录成功,不管之前是什么登录状态,游戏内部都要切换成新的用户
+                LogUtil.e(LogUtil.TAG, "百度--账号切换成功");
+                UserModel.getInstance().setDatas(result);
+                setSessionInvalidListener();
+                String text = "code:" + code + "\nmessage:" + message;
+                if (null == result) {
+                    text = "Login failed->" + text;
+                } else {
+                    text = "Login success->" + text
+                            + "\nplatform:" + result.getPlatform()
+                            + "\nuserId:" + result.getUserId()
+                            + "\ntoken:" + result.getToken()
+                            + "\nplatformUserId:" + result.getPlatformUserId()
+                            + "\nplatformToken:" + result.getPlatformToken()
+                            + "\nisBindMobile: " + result.isBindMobile()
+                            + "\nisFistLogin: " + result.isFirstLogin();
+                }
+
+                showShortToast(text);
+                LogUtil.i(LogUtil.TAG, text);
             }
 
             @Override
             public void onCancel() {
                 // 操作前后的登录状态没变化
+                LogUtil.e(LogUtil.TAG, "百度--账号切换取消");
             }
 
             @Override
-            public void onError(int code, String message, WAResult result, Throwable throwable) {
+            public void onError(int code, String message, WALoginResult result, Throwable throwable) {
                 // 登录失败,游戏内部之前如果是已经登录的,要清楚自己记录的登录状态,设置成未登录。如果之前未登录,不用处理
+                LogUtil.e(LogUtil.TAG, "百度--账号切换失败");
             }
         });
     }
 
     /** TODO 查询登录用户实名认证状态 */
     private void queryLoginUserAuthenticateState() {
-        WAUserProxy.queryLoginUserAuthenticateState(this,WAUserProxy.getCurrChannel(),new WACallback<Integer>() {
+        WAUserProxy.queryLoginUserAuthenticateState(this, WAUserProxy.getCurrChannel(),new WACallback<Integer>() {
             @Override
             public void onSuccess (int code, String message, Integer result){
                 // resut 0 无此用户数据; 1 未成年; 2 已成年

@@ -16,6 +16,7 @@ import com.wa.sdk.common.WAActivityAdPage;
 import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
+import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.social.WASocialProxy;
 import com.wa.sdk.social.model.WAFriendsResult;
@@ -62,32 +63,49 @@ public class Channel360Activity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_login)
-            login();
-        else if (v.getId() == R.id.btn_pay)
-            startActivity(new Intent(this, PaymentActivity.class));
-        else if (v.getId() == R.id.btn_query_init_info_intent)
-            queryInitInfoIntent();
-        else if (v.getId() == R.id.btn_upload_score)
-            uploadScore();
-//        else if (v.getId() == R.id.btn_invite)
-//            invite();
-//        else if (v.getId() == R.id.btn_invite_ui)
-//            inviteUI();
-        else if (v.getId() == R.id.btn_share)
-            share();
-        else if (v.getId() == R.id.btn_tracking)
-            tracking();
-        else if (v.getId() == R.id.btn_switch_account)
-            switchAccount();
-        else if (v.getId() == R.id.btn_query_authenticate_state)
-            queryLoginUserAuthenticateState();
-        else if (v.getId() == R.id.btn_rank)
-            startActivity(new Intent(this, Rank360Activity.class));
-        else if (v.getId() == R.id.btn_logout)
-            logout();
-        else if (v.getId() == R.id.btn_exit_game)
-            exitGame();
+        switch (v.getId()) {
+            case R.id.btn_login:
+                login();
+                break;
+            case R.id.btn_pay:
+                startActivity(new Intent(this, PaymentActivity.class));
+                break;
+            case R.id.btn_query_init_info_intent:
+                queryInitInfoIntent();
+                break;
+            case R.id.btn_upload_score:
+                uploadScore();
+                break;
+//            case R.id.btn_invite:
+//                invite();
+//                break;
+//            case R.id.btn_invite_ui:
+//                inviteUI();
+//                break;
+            case R.id.btn_share:
+                share();
+                break;
+            case R.id.btn_tracking:
+                tracking();
+                break;
+            case R.id.btn_switch_account:
+                switchAccount();
+                break;
+            case R.id.btn_query_authenticate_state:
+                queryLoginUserAuthenticateState();
+                break;
+            case R.id.btn_rank:
+                startActivity(new Intent(this, Rank360Activity.class));
+                break;
+            case R.id.btn_logout:
+                logout();
+                break;
+            case R.id.btn_exit_game:
+                exitGame();
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -101,7 +119,6 @@ public class Channel360Activity extends BaseActivity {
             public void onSuccess(int code, String message, WALoginResult result) {
                 UserModel.getInstance().setDatas(result);
                 cancelLoadingDialog();
-                showShortToast(message);
 
                 /**
                  * TODO 游戏角色信息上传 (必接) 必填必须传，选填可不传
@@ -159,6 +176,22 @@ public class Channel360Activity extends BaseActivity {
                         "{'roleid':2,'intimacy':'0','nexusid':'200','nexusname':'仇人'}]");    // 他的好友
 
                 WAUserProxy.submitRoleData(WAUserProxy.getCurrChannel(), Channel360Activity.this, dataMap);
+                String text = "code:" + code + "\nmessage:" + message;
+                if (null == result) {
+                    text = "Login failed->" + text;
+                } else {
+                    text = "Login success->" + text
+                            + "\nplatform:" + result.getPlatform()
+                            + "\nuserId:" + result.getUserId()
+                            + "\ntoken:" + result.getToken()
+                            + "\nplatformUserId:" + result.getPlatformUserId()
+                            + "\nplatformToken:" + result.getPlatformToken()
+                            + "\nisBindMobile: " + result.isBindMobile()
+                            + "\nisFistLogin: " + result.isFirstLogin();
+                }
+
+                showShortToast(text);
+                LogUtil.i(LogUtil.TAG, text);
             }
 
             @Override
@@ -434,42 +467,56 @@ public class Channel360Activity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        activityAdPage.onStart();
+        if(null != activityAdPage) {
+            activityAdPage.onStart();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        activityAdPage.onResume();
+        if(null != activityAdPage) {
+            activityAdPage.onResume();
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        activityAdPage.onPause();
+        if(null != activityAdPage) {
+            activityAdPage.onPause();
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        activityAdPage.onStop();
+        if(null != activityAdPage) {
+            activityAdPage.onStop();
+        }
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        activityAdPage.onRestart();
+        if(null != activityAdPage) {
+            activityAdPage.onRestart();
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        activityAdPage.onActivityResult(requestCode, resultCode, data);
+        if(null != activityAdPage) {
+            activityAdPage.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        activityAdPage.onNewIntent(intent);
+        if(null != activityAdPage) {
+            activityAdPage.onNewIntent(intent);
+        }
     }
 }
