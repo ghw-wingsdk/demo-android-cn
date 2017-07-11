@@ -5,6 +5,8 @@ android {
     buildToolsVersion "23.0.2"
 
     signingConfigs {
+        // 测试签名，相应的平台（微信、360、百度、UC）的资源需要自己申请，
+        // 测试的key和包名会因为已经申请过会无法申请的情况，请自己修改包名和新建签名文件再申请
         config {
             keyAlias 'pcl-sdk-cert-dev'
             keyPassword '123456'
