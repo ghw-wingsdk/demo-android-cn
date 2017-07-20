@@ -13,12 +13,6 @@ android {
             storeFile file('../keystores/android-cert-dev.jks')
             storePassword '123456'
         }
-        config {
-            keyAlias 'ddtank'
-            keyPassword 'angame!@#$%^Q123456'
-            storeFile file('../keystores/ddtankmobile_cert.jks')
-            storePassword 'angame!@#$%^Q123456'
-        }
     }
 
     defaultConfig {
