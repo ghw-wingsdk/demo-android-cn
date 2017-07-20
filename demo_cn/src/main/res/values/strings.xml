@@ -50,6 +50,7 @@
     <string name="share">Share</string>
     <string name="switch_account">Switch account</string>
     <string name="authenticate_state">Authenticate state</string>
+    <string name="authenticate">Authenticate</string>
     <string name="rank">rank</string>
     <string name="logout">Logout</string>
     <string name="exit_game">Exit game</string>

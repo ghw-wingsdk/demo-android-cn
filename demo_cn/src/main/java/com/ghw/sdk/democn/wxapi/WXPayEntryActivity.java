@@ -1,13 +1,9 @@
 package com.ghw.sdk.democn.wxapi;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.wa.sdk.WAConstants;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.common.model.WACallback;
-import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.pay.WAPayProxy;
 
 /**

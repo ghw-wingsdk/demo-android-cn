@@ -191,6 +191,12 @@
                     android:text="@string/exit_game"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

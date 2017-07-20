@@ -15,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.wa.sdk.WAConstants;
@@ -27,9 +28,11 @@ import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WACommonProxy;
+import com.wa.sdk.common.WAConfig;
 import com.wa.sdk.common.WASharedPrefHelper;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
+import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WALoginResult;
@@ -72,6 +75,14 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(WACommonProxy.onActivityResult(requestCode, resultCode, data)) {
+           return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public void showHashKey(Context context) {
@@ -200,8 +211,23 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 userModel.setDatas(result);
-                showShortToast(message);
                 button.setEnabled(true);
+                String text = "code:" + code + "\nmessage:" + message;
+                if (null == result) {
+                    text = "Login failed->" + text;
+                } else {
+                    text = "Login success->" + text
+                            + "\nplatform:" + result.getPlatform()
+                            + "\nuserId:" + result.getUserId()
+                            + "\ntoken:" + result.getToken()
+                            + "\nplatformUserId:" + result.getPlatformUserId()
+                            + "\nplatformToken:" + result.getPlatformToken()
+                            + "\nisBindMobile: " + result.isBindMobile()
+                            + "\nisFistLogin: " + result.isFirstLogin();
+                }
+
+                LogUtil.i(LogUtil.TAG, text);
+                showShortToast(text);
             }
 
             @Override

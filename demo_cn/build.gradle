@@ -13,6 +13,12 @@ android {
             storeFile file('../keystores/android-cert-dev.jks')
             storePassword '123456'
         }
+        config {
+            keyAlias 'ddtank'
+            keyPassword 'angame!@#$%^Q123456'
+            storeFile file('../keystores/ddtankmobile_cert.jks')
+            storePassword 'angame!@#$%^Q123456'
+        }
     }
 
     defaultConfig {
@@ -23,6 +29,8 @@ android {
         versionName "1.1.2"
         signingConfig signingConfigs.config
         multiDexEnabled true
+        // 这里需要添加placeHolder，Key为PACKAGE_NAME，value为应用包名，详情参考文档说明
+        manifestPlaceholders.put('PACKAGE_NAME', applicationId)
     }
 
     buildTypes {

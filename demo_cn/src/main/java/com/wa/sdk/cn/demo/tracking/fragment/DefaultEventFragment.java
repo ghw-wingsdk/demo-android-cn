@@ -125,7 +125,10 @@ public class DefaultEventFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 String newValue = s.toString();
                 try {
-                    float value = Float.valueOf(newValue);
+                    float value = 0;
+                    if (! StringUtil.isEmpty(newValue))
+                        value = Float.valueOf(newValue);
+
                     onEventValueChanged(mDefaultValue, value);
                     mDefaultValue = value;
                 } catch (Exception e) {
