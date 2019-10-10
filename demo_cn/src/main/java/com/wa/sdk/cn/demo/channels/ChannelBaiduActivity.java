@@ -23,7 +23,7 @@ import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WALoginResult;
 
 /**
- * 360 渠道
+ * 百度 渠道
  * Created by hank on 16/7/22.
  */
 public class ChannelBaiduActivity extends BaseActivity {
@@ -213,7 +213,7 @@ public class ChannelBaiduActivity extends BaseActivity {
 
     /** TODO 设置切换账号结果通知 */
     private void setSuspendWindowChangeAccountListener() {
-        WAUserProxy.setSuspendWindowChangeAccountListener(WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
+        WAUserProxy.setSuspendWindowChangeAccountListener(this,WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 // 登录成功,不管之前是什么登录状态,游戏内部都要切换成新的用户
@@ -254,7 +254,7 @@ public class ChannelBaiduActivity extends BaseActivity {
 
     /** TODO 查询登录用户实名认证状态 */
     private void queryLoginUserAuthenticateState() {
-        WAUserProxy.queryLoginUserAuthenticateState(this, WAUserProxy.getCurrChannel(),new WACallback<Integer>() {
+        WAUserProxy.queryLoginUserAuthenticateState(this,WAUserProxy.getCurrChannel(),new WACallback<Integer>() {
             @Override
             public void onSuccess (int code, String message, Integer result){
                 // resut 0 无此用户数据; 1 未成年; 2 已成年

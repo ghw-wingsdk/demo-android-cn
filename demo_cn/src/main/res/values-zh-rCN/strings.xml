@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">WASdkDemocn</string>
+    <string name="app_name">WA(国内)</string>
 
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
@@ -17,6 +17,14 @@
     <string name="a360">360</string>
     <string name="baidu">百度</string>
     <string name="uc">UC</string>
+    <string name="ysdk_login">应用宝登录</string>
+    <string name="oppo_login">OPPO登录</string>
+    <string name="vivo_login">VIVO登录</string>
+    <string name="xiaomi_login">小米登录</string>
+    <string name="huawei_login">华为登录</string>
+    <string name="qihoo360_login">360登录</string>
+    <string name="baidu_login">百度登录</string>
+    <string name="uc_login">UC登录</string>
     <string name="test_crash">闪退测试</string>
     <string name="check_update">检查更新</string>
     <string name="download_patch">下载Patch包</string>
@@ -43,8 +51,9 @@
     <string name="pay_ui_title">网页支付</string>
 
     <!-- -->
-    <string name="login">登录</string>
+    <string name="login">WA登录</string>
     <string name="payment">支付</string>
+    <string name="query_channel_balance">游戏币查询</string>
     <string name="invite">邀请</string>
     <string name="invite_ui">邀请(带界面)</string>
     <string name="share">分享</string>

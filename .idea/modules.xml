@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/WADemocn.iml" filepath="$PROJECT_DIR$/WADemocn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/WASdkDemoCN.iml" filepath="$PROJECT_DIR$/WASdkDemoCN.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo_cn/demo_cn.iml" filepath="$PROJECT_DIR$/demo_cn/demo_cn.iml" />
     </modules>
   </component>

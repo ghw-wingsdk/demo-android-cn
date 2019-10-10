@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.wa.sdk.cn.demo.Utils.ActivityManager;
 import com.wa.sdk.cn.demo.widget.LoadingDialog;
+import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.track.WATrackProxy;
 
 
@@ -39,6 +40,18 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
         hideNavigationBar();
 
         mFragmentManager = getSupportFragmentManager();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        WACommonProxy.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+//        WACommonProxy.onPause(this);
+        super.onPause();
     }
 
     @Override

@@ -13,6 +13,7 @@ public class WADemoConfig {
     public static final String SP_KEY_ENABLE_LOGCAT = "enable_logcat";
 
     public static final String SP_KEY_ENABLE_APW = "enable_app_wall";
+    public static final String SP_KEY_ENABLE_FLOW_VIEW = "enable_flow_view";
 
     public static final String SP_KEY_ENABLE_LOGIN_CACHE = "enable_login_cache";
 

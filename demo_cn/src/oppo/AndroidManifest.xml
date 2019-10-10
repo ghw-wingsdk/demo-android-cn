@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wa.sdk.cn.demo">
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:name=".WADemoApp"
+        android:theme="@style/AppTheme">
+        <!-- OPPO SDK END -->
+        <meta-data android:name="debug_mode"
+            android:value="false" /> <!-- 调试开关，发布时候设置false -->
+        <meta-data android:name="app_key"
+            android:value="B7iH9G1tf74SosO8COKO4o4W8" /> <!-- appKey -->
+        <meta-data
+            android:name="com.wa.sdk.OPPO_APP_ID"
+            android:value="3527" />
+        <meta-data
+            android:name="com.wa.sdk.OPPO_APP_SECRET"
+            android:value="E9233fD1b86e89332B35F06eE9305484" />
+        <!-- OPPO SDK END -->
+    </application>
+
+</manifest>

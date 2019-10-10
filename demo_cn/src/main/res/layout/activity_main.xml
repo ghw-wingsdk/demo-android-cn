@@ -45,48 +45,36 @@
                     android:textOff="@string/disable_extend"
                     android:checked="true"/>
             </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <ToggleButton
+                    android:id="@+id/tbtn_login_flow_type"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textOn="@string/rebind_account_with_device"
+                    android:textOff="@string/do_not_rebind_account_with_device"
+                    android:checked="false"/>
+                <ToggleButton
+                    android:id="@+id/tbtn_login_cache"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:textOn="@string/enable_login_cache"
+                    android:textOff="@string/disable_login_cache"
+                    android:checked="true"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
-                <Button
-                    android:id="@+id/btn_360"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/a360"
-                    android:onClick="onClick"
-                    android:layout_gravity="center_horizontal"/>
-                <Button
-                    android:id="@+id/btn_baidu"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/baidu"
-                    android:onClick="onClick"
-                    android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <Button
-                    android:id="@+id/btn_uc"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/uc"
-                    android:onClick="onClick"
-                    android:layout_gravity="center_horizontal"/>
                 <Button
                     android:id="@+id/btn_login"
                     android:layout_width="0dp"
@@ -97,7 +85,42 @@
                     android:text="@string/login"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
+                <Button
+                    android:id="@+id/btn_channel_login"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_horizontal"/>
             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <Button
+                    android:id="@+id/btn_switch_account"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/switch_account"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_horizontal"/>
+                <Button
+                    android:id="@+id/btn_logout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/logout"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -114,6 +137,22 @@
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
                 <Button
+                    android:id="@+id/btn_query_channel_balance"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/query_channel_balance"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <Button
                     android:id="@+id/btn_tracking"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -123,60 +162,17 @@
                     android:text="@string/tracking"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-
-            <!--<LinearLayout-->
-                <!--android:orientation="horizontal"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginTop="10dp">-->
-                <!--<Button-->
-                    <!--android:id="@+id/btn_login"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="@string/loginAccount"-->
-                    <!--android:onClick="onClick"-->
-                    <!--android:layout_gravity="center_horizontal"/>-->
-                <!--<Button-->
-                    <!--android:id="@+id/btn_payment"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:layout_marginLeft="5dp"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="@string/payment"-->
-                    <!--android:onClick="onClick"-->
-                    <!--android:layout_gravity="center_horizontal"/>-->
-            <!--</LinearLayout>-->
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
                 <ToggleButton
-                    android:id="@+id/tbtn_login_cache"
+                    android:id="@+id/tbtn_flow_view"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
-                    android:textOn="@string/enable_login_cache"
-                    android:textOff="@string/disable_login_cache"
-                    android:checked="true"/>
-                <Button
-                    android:id="@+id/btn_switch_account"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/switch_account"
-                    android:onClick="onClick"
-                    android:layout_gravity="center_horizontal"/>
+                    android:textOn="@string/show_float_view"
+                    android:textOff="@string/hidden_float_view"
+                    android:checked="true"
+                    android:visibility="invisible"/>
             </LinearLayout>
 
             <LinearLayout
@@ -184,14 +180,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp">
-                <Button
-                    android:id="@+id/btn_logout"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/logout"
-                    android:onClick="onClick"
-                    android:layout_gravity="center_horizontal" />
                 <Button
                     android:id="@+id/btn_hot_update"
                     android:layout_width="0dp"
@@ -202,21 +190,6 @@
                     android:text="@string/hot_update"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <ToggleButton
-                    android:id="@+id/tbtn_login_flow_type"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textOn="@string/rebind_account_with_device"
-                    android:textOff="@string/do_not_rebind_account_with_device"
-                    android:checked="false"/>
                 <Button
                     android:id="@+id/btn_test_crash"
                     android:layout_width="0dp"

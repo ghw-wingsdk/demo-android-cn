@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wa.sdk.cn.demo">
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <!-- 应用宝SDK接入 QQ接入配置 START -->
+        <!-- 应用宝SDK接入 QQ接入配置 -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1105350078" />
+            </intent-filter>
+        </activity>
+
+        <!-- TODO SDK接入 微信接入配置 START -->
+        <!-- 注意：此处应改为 游com.ddtankfcb.hxsy.wxapixapi.WXEntryActivity -->
+        <!-- 注意：此处应改为 游戏包名.diff -->
+        <activity
+            android:name="com.tencent.tmgp.ddtankghw.wxapi.WXEntryActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:label="WXEntryActivity"
+            android:launchMode="singleTop"
+            android:taskAffinity="${PACKAGE_NAME}.diff">
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <!-- 注意：此处应改为 游戏的微信appid -->
+            <data android:scheme="wxaaaa6871dd6c6857" />
+        </intent-filter>
+    </activity>
+    <!-- 应用宝接入 QQ接入配置 END -->
+    </application>
+
+</manifest>
