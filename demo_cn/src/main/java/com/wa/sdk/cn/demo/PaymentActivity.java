@@ -93,6 +93,7 @@ public class PaymentActivity extends BaseActivity {
                                 payUI(tv.getText().toString(), "extInfotest");
                             else
                                 showShortToast("请先登录");
+
                         }
                     });
                 }

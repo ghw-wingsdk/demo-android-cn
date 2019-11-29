@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WA(XIAOMI)</string>
-    <string name="xiaomi_app_id">2882303761517673537</string>
-    <string name="xiaomi_app_key">5221767320537</string>
+    <!-- 小米 app id -->
+    <string name="xiaomi_app_id">2882303761518224220</string>
+    <!-- 小米 app key -->
+    <string name="xiaomi_app_key">5621822491220</string>
 </resources>

@@ -21,11 +21,13 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <meta-data
             android:name="com.wa.sdk.VIVO_APP_ID"
-            android:value="27dfd05d79b16af699e25a84caf2cd0e" />
-        <!--<meta-data-->
-        <!--android:name="com.wa.sdk.VIVO_APP_ID"-->
-        <!--android:value="25c5233f0926358948f85edc7c6e37fb" />-->
-        <!-- VIVO SDK END -->
+            android:value="103045597" />
+        <meta-data
+            android:name="com.wa.sdk.VIVO_APP_KEY"
+            android:value="62493213531f01f0553a23295a060ed4" />
+        <meta-data
+            android:name="com.wa.sdk.VIVO_CP_ID"
+            android:value="33d2113d45e4fa953b48" />
     </application>
 
 </manifest>

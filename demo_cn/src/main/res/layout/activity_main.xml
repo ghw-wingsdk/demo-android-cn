@@ -172,7 +172,7 @@
                     android:textOn="@string/show_float_view"
                     android:textOff="@string/hidden_float_view"
                     android:checked="true"
-                    android:visibility="invisible"/>
+                    android:visibility="visible"/>
             </LinearLayout>
 
             <LinearLayout

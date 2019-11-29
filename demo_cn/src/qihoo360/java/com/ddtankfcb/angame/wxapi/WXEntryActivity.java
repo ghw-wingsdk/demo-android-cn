@@ -10,16 +10,16 @@ import com.wa.sdk.user.WAUserProxy;
 /**
  * WA 微信工具类
  */
-public class WXEntryActivity extends Activity {
-
-    public void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        requestWindowFeature(Window.FEATURE_PROGRESS);
-        super.onCreate(savedInstanceState);
-
-        WAUserProxy.entryLoginInit(this, getIntent());
-        WASocialProxy.entryShareInit(this, getIntent());
-
-        finish();
-    }
-}
+//public class WXEntryActivity extends Activity {
+//
+//    public void onCreate(Bundle savedInstanceState) {
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        requestWindowFeature(Window.FEATURE_PROGRESS);
+//        super.onCreate(savedInstanceState);
+//
+//        WAUserProxy.entryLoginInit(this, getIntent());
+//        WASocialProxy.entryShareInit(this, getIntent());
+//
+//        finish();
+//    }
+//}

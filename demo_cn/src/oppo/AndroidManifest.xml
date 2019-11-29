@@ -8,17 +8,20 @@
         android:supportsRtl="true"
         android:name=".WADemoApp"
         android:theme="@style/AppTheme">
-        <!-- OPPO SDK END -->
+        <!-- OPPO SDK START -->
         <meta-data android:name="debug_mode"
             android:value="false" /> <!-- 调试开关，发布时候设置false -->
+        <meta-data android:name="is_offline_game"
+            android:value="false" /><!-- true:单机游戏 false:网游 -->
         <meta-data android:name="app_key"
-            android:value="B7iH9G1tf74SosO8COKO4o4W8" /> <!-- appKey -->
+            android:value="AjPX77d15G08cg4oOkcOgkSgc" /> <!-- appKey -->
         <meta-data
             android:name="com.wa.sdk.OPPO_APP_ID"
-            android:value="3527" />
+            android:value="3607343" />
         <meta-data
             android:name="com.wa.sdk.OPPO_APP_SECRET"
-            android:value="E9233fD1b86e89332B35F06eE9305484" />
+            android:value="F7e2C959eAb09c4245257eA405985c11" />
+        <uses-library android:name="org.apache.http.legacy" android:required="false" /><!--9.0及以上设备可能需要 -->
         <!-- OPPO SDK END -->
     </application>
 

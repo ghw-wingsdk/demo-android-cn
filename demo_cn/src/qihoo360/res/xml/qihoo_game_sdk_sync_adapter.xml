@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- 注意下面的 android:contentAuthority，它必须是：
+ android:contentAuthority = "你的游戏包名.cx.accounts.syncprovider" 组成的
+ 它和 AndroidManifest.xml 下的修改是一样的 -->
+<!--需要CP在应用自己配置-->
+<sync-adapter xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:accountType="com.qihoo.pushsdk.accounts"
+    android:allowParallelSyncs="false"
+    android:contentAuthority="com.ghw.sdk.democn.cx.accounts.syncprovider"
+    android:isAlwaysSyncable="true"
+    android:supportsUploading="false"
+    android:userVisible="true"
+    tools:node="replace" />

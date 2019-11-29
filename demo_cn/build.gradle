@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-
+//apply plugin: 'com.huawei.agconnect' //华为渠道需要打开
 android {
     compileSdkVersion rootProject.compileSdkVersion
 
@@ -23,8 +23,8 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 13
-        versionName "1.3.0"
-        multiDexEnabled false
+        versionName "1.4.0"
+        multiDexEnabled true
         signingConfig signingConfigs.config
 
         //必须要保证所有的flavor 都属于同一个维度
@@ -51,8 +51,11 @@ android {
                 }
             }
             // 测试环境
-            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL:'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi',
-                                         SDK_TRACKING_HTTP_BASE_URL:'http://sdk-test2.wingsdk.cn/sdk_bkd_qa/data_collection/data'])
+//            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL:'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi',
+//                                         SDK_TRACKING_HTTP_BASE_URL:'http://sdk-test2.wingsdk.cn/sdk_bkd_qa/data_collection/data'])
+
+            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : 'http://sdk-test1.gamehollywood.com/sdk_bkd_qa/sdkapi',
+                                         SDK_TRACKING_HTTP_BASE_URL: 'http://sdk-test2.gamehollywood.com/data_collection_qa/data/forward'])
 //            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL:'http://172.16.100.53/sdk_bkd_qa/sdkapi/',
 //                                         SDK_TRACKING_HTTP_BASE_URL:'http://172.16.100.58/data_collection_qa/data'])
         }
@@ -89,12 +92,12 @@ android {
         }
         // VIVO
         vivo {
-            applicationId "com.ddtankfcb.hxsy.vivo"
+            applicationId "com.ghw.wingcn.vivo"
             manifestPlaceholders.put('PACKAGE_NAME', applicationId)
         }
         // 小米
         xiaomi {
-            applicationId "com.ghw.wing"
+            applicationId "com.winsdk.android.mi"
             manifestPlaceholders.put('PACKAGE_NAME', applicationId)
         }
         // 应用宝
@@ -102,12 +105,19 @@ android {
             applicationId "com.tencent.tmgp.ddtankghw"
             manifestPlaceholders.put('PACKAGE_NAME', applicationId)
         }
-        // 华为
+
+        //魅族
+        meizu {
+            applicationId "com.ghw.dsw.mz"
+            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+            //resValue "string", "app_name", "meizu"
+        }
+        // 华为(打包华为渠道时需要注释掉其他渠道，华为对多渠道打包报错，暂时未找到原因)
         huawei {
-//            applicationId "com.ddtankfcb.hxsy.huawei"
-            applicationId "com.ghw.wing.huawei"
+            applicationId "com.ghw.wingcn.huawei"
             manifestPlaceholders.put('PACKAGE_NAME', applicationId)
         }
+
     }
 
     // 打包自动生成名字
@@ -138,7 +148,7 @@ android {
         abortOnError false
     }
 
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.2'
 }
 
 //获取时间戳
@@ -151,32 +161,38 @@ def getDate() {
 dependencies {
     implementation(dependency.supportV4)
     implementation(dependency.appcompatV7)
-
+    implementation 'com.android.support:multidex:1.0.3'
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:1.3.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:1.4.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:1.3.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:1.4.0'
     // 网页支付模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-webpay:1.3.0'
+    implementation 'com.wa.sdkcn:wa-sdk-webpay:1.4.0'
 //     应用墙模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-apw:1.3.0'
-//     微信模块（可选,不可与有微信相关的渠道混合使用）
-    implementation 'com.wa.sdkcn:wa-sdk-wechat:1.3.0'
+  //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
+//     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
+    //implementation 'com.wa.sdkcn:wa-sdk-wechat:1.4.0'
 //     360模块（可选，不可与其他可选模块混合使用）
-    //qihoo360Implementation 'com.wa.sdkcn:wa-sdk-360:1.3.0'
+//    qihoo360Implementation 'com.wa.sdkcn:wa-sdk-360:1.4.0'
     // 百度模块（可选，不可与其他可选模块混合使用）
-    baiduImplementation 'com.wa.sdkcn:wa-sdk-baidu:1.3.0'
-    // uc（可选，不可与其他可选模块混合使用）
-    ucImplementation 'com.wa.sdkcn:wa-sdk-uc:1.3.0'
-    // xiaomi（可选，不可与其他可选模块混合使用）
-    xiaomiImplementation 'com.wa.sdkcn:wa-sdk-xiaomi:1.3.0'
+//    baiduImplementation 'com.wa.sdkcn:wa-sdk-baidu:1.4.0'
+//    // uc（可选，不可与其他可选模块混合使用）
+//    ucImplementation 'com.wa.sdkcn:wa-sdk-uc:1.4.0'
+//    // xiaomi（可选，不可与其他可选模块混合使用）
+    xiaomiImplementation 'com.wa.sdkcn:wa-sdk-xiaomi:1.4.0'
     // oppo（可选，不可与其他可选模块混合使用）
-    oppoImplementation 'com.wa.sdkcn:wa-sdk-oppo:1.3.0'
+//   oppoImplementation 'com.wa.sdkcn:wa-sdk-oppo:1.4.0'
     // vivo（可选，不可与其他可选模块混合使用）
-    //vivoImplementation 'com.wa.sdkcn:wa-sdk-vivo:1.3.0'
-    // huawei（可选，不可与其他可选模块混合使用）
-    huaweiImplementation 'com.wa.sdkcn:wa-sdk-huawei:1.3.0'
+//    vivoImplementation 'com.wa.sdkcn:wa-sdk-vivo:1.4.0'
+//    // huawei（可选，不可与其他可选模块混合使用）
+//    huaweiImplementation 'com.wa.sdkcn:wa-sdk-huawei:1.4.0'
     // ysdk应用宝（可选，不可与其他可选模块混合使用）
-    ysdkImplementation 'com.wa.sdkcn:wa-sdk-ysdk:1.3.0'
+//    ysdkImplementation 'com.wa.sdkcn:wa-sdk-ysdk:1.4.0'
+//    //魅族（可选，不可与其他可选模块混合使用）
+//    meizuImplementation 'com.wa.sdkcn:wa-sdk-meizu:1.4.0'
+
+
+
+
 }
 

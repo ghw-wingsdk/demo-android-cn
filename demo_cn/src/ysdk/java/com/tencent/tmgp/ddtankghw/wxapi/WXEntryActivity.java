@@ -5,4 +5,5 @@ package com.tencent.tmgp.ddtankghw.wxapi;
  */
 
 public class WXEntryActivity extends com.tencent.ysdk.module.user.impl.wx.YSDKWXEntryActivity {
+
 }

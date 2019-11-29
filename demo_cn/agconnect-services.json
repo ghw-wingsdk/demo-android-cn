@@ -1,0 +1,11 @@
+{
+	"client":{
+		"cp_id":"890086000102099981",
+		"product_id":"9105385871708144247",
+		"client_id":"206363896729044032",
+		"client_secret":"A26C3B9EE37B59A5EA866EEF33CA41B1EC0AF1DDD60144593450E32AB476ABD0",
+		"app_id":"101210903",
+		"package_name": "com.ghw.wingcn.huawei"
+	},
+	"configuration_version":"1.0"
+}

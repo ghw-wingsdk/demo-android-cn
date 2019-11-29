@@ -22,6 +22,8 @@ import android.widget.ToggleButton;
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.apw.WAApwProxy;
 import com.wa.sdk.cn.demo.base.BaseActivity;
+import com.wa.sdk.cn.demo.channels.Channel360EventInfoUtil;
+import com.wa.sdk.cn.demo.channels.ChannelBaiduUtil;
 import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
@@ -33,6 +35,7 @@ import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.common.utils.StringUtil;
 import com.wa.sdk.core.WACoreProxy;
+import com.wa.sdk.core.WASdkProperties;
 import com.wa.sdk.pay.WAPayProxy;
 import com.wa.sdk.pay.model.WAChannelBalance;
 import com.wa.sdk.user.WAUserProxy;
@@ -52,13 +55,14 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        WASdkProperties.getInstance().isLogin();
+
         WACoreProxy.setDebugMode(true);
 
         WACoreProxy.initialize(this);
         WACommonProxy.onCreate(this, savedInstanceState);
         WACoreProxy.setServerId("1");
         WACoreProxy.setLevel(10);
-        WACoreProxy.setNickname("WADemo user1");
         WACommonProxy.enableLogcat(this);
 
         // Demo的初始化，跟SDK无关
@@ -71,7 +75,7 @@ public class MainActivity extends BaseActivity {
 
         showHashKey(this);
 
-        if(WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel())) {
+        if (WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel())) {
             WACommonProxy.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE, true,
                     "应用需要开启存储读写权限，是否开启？",
                     "应用需要开启存储读写权限,不开启将无法使用应用,请前往设置中开启存储权限",
@@ -83,17 +87,17 @@ public class MainActivity extends BaseActivity {
 
                         @Override
                         public void onRequestPermissionResult(String[] permissions, boolean[] grantedResults) {
-                            if(null == permissions || permissions.length == 0) {
+                            if (null == permissions || permissions.length == 0) {
                                 Process.killProcess(Process.myPid());
                                 return;
                             }
                             boolean forceExit = true;
                             for (int i = 0; i < permissions.length; i++) {
-                                if(Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permissions[i]) && grantedResults[0]) {
+                                if (Manifest.permission.WRITE_EXTERNAL_STORAGE.equals(permissions[i]) && grantedResults[0]) {
                                     forceExit = false;
                                 }
                             }
-                            if(forceExit) {
+                            if (forceExit) {
                                 Process.killProcess(Process.myPid());
                             }
                         }
@@ -102,10 +106,12 @@ public class MainActivity extends BaseActivity {
 
         checkYSDKPerssion();
 
+
+
     }
 
-    private void checkYSDKPerssion(){
-        if(WAConstants.CHANNEL_YSDK.equals(WAUserProxy.getCurrChannel())) {
+    private void checkYSDKPerssion() {
+        if (WAConstants.CHANNEL_YSDK.equals(WAUserProxy.getCurrChannel())) {
             WACommonProxy.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE, true,
                     "应用需要开启通讯录及电话权限，是否开启？",
                     "应用需要开启通讯录及电话权限,不开启将无法使用应用,请前往设置中开启通讯录及电话权限",
@@ -117,17 +123,17 @@ public class MainActivity extends BaseActivity {
 
                         @Override
                         public void onRequestPermissionResult(String[] permissions, boolean[] grantedResults) {
-                            if(null == permissions || permissions.length == 0) {
+                            if (null == permissions || permissions.length == 0) {
                                 //showLongToast("应用需要开启通讯录及电话权限");
                                 return;
                             }
                             boolean forceExit = true;
                             for (int i = 0; i < permissions.length; i++) {
-                                if(Manifest.permission.READ_PHONE_STATE.equals(permissions[i]) && grantedResults[0]) {
+                                if (Manifest.permission.READ_PHONE_STATE.equals(permissions[i]) && grantedResults[0]) {
                                     forceExit = false;
                                 }
                             }
-                            if(forceExit) {
+                            if (forceExit) {
                                 showLongToast("应用需要开启通讯录及电话权限,不开启将无法使用应用,请前往设置中开启通讯录及电话权限");
                             }
                         }
@@ -214,10 +220,12 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    /** TODO 退出游戏 */
+    /**
+     * TODO 退出游戏
+     */
     private void exitGame() {
         String platform = WAUserProxy.getCurrChannel();
-        if(StringUtil.isEmpty(platform)) {
+        if (StringUtil.isEmpty(platform)) {
             finish();
             return;
         }
@@ -273,18 +281,19 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_test_crash: // 闪退测试
                 testCrash();
                 break;
-            case  R.id.btn_hot_update: // 热更新
+            case R.id.btn_hot_update: // 热更新
                 startActivity(new Intent(this, HotUpdateActivity.class));
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 
     /**
      * 登录
+     *
      * @param channel 渠道
-     * @param button 按钮View
+     * @param button  按钮View
      */
     private void login(String channel, final View button) {
 
@@ -315,6 +324,18 @@ public class MainActivity extends BaseActivity {
 
                 LogUtil.i(LogUtil.TAG, text);
                 showShortToast(text);
+
+                //360
+                if(WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_QIHU360)){
+                    Channel360EventInfoUtil.getInstance().submitRoleData(MainActivity.this);
+                }
+
+                //百度
+                if(WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_BAIDU)){
+                    ChannelBaiduUtil.getInstance().setSessionInvalidListener(MainActivity.this);
+                    ChannelBaiduUtil.getInstance().setSuspendWindowChangeAccountListener(MainActivity.this);
+                }
+
             }
 
             @Override
@@ -333,11 +354,12 @@ public class MainActivity extends BaseActivity {
 
     /**
      * 切换账号
+     *
      * @param button 按钮View
      */
     private void switchAccount(final View button) {
 //        userModel.clear();
-        WAUserProxy.switchAccount(this, WAConstants.CHANNEL_WA, new WACallback<WALoginResult>() {
+        WAUserProxy.switchAccount(this,WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 userModel.setDatas(result);
@@ -360,7 +382,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void queryChannelBalance() {
-        if(!userModel.isLogin()) {
+        if (!userModel.isLogin()) {
             showShortToast("没有登录，请先登录");
             return;
         }
@@ -373,7 +395,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         final String channel = WAUserProxy.getCurrChannel();
-        if(WAConstants.CHANNEL_YSDK.equals(channel)) {
+        if (WAConstants.CHANNEL_YSDK.equals(channel)) {
             WAPayProxy.queryChannelBalance(channel, new WACallback<WAChannelBalance>() {
                 @Override
                 public void onSuccess(int code, String message, WAChannelBalance result) {
@@ -440,6 +462,8 @@ public class MainActivity extends BaseActivity {
             }
         });
         tb.setTitleText(R.string.app_name);
+
+
         tb.setTitleTextColor(R.color.color_white);
 
         ToggleButton tbtnLogcat = (ToggleButton) findViewById(R.id.tbtn_logcat);
@@ -484,6 +508,8 @@ public class MainActivity extends BaseActivity {
             btnChannelLogin.setText(R.string.baidu_login);
         } else if (WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
             btnChannelLogin.setText(R.string.uc_login);
+        } else if (WAConstants.CHANNEL_MEIZU.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.meizu_login);
         } else {
             btnChannelLogin.setText("None");
             btnChannelLogin.setEnabled(false);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wa.sdk.cn.demo">
 
     <application
@@ -13,17 +14,19 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1105350078" />
             </intent-filter>
         </activity>
 
-        <!-- TODO SDK接入 微信接入配置 START -->
-        <!-- 注意：此处应改为 游com.ddtankfcb.hxsy.wxapixapi.WXEntryActivity -->
+        <!-- TODO SDK接入 微信接入配置 START -->l
+        <!-- 注意：此处应改为 游com.ddtankfcb.hxsy.wxapi.WXEntryActivity -->
         <!-- 注意：此处应改为 游戏包名.diff -->
         <activity
             android:name="com.tencent.tmgp.ddtankghw.wxapi.WXEntryActivity"
@@ -32,14 +35,21 @@
             android:label="WXEntryActivity"
             android:launchMode="singleTop"
             android:taskAffinity="${PACKAGE_NAME}.diff">
-        <intent-filter>
-            <action android:name="android.intent.action.VIEW" />
-            <category android:name="android.intent.category.DEFAULT" />
-            <!-- 注意：此处应改为 游戏的微信appid -->
-            <data android:scheme="wxaaaa6871dd6c6857" />
-        </intent-filter>
-    </activity>
-    <!-- 应用宝接入 QQ接入配置 END -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <!-- 注意：此处应改为 游戏的微信appid -->
+                <data android:scheme="wxaaaa6871dd6c6857" />
+            </intent-filter>
+        </activity>
+        <!-- 应用宝接入 QQ接入配置 END -->
+
+        <activity
+            android:name="com.tencent.midas.proxyactivity.APMidasPayProxyActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            tools:node="replace" />
     </application>
 
 </manifest>

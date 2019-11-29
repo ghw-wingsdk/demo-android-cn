@@ -140,6 +140,22 @@
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
                 <Button
+                    android:id="@+id/btn_authenticate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/authenticate"
+                    android:onClick="onClick"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+                <Button
                     android:id="@+id/btn_query_authenticate_state"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -149,12 +165,6 @@
                     android:text="@string/authenticate_state"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/btn_rank"
                     android:layout_width="0dp"
@@ -165,6 +175,12 @@
                     android:text="@string/rank"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/btn_logout"
                     android:layout_width="0dp"
@@ -175,12 +191,6 @@
                     android:text="@string/logout"
                     android:onClick="onClick"
                     android:layout_gravity="center_horizontal"/>
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
                 <Button
                     android:id="@+id/btn_exit_game"
                     android:layout_width="0dp"
