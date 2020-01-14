@@ -70,9 +70,9 @@ public class CustomEventFragment extends BaseFragment {
     }
 
     private void initView(View contentView) {
-        EditText eventName = (EditText) contentView.findViewById(R.id.et_event_name);
+        EditText eventName = contentView.findViewById(R.id.et_event_name);
 
-        EditText countValue = (EditText) contentView.findViewById(R.id.et_event_count_value);
+        EditText countValue = contentView.findViewById(R.id.et_event_count_value);
 
         eventName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -117,8 +117,8 @@ public class CustomEventFragment extends BaseFragment {
             }
         });
 
-        mLlParamsContent = (LinearLayout) contentView.findViewById(R.id.ll_event_parameter_content);
-        mBtnAddParameter = (Button) contentView.findViewById(R.id.btn_add_parameter);
+        mLlParamsContent = contentView.findViewById(R.id.ll_event_parameter_content);
+        mBtnAddParameter = contentView.findViewById(R.id.btn_add_parameter);
         mBtnAddParameter.setOnClickListener(this);
     }
 
@@ -192,9 +192,7 @@ public class CustomEventFragment extends BaseFragment {
             }
         } else {
             if(null == newValue) { // newValue 为null，删除
-                if(mEventValues.containsKey(key)) {
-                    mEventValues.remove(key);
-                }
+                mEventValues.remove(key);
             } else {
                 mEventValues.put(key, newValue);
             }

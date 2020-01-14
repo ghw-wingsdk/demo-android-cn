@@ -47,6 +47,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 设置标题背景
+     *
      * @param resId
      */
     public TitleBar setTitleBackGroundResource(int resId) {
@@ -56,11 +57,12 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 设置标题文字颜色
+     *
      * @param resId
      */
     public TitleBar setTitleTextColor(int resId) {
         ColorStateList textColor = getResourceColorStateList(resId);
-        if(null != textColor) {
+        if (null != textColor) {
             mTvTitle.setTextColor(textColor);
         }
         return this;
@@ -68,6 +70,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 设置标题文字
+     *
      * @param resId
      */
     public TitleBar setTitleText(int resId) {
@@ -77,6 +80,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 设置标题文字
+     *
      * @param text
      */
     public TitleBar setTitleText(CharSequence text) {
@@ -87,8 +91,9 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置左按钮
+     *
      * @param iconResId 图标资源id
-     * @param listener 点击监听
+     * @param listener  点击监听
      * @return 当前标题栏对象
      */
     public TitleBar setLeftButton(int iconResId, View.OnClickListener listener) {
@@ -99,6 +104,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 启用/禁用左1按钮
+     *
      * @param enabled
      * @return
      */
@@ -109,8 +115,9 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置右按钮
+     *
      * @param iconResId 图标资源id
-     * @param listener 点击监听
+     * @param listener  点击监听
      * @return 当前标题栏对象
      */
     public TitleBar setRightButton(int iconResId, View.OnClickListener listener) {
@@ -121,6 +128,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置右按钮
+     *
      * @param text 文字
      * @return 当前标题栏对象
      */
@@ -130,7 +138,7 @@ public class TitleBar extends ALinearLayout {
         mBtnRight.setVisibility(VISIBLE);
         mBtnRight.setOnClickListener(listener);
         mRightDivider.setVisibility(VISIBLE);
-        if(VISIBLE != mBtnLeft.getVisibility()) {
+        if (VISIBLE != mBtnLeft.getVisibility()) {
             mBtnLeft.setVisibility(INVISIBLE);
             mLeftDivider.setVisibility(GONE);
         }
@@ -139,6 +147,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置右按钮
+     *
      * @param resId 文字资源id
      * @return 当前标题栏对象
      */
@@ -148,7 +157,7 @@ public class TitleBar extends ALinearLayout {
         mBtnRight.setVisibility(VISIBLE);
         mBtnRight.setOnClickListener(listener);
         mRightDivider.setVisibility(VISIBLE);
-        if(VISIBLE != mBtnLeft.getVisibility()) {
+        if (VISIBLE != mBtnLeft.getVisibility()) {
             mBtnLeft.setVisibility(INVISIBLE);
             mLeftDivider.setVisibility(GONE);
         }
@@ -167,6 +176,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 启用/禁用右1按钮
+     *
      * @param enabled
      * @return
      */
@@ -177,15 +187,16 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 初始化UI
+     *
      * @param context
      * @param attrs
      */
     private void initView(Context context, AttributeSet attrs) {
         inflate(context, R.layout.layout_titlebar, this);
 
-        mBtnLeft = (Button) findViewById(R.id.btn_titlebar_left);
-        mBtnRight = (Button) findViewById(R.id.btn_titlebar_right);
-        mTvTitle = (TextView) findViewById(R.id.tv_titlebar_title);
+        mBtnLeft = findViewById(R.id.btn_titlebar_left);
+        mBtnRight = findViewById(R.id.btn_titlebar_right);
+        mTvTitle = findViewById(R.id.tv_titlebar_title);
 
         mLeftDivider = findViewById(R.id.view_left_divider);
         mRightDivider = findViewById(R.id.view_right_divider);
@@ -193,6 +204,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置左按钮
+     *
      * @param iconResId 图标资源id
      * @return 当前标题栏对象
      */
@@ -201,7 +213,7 @@ public class TitleBar extends ALinearLayout {
         mBtnLeft.setCompoundDrawablesWithIntrinsicBounds(iconResId, 0, 0, 0);
         mBtnLeft.setVisibility(VISIBLE);
         mLeftDivider.setVisibility(VISIBLE);
-        if(VISIBLE != mBtnRight.getVisibility()) {
+        if (VISIBLE != mBtnRight.getVisibility()) {
             mBtnRight.setVisibility(INVISIBLE);
             mRightDivider.setVisibility(GONE);
         }
@@ -210,6 +222,7 @@ public class TitleBar extends ALinearLayout {
 
     /**
      * 配置右按钮
+     *
      * @param iconResId 图标资源id
      * @return 当前标题栏对象
      */
@@ -218,7 +231,7 @@ public class TitleBar extends ALinearLayout {
         mBtnRight.setCompoundDrawablesWithIntrinsicBounds(0, 0, iconResId, 0);
         mBtnRight.setVisibility(VISIBLE);
         mRightDivider.setVisibility(VISIBLE);
-        if(VISIBLE != mBtnLeft.getVisibility()) {
+        if (VISIBLE != mBtnLeft.getVisibility()) {
             mBtnLeft.setVisibility(INVISIBLE);
             mLeftDivider.setVisibility(GONE);
         }

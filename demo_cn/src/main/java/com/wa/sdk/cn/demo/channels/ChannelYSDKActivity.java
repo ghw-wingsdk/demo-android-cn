@@ -37,7 +37,7 @@ public class ChannelYSDKActivity extends BaseActivity {
     }
 
     private void initViews() {
-        mTitlebar = (TitleBar) findViewById(R.id.tb_baidu);
+        mTitlebar = findViewById(R.id.tb_baidu);
         if (WAConstants.CHANNEL_YSDK.equals(WAUserProxy.getCurrChannel()))
             mTitlebar.setTitleText(R.string.ysdk_login);
         else if (WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel()))
@@ -58,7 +58,7 @@ public class ChannelYSDKActivity extends BaseActivity {
         mTitlebar.setTitleTextColor(R.color.color_white);
 
         if (WAConstants.CHANNEL_HUAWEI.equals(WAUserProxy.getCurrChannel())) {
-            Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
+            Button btnFloatView = findViewById(R.id.btn_float_view);
             btnFloatView.setVisibility(View.VISIBLE);
         }
     }
@@ -170,7 +170,7 @@ public class ChannelYSDKActivity extends BaseActivity {
 
     /** TODO 显示/隐藏悬浮框 */
     private void floatView() {
-        Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
+        Button btnFloatView = findViewById(R.id.btn_float_view);
         WACommonProxy.floatView(this, WAUserProxy.getCurrChannel(), !btnFloatView.isSelected());
         btnFloatView.setSelected(! btnFloatView.isSelected());
 

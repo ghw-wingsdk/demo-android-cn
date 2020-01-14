@@ -37,7 +37,7 @@ public class ChannelUCActivity extends BaseActivity {
     }
 
     private void initViews() {
-        mTitlebar = (TitleBar) findViewById(R.id.tb_uc);
+        mTitlebar = findViewById(R.id.tb_uc);
         mTitlebar.setTitleText(R.string.uc);
         mTitlebar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override

@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 13
-        versionName "1.4.0"
+        versionName "1.5.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -70,48 +70,48 @@ android {
             manifestPlaceholders.put('PACKAGE_NAME', applicationId)
         }
 
-        // 百度
-        baidu {
-            applicationId "com.ghw.sdk.democn"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // UC
-        uc {
-            applicationId "com.ghw.sdk.democn"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // 360
-        qihoo360 {
-            applicationId "com.ghw.sdk.democn"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // OPPO
-        oppo {
-            applicationId "com.ddtankfcb.hxsy.nearme.gamecenter"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // VIVO
-        vivo {
-            applicationId "com.ghw.wingcn.vivo"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // 小米
-        xiaomi {
-            applicationId "com.winsdk.android.mi"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-        // 应用宝
-        ysdk {
-            applicationId "com.tencent.tmgp.ddtankghw"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
-
-        //魅族
-        meizu {
-            applicationId "com.ghw.dsw.mz"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-            //resValue "string", "app_name", "meizu"
-        }
+//        // 百度
+//        baidu {
+//            applicationId "com.ghw.sdk.democn"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // UC
+//        uc {
+//            applicationId "com.ghw.sdk.democn"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // 360
+//        qihoo360 {
+//            applicationId "com.ghw.sdk.democn"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // OPPO
+//        oppo {
+//            applicationId "com.ddtankfcb.hxsy.nearme.gamecenter"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // VIVO
+//        vivo {
+//            applicationId "com.ghw.wingcn.vivo"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // 小米
+//        xiaomi {
+//            applicationId "com.winsdk.android.mi"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//        // 应用宝
+//        ysdk {
+//            applicationId "com.tencent.tmgp.ddtankghw"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
+//
+//        //魅族
+//        meizu {
+//            applicationId "com.ghw.dsw.mz"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//            //resValue "string", "app_name", "meizu"
+//        }
         // 华为(打包华为渠道时需要注释掉其他渠道，华为对多渠道打包报错，暂时未找到原因)
         huawei {
             applicationId "com.ghw.wingcn.huawei"
@@ -163,15 +163,17 @@ dependencies {
     implementation(dependency.appcompatV7)
     implementation 'com.android.support:multidex:1.0.3'
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:1.4.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:1.5.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:1.4.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:1.5.0'
     // 网页支付模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-webpay:1.4.0'
+    implementation 'com.wa.sdkcn:wa-sdk-webpay:1.5.0'
+    // aihelp模块（可选）
+    implementation 'com.wa.sdkcn:wa-sdk-aihelp:1.5.0'
 //     应用墙模块（可选）
   //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
 //     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
-    //implementation 'com.wa.sdkcn:wa-sdk-wechat:1.4.0'
+    implementation 'com.wa.sdkcn:wa-sdk-wechat:1.5.0'
 //     360模块（可选，不可与其他可选模块混合使用）
 //    qihoo360Implementation 'com.wa.sdkcn:wa-sdk-360:1.4.0'
     // 百度模块（可选，不可与其他可选模块混合使用）
@@ -179,13 +181,13 @@ dependencies {
 //    // uc（可选，不可与其他可选模块混合使用）
 //    ucImplementation 'com.wa.sdkcn:wa-sdk-uc:1.4.0'
 //    // xiaomi（可选，不可与其他可选模块混合使用）
-    xiaomiImplementation 'com.wa.sdkcn:wa-sdk-xiaomi:1.4.0'
+//    xiaomiImplementation 'com.wa.sdkcn:wa-sdk-xiaomi:1.4.0'
     // oppo（可选，不可与其他可选模块混合使用）
 //   oppoImplementation 'com.wa.sdkcn:wa-sdk-oppo:1.4.0'
     // vivo（可选，不可与其他可选模块混合使用）
 //    vivoImplementation 'com.wa.sdkcn:wa-sdk-vivo:1.4.0'
 //    // huawei（可选，不可与其他可选模块混合使用）
-//    huaweiImplementation 'com.wa.sdkcn:wa-sdk-huawei:1.4.0'
+//    huaweiImplementation 'com.wa.sdkcn:wa-sdk-huawei:1.5.0'
     // ysdk应用宝（可选，不可与其他可选模块混合使用）
 //    ysdkImplementation 'com.wa.sdkcn:wa-sdk-ysdk:1.4.0'
 //    //魅族（可选，不可与其他可选模块混合使用）

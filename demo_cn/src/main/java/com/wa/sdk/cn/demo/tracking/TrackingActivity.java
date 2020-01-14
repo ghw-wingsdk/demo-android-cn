@@ -59,7 +59,7 @@ public class TrackingActivity extends BaseActivity implements OnPageChangeListen
 
     private void initViews() {
         // 标题
-        tb = (TitleBar) findViewById(R.id.tb_tracking);
+        tb = findViewById(R.id.tb_tracking);
         tb.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +69,7 @@ public class TrackingActivity extends BaseActivity implements OnPageChangeListen
         tb.setTitleText(R.string.tracking);
         tb.setTitleTextColor(R.color.color_white);
 
-        tabBarView = (TabBarView) findViewById(R.id.tbv);
+        tabBarView = findViewById(R.id.tbv);
         tabBarView.setTitles(new String[]{"WA", "360", "百度"});
         tabBarView.setOnItemSelectedListener(this);
 
@@ -88,7 +88,7 @@ public class TrackingActivity extends BaseActivity implements OnPageChangeListen
             viewList.add(listView);
         }
 
-        vp = (ViewPager) findViewById(R.id.vp);
+        vp = findViewById(R.id.vp);
         vp.addOnPageChangeListener(this);
         vp.setAdapter(new AdapterPager(viewList));
     }

@@ -64,7 +64,7 @@ public class ChannelBaiduActivity extends BaseActivity {
     }
 
     private void initViews() {
-        mTitlebar = (TitleBar) findViewById(R.id.tb_baidu);
+        mTitlebar = findViewById(R.id.tb_baidu);
         mTitlebar.setTitleText(R.string.baidu);
         mTitlebar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override
@@ -115,7 +115,7 @@ public class ChannelBaiduActivity extends BaseActivity {
             activityAdPage.onDestroy();
         }
 
-        Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
+        Button btnFloatView = findViewById(R.id.btn_float_view);
         if (btnFloatView.isSelected()) { // 如果打开了百度悬浮框 就需要关闭
             floatView();
         }
@@ -288,7 +288,7 @@ public class ChannelBaiduActivity extends BaseActivity {
 
     /** TODO 显示/隐藏悬浮框 */
     private void floatView() {
-        Button btnFloatView = (Button) findViewById(R.id.btn_float_view);
+        Button btnFloatView = findViewById(R.id.btn_float_view);
         WACommonProxy.floatView(this, WAUserProxy.getCurrChannel(), !btnFloatView.isSelected());
         btnFloatView.setSelected(! btnFloatView.isSelected());
 

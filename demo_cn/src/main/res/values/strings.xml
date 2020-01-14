@@ -76,4 +76,17 @@
     <string name="global_rank">Global Rank</string>
     <string name="global_rank_ui">Global Rank UI</string>
 <string name="cls">"com.ddtankfcb.angame.wxapi.WXEntryActivity"</string>
+
+    <!-- 客服系统-->
+    <string name="showElva">启动机器人客服界面</string>
+    <string name="showElvaOP">启动运营界面</string>
+    <string name="showFAQs">展示全部FAQ菜单</string>
+    <string name="showConversation">进入人工客服界面</string>
+    <string name="setSDKLanguage">设置语言</string>
+    <string name="showSingleFAQ">展示单条FAQ</string>
+    <string name="csc">客服系统</string>
+    <string name="showFAQSection">展示FAQ分类</string>
+    <string name="input_sectionPublishId">请输入SectionPublishId</string>
+    <string name="input_faqId">请输入faqId</string>
+    <string name="wa_csc">客服系统</string>
 </resources>

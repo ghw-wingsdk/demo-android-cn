@@ -7,7 +7,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -122,6 +123,10 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity android:name=".CscActivity" />
+
+        <activity android:name=".ClientIdTestActivity" />
+
         <!-- sdk的appid -->
         <meta-data
             android:name="com.wa.sdk.APP_ID"
@@ -150,6 +155,17 @@
             android:name="com.wa.sdk.WEIXIN_SECRET"
             android:value="ff8e4c91da1a616b1fdd0b08015a2b6f" />
         <!-- 微信 END -->
+
+        <!--aihelp-->
+        <meta-data
+            android:name="com.wa.sdk.AIHelp_appKey"
+            android:value="GAMEHOLLYWOODHK_app_ae1237c5f12e44c08d29a2bea787bbf2" />
+        <meta-data
+            android:name="com.wa.sdk.AIHelp_domain"
+            android:value="gamehollywoodhk@aihelp.net" />
+        <meta-data
+            android:name="com.wa.sdk.AIHelp_appId"
+            android:value="gamehollywoodhk_platform_8c054d5b-803d-40f3-a263-730c0365bf7d" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

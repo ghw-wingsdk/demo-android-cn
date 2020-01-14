@@ -13,12 +13,6 @@
             android:value="com.wa.sdk.democn.DemoAppListener" />
 
         <!-- VIVO SDK START -->
-        <!-- VIVO渠道微信支付配置 -->
-        <activity
-            android:name="com.ddtankfcb.hxsy.vivo.wxapi.WXPayEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <meta-data
             android:name="com.wa.sdk.VIVO_APP_ID"
             android:value="103045597" />

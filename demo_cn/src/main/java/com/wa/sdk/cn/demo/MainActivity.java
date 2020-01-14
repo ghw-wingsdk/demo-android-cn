@@ -8,18 +8,22 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.wa.sdk.WAConstants;
+import com.wa.sdk.aihelp.csc.WAAiHelpCsc;
 import com.wa.sdk.apw.WAApwProxy;
 import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.channels.Channel360EventInfoUtil;
@@ -28,6 +32,7 @@ import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WACommonProxy;
+import com.wa.sdk.common.WAConfig;
 import com.wa.sdk.common.WASharedPrefHelper;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAPermissionCallback;
@@ -36,13 +41,25 @@ import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.common.utils.StringUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.core.WASdkProperties;
+import com.wa.sdk.csc.WACscProxy;
 import com.wa.sdk.pay.WAPayProxy;
 import com.wa.sdk.pay.model.WAChannelBalance;
+import com.wa.sdk.track.WAEventType;
+import com.wa.sdk.track.WATrackProxy;
+import com.wa.sdk.track.model.WAEvent;
 import com.wa.sdk.user.WAUserProxy;
+import com.wa.sdk.user.model.WACertificationInfo;
 import com.wa.sdk.user.model.WALoginResult;
+import com.wa.sdk.wa.core.WASdkCore;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Console;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
@@ -55,14 +72,17 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        WASdkProperties.getInstance().isLogin();
+//        WACoreProxy.setClientId("ji8857d6644f456edbcb6ba12ffc15jl");
 
+
+        //开启调试模式
         WACoreProxy.setDebugMode(true);
 
         WACoreProxy.initialize(this);
         WACommonProxy.onCreate(this, savedInstanceState);
         WACoreProxy.setServerId("1");
         WACoreProxy.setLevel(10);
+
         WACommonProxy.enableLogcat(this);
 
         // Demo的初始化，跟SDK无关
@@ -108,13 +128,16 @@ public class MainActivity extends BaseActivity {
 
 
 
+
+
+
     }
 
     private void checkYSDKPerssion() {
         if (WAConstants.CHANNEL_YSDK.equals(WAUserProxy.getCurrChannel())) {
             WACommonProxy.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE, true,
                     "应用需要开启通讯录及电话权限，是否开启？",
-                    "应用需要开启通讯录及电话权限,不开启将无法使用应用,请前往设置中开启通讯录及电话权限",
+                    "开启通讯录及电话权限,不开启将无法使用应用,请前往设置中开启通讯录及电话权限",
                     new WAPermissionCallback() {
                         @Override
                         public void onCancel() {
@@ -284,6 +307,9 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_hot_update: // 热更新
                 startActivity(new Intent(this, HotUpdateActivity.class));
                 break;
+            case R.id.btn_csc:
+                startActivity(new Intent(this, CscActivity.class));
+                break;
             default:
                 break;
         }
@@ -296,6 +322,8 @@ public class MainActivity extends BaseActivity {
      * @param button  按钮View
      */
     private void login(String channel, final View button) {
+
+        WACscProxy.setSDKLanguage("zh_CN");
 
         button.setEnabled(false);
 
@@ -326,15 +354,36 @@ public class MainActivity extends BaseActivity {
                 showShortToast(text);
 
                 //360
-                if(WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_QIHU360)){
+                if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_QIHU360)) {
                     Channel360EventInfoUtil.getInstance().submitRoleData(MainActivity.this);
                 }
 
                 //百度
-                if(WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_BAIDU)){
+                if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_BAIDU)) {
                     ChannelBaiduUtil.getInstance().setSessionInvalidListener(MainActivity.this);
                     ChannelBaiduUtil.getInstance().setSuspendWindowChangeAccountListener(MainActivity.this);
                 }
+
+                //华为
+                if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_HUAWEI)) {
+                    WAUserProxy.queryLoginUserAuthenticateState(MainActivity.this, WAUserProxy.getCurrChannel(), new WACallback<Integer>() {
+                        @Override
+                        public void onSuccess(int code, String message, Integer result) {
+                            LogUtil.d(TAG, "认证结果：" + result);
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+
+                        @Override
+                        public void onError(int code, String message, Integer result, Throwable throwable) {
+
+                        }
+                    });
+                }
+
 
             }
 
@@ -359,7 +408,7 @@ public class MainActivity extends BaseActivity {
      */
     private void switchAccount(final View button) {
 //        userModel.clear();
-        WAUserProxy.switchAccount(this,WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
+        WAUserProxy.switchAccount(this, WAConstants.CHANNEL_WA, new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
                 userModel.setDatas(result);
@@ -454,7 +503,7 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
 
-        TitleBar tb = (TitleBar) findViewById(R.id.tb_main);
+        TitleBar tb = findViewById(R.id.tb_main);
         tb.setRightButton(android.R.drawable.ic_menu_close_clear_cancel, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -466,32 +515,32 @@ public class MainActivity extends BaseActivity {
 
         tb.setTitleTextColor(R.color.color_white);
 
-        ToggleButton tbtnLogcat = (ToggleButton) findViewById(R.id.tbtn_logcat);
+        ToggleButton tbtnLogcat = findViewById(R.id.tbtn_logcat);
         boolean enableLogcat = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_LOGCAT, true);
         tbtnLogcat.setChecked(enableLogcat);
         tbtnLogcat.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        ToggleButton tbtnExtend = (ToggleButton) findViewById(R.id.tbtn_app_wall);
+        ToggleButton tbtnExtend = findViewById(R.id.tbtn_app_wall);
         boolean enableExtend = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_APW, true);
         tbtnExtend.setChecked(enableExtend);
         tbtnExtend.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        ToggleButton tbtnLoginCache = (ToggleButton) findViewById(R.id.tbtn_login_cache);
+        ToggleButton tbtnLoginCache = findViewById(R.id.tbtn_login_cache);
         boolean enableLoginCache = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_LOGIN_CACHE, true);
         tbtnLoginCache.setChecked(enableLoginCache);
         tbtnLoginCache.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        ToggleButton tbtnLoginFlowType = (ToggleButton) findViewById(R.id.tbtn_login_flow_type);
+        ToggleButton tbtnLoginFlowType = findViewById(R.id.tbtn_login_flow_type);
         boolean enableLoginFlowType = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_LOGIN_FLOW_TYPE, true);
         tbtnLoginFlowType.setChecked(enableLoginFlowType);
         tbtnLoginFlowType.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        ToggleButton tbtnFlowView = (ToggleButton) findViewById(R.id.tbtn_flow_view);
+        ToggleButton tbtnFlowView = findViewById(R.id.tbtn_flow_view);
         boolean enableFlowView = mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_FLOW_VIEW, true);
         tbtnFlowView.setChecked(enableFlowView);
         tbtnFlowView.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        Button btnChannelLogin = (Button) findViewById(R.id.btn_channel_login);
+        Button btnChannelLogin = findViewById(R.id.btn_channel_login);
         if (WAUserProxy.getCurrChannel().startsWith(WAConstants.CHANNEL_YSDK)) {
             btnChannelLogin.setText(R.string.ysdk_login);
         } else if (WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel())) {
@@ -521,6 +570,49 @@ public class MainActivity extends BaseActivity {
         if (mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_APW, true)) {
             WAApwProxy.showEntryFlowIcon(this);
         }
+
+        final Button btn_create_real_name = findViewById(R.id.btn_create_real_name);
+        btn_create_real_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                WAEvent.Builder builder = new WAEvent.Builder();
+//                builder.setDefaultEventName(WAEventType.USER_CREATED);
+//                Map<String, Object> eventValues = new HashMap<>();
+//                eventValues.put("nickname", "总裁女友");
+//                eventValues.put("registerTime", System.currentTimeMillis());
+//                eventValues.put("fighting", 1);
+//                builder.setDefaultEventValues(eventValues);
+//                WATrackProxy.trackEvent(MainActivity.this, builder.build());
+
+                WAUserProxy.queryUserCertificationInfo(MainActivity.this, WAConstants.CHANNEL_WA, new WACallback<WACertificationInfo>() {
+                    @Override
+                    public void onSuccess(int code, String message, WACertificationInfo result) {
+                        LogUtil.d(TAG,"Age:"+result.getAge()+", UserRealNameStatus:"+result.getUserRealNameStatus());
+                        showShortToast("Age:"+result.getAge()+", UserRealNameStatus:"+result.getUserRealNameStatus());
+                    }
+
+                    @Override
+                    public void onCancel() {
+
+                    }
+
+                    @Override
+                    public void onError(int code, String message, WACertificationInfo result, Throwable throwable) {
+
+                    }
+                });
+            }
+        });
+
+
+        final Button btnOpenClientId=findViewById(R.id.btn_open_clientid_test);
+        btnOpenClientId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                  MainActivity.this.startActivity(new Intent(MainActivity.this,ClientIdTestActivity.class));
+            }
+        });
+
     }
 
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {

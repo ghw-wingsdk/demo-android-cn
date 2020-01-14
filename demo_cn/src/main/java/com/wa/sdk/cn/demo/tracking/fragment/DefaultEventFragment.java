@@ -83,10 +83,10 @@ public class DefaultEventFragment extends BaseFragment {
     }
 
     private void initView(View contentView) {
-        EditText eventName = (EditText) contentView.findViewById(R.id.et_event_name);
+        EditText eventName = contentView.findViewById(R.id.et_event_name);
         eventName.setEnabled(mDefaultEventName.startsWith(WAEventType.CUSTOM_EVENT_PREFIX));
 
-        EditText countValue = (EditText) contentView.findViewById(R.id.et_event_count_value);
+        EditText countValue = contentView.findViewById(R.id.et_event_count_value);
 
         eventName.setText(mDefaultEventName);
         countValue.setText(String.valueOf(mDefaultValue));
@@ -137,8 +137,8 @@ public class DefaultEventFragment extends BaseFragment {
             }
         });
 
-        mLlParamsContent = (LinearLayout) contentView.findViewById(R.id.ll_event_parameter_content);
-        mBtnAddParameter = (Button) contentView.findViewById(R.id.btn_add_parameter);
+        mLlParamsContent = contentView.findViewById(R.id.ll_event_parameter_content);
+        mBtnAddParameter = contentView.findViewById(R.id.btn_add_parameter);
         mBtnAddParameter.setOnClickListener(this);
     }
 

@@ -44,7 +44,7 @@ public class HotUpdateActivity extends BaseActivity {
     }
 
     private void initView() {
-        TitleBar titleBar = (TitleBar) findViewById(R.id.tb_hot_update);
+        TitleBar titleBar = findViewById(R.id.tb_hot_update);
         titleBar.setTitleText(R.string.hot_update);
         titleBar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override

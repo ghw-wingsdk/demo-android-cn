@@ -39,7 +39,7 @@ public class PaymentActivity extends BaseActivity {
 
         setContentView(R.layout.activity_payment);
 
-        TitleBar titleBar = (TitleBar) findViewById(R.id.tb_payment);
+        TitleBar titleBar = findViewById(R.id.tb_payment);
         titleBar.setTitleText(R.string.payment);
         titleBar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override
@@ -81,7 +81,7 @@ public class PaymentActivity extends BaseActivity {
                 }
 
                 if (waProductIdList.size() > 0){
-                    ListView listView = (ListView)findViewById(R.id.lv_payment_sku);
+                    ListView listView = findViewById(R.id.lv_payment_sku);
                     ArrayAdapter<String> payUIAdapter = new ArrayAdapter<String>(PaymentActivity.this, R.layout.payui_item, waProductIdList);
                     listView.setAdapter(payUIAdapter);
 

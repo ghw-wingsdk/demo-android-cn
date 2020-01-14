@@ -49,7 +49,7 @@ public class Channel360Activity extends BaseActivity {
     }
 
     private void initViews() {
-        mTitlebar = (TitleBar) findViewById(R.id.tb_360);
+        mTitlebar = findViewById(R.id.tb_360);
         mTitlebar.setTitleText(R.string.a360);
         mTitlebar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override

@@ -20,7 +20,7 @@
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
+                <!-- TODO GAME 这里为游戏QQ登录的配置，游戏需要修改为自己手Q的appid -->
                 <data android:scheme="tencent1105350078" />
             </intent-filter>
         </activity>

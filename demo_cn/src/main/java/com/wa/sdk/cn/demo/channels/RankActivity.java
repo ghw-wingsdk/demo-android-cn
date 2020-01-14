@@ -47,7 +47,7 @@ public class RankActivity extends BaseActivity implements OnPageChangeListener, 
     }
 
     private void initViews() {
-        mTitleBar = (TitleBar)findViewById(R.id.tb_rank);
+        mTitleBar = findViewById(R.id.tb_rank);
         mTitleBar.setTitleTextColor(R.color.color_white);
         mTitleBar.setTitleText(R.string.rank);
         mTitleBar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
@@ -70,7 +70,7 @@ public class RankActivity extends BaseActivity implements OnPageChangeListener, 
             viewList.add(listView);
         }
 
-        vp = (ViewPager) findViewById(R.id.vp);
+        vp = findViewById(R.id.vp);
         vp.addOnPageChangeListener(this);
         vp.setAdapter(new AdapterPager(viewList));
     }

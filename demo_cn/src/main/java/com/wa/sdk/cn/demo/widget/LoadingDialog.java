@@ -96,7 +96,7 @@ public class LoadingDialog extends Dialog {
 
         setContentView(R.layout.layout_loading_dialog);
 
-        mTvMessage = (TextView) findViewById(R.id.tv_loading_dialog_message);
+        mTvMessage = findViewById(R.id.tv_loading_dialog_message);
     }
 
     private static int getIdentifier(Context context, String name, String type) {

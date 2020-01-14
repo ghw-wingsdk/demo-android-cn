@@ -7,25 +7,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!-- 华为 SDK START -->
-        <!-- 华为 app id -->
-        <meta-data
-            android:name="com.wa.sdk.HUAWEI_APP_ID"
-            android:value="@string/huawei_appId" />
-        <!-- 华为 pay id -->
-        <meta-data
-            android:name="com.wa.sdk.HUAWEI_PAY_ID"
-            android:value="@string/huawei_payId" />
-        <!-- 华为浮标密钥 -->
-        <meta-data
-            android:name="com.wa.sdk.HUAWEI_BUO_SECRET"
-            android:value="@string/huawei_buo_secret" />
-        <!-- 华为 支付sdk的商户名称 -->
-        <meta-data
-            android:name="com.wa.sdk.HUAWEI_USER_NAME"
-            android:value="广州市蓝色动力数码科技有限公司" />
 
-        <!-- 华为 SDK END -->
     </application>
 
 </manifest>

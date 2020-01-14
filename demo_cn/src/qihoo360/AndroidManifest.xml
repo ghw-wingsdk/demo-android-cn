@@ -21,17 +21,17 @@
         “${工程目录}/src/com/a/com.ddtankfcb.hxsy.wxapixapi/WXEntryActivity.java”这个路径下。
         并将此 java 文件中的第一行 package 声明修改为“package com.a.com.ddtankfcb.hxsy.wxapixapi;”
         -->
-        <activity
-            android:name="com.ghw.sdk.democn.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<!--        <activity-->
+<!--            android:name="com.ghw.sdk.democn.wxapi.WXEntryActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
-        <activity
-            android:name="com.ddtankfcb.angame.wxapi.WXEntryActivity"
-            android:exported="true"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+<!--        <activity-->
+<!--            android:name="com.ddtankfcb.angame.wxapi.WXEntryActivity"-->
+<!--            android:exported="true"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@android:style/Theme.Translucent.NoTitleBar" />-->
 
         <!-- 360 SDK START -->
 

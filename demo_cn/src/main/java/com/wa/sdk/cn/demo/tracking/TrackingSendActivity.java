@@ -92,7 +92,7 @@ public class TrackingSendActivity extends BaseActivity {
     }
 
     private void initTitlebar() {
-        TitleBar tb = (TitleBar) findViewById(R.id.tb_tracking_send);
+        TitleBar tb = findViewById(R.id.tb_tracking_send);
         tb.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

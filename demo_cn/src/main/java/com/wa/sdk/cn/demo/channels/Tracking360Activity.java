@@ -37,7 +37,7 @@ public class Tracking360Activity extends BaseActivity implements OnItemClickList
     }
 
     private void initViews() {
-        mTitleBar = (TitleBar)findViewById(R.id.tb_tracking);
+        mTitleBar = findViewById(R.id.tb_tracking);
         mTitleBar.setTitleTextColor(R.color.color_white);
         mTitleBar.setTitleText(R.string.tracking);
         mTitleBar.setLeftButton(android.R.drawable.ic_menu_revert, new View.OnClickListener() {

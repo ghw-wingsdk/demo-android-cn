@@ -50,6 +50,6 @@ public class TabView extends ALinearLayout {
     private void initView(Context context) {
         inflate(context, R.layout.layout_tab_view, this);
 
-        mTvTitle = (TextView) findViewById(R.id.tv_tab_view_title);
+        mTvTitle = findViewById(R.id.tv_tab_view_title);
     }
 }

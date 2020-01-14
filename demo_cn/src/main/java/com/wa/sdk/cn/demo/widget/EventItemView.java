@@ -119,9 +119,9 @@ public class EventItemView extends ALinearLayout implements View.OnClickListener
     private void initView(Context context) {
         inflate(context, R.layout.item_event_send, this);
 
-        mEtKey = (EditText) findViewById(R.id.et_item_event_key);
-        mEtValue = (EditText) findViewById(R.id.et_item_event_value);
-        mBtnDel = (Button) findViewById(R.id.btn_item_event_delete);
+        mEtKey = findViewById(R.id.et_item_event_key);
+        mEtValue = findViewById(R.id.et_item_event_value);
+        mBtnDel = findViewById(R.id.btn_item_event_delete);
 
         mBtnDel.setOnClickListener(this);
         mEtKey.addTextChangedListener(new TextWatcher() {
@@ -166,11 +166,11 @@ public class EventItemView extends ALinearLayout implements View.OnClickListener
     }
 
     public interface OnDeleteListener {
-        public void onDelete(EventItemView view);
+        void onDelete(EventItemView view);
     }
 
     public interface OnDataChangedListener {
 
-        public void onDataChanged(int type, String key, boolean isKey, Object oldValue, Object newValue);
+        void onDataChanged(int type, String key, boolean isKey, Object oldValue, Object newValue);
     }
 }
