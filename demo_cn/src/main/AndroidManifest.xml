@@ -159,13 +159,13 @@
         <!--aihelp-->
         <meta-data
             android:name="com.wa.sdk.AIHelp_appKey"
-            android:value="GAMEHOLLYWOODHK_app_ae1237c5f12e44c08d29a2bea787bbf2" />
+            android:value="GAMEHOLLYWOODHK_app_6ff2af7846a245e8a56c74d2331ede73" />
         <meta-data
             android:name="com.wa.sdk.AIHelp_domain"
             android:value="gamehollywoodhk@aihelp.net" />
         <meta-data
             android:name="com.wa.sdk.AIHelp_appId"
-            android:value="gamehollywoodhk_platform_8c054d5b-803d-40f3-a263-730c0365bf7d" />
+            android:value="gamehollywoodhk_platform_598ee350-adbf-4a70-bef6-6d11232b7301" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
