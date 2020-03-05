@@ -39,6 +39,7 @@ import com.wa.sdk.common.model.WAPermissionCallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.common.utils.StringUtil;
+import com.wa.sdk.common.utils.WAUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.core.WASdkProperties;
 import com.wa.sdk.csc.WACscProxy;
@@ -125,10 +126,6 @@ public class MainActivity extends BaseActivity {
         }
 
         checkYSDKPerssion();
-
-
-
-
 
 
     }
@@ -322,9 +319,7 @@ public class MainActivity extends BaseActivity {
      * @param button  按钮View
      */
     private void login(String channel, final View button) {
-
         WACscProxy.setSDKLanguage("zh_CN");
-
         button.setEnabled(false);
 
         checkYSDKPerssion();
@@ -357,6 +352,7 @@ public class MainActivity extends BaseActivity {
                 if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_QIHU360)) {
                     Channel360EventInfoUtil.getInstance().submitRoleData(MainActivity.this);
                 }
+
 
                 //百度
                 if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_BAIDU)) {
@@ -559,6 +555,8 @@ public class MainActivity extends BaseActivity {
             btnChannelLogin.setText(R.string.uc_login);
         } else if (WAConstants.CHANNEL_MEIZU.equals(WAUserProxy.getCurrChannel())) {
             btnChannelLogin.setText(R.string.meizu_login);
+        } else if (WAConstants.CHANNEL_QQ.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.qq_login);
         } else {
             btnChannelLogin.setText("None");
             btnChannelLogin.setEnabled(false);
@@ -587,8 +585,8 @@ public class MainActivity extends BaseActivity {
                 WAUserProxy.queryUserCertificationInfo(MainActivity.this, WAConstants.CHANNEL_WA, new WACallback<WACertificationInfo>() {
                     @Override
                     public void onSuccess(int code, String message, WACertificationInfo result) {
-                        LogUtil.d(TAG,"Age:"+result.getAge()+", UserRealNameStatus:"+result.getUserRealNameStatus());
-                        showShortToast("Age:"+result.getAge()+", UserRealNameStatus:"+result.getUserRealNameStatus());
+                        LogUtil.d(TAG, "Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
+                        showShortToast("Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
                     }
 
                     @Override
@@ -605,11 +603,11 @@ public class MainActivity extends BaseActivity {
         });
 
 
-        final Button btnOpenClientId=findViewById(R.id.btn_open_clientid_test);
+        final Button btnOpenClientId = findViewById(R.id.btn_open_clientid_test);
         btnOpenClientId.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                  MainActivity.this.startActivity(new Intent(MainActivity.this,ClientIdTestActivity.class));
+                MainActivity.this.startActivity(new Intent(MainActivity.this, ClientIdTestActivity.class));
             }
         });
 

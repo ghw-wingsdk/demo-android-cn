@@ -134,6 +134,9 @@ public class PaymentActivity extends BaseActivity {
                 } else {
                     Log.d(TAG, "支付成功");
                     showLongToast("支付成功");
+                    result.getPlatform();
+
+
                 }
             }
 

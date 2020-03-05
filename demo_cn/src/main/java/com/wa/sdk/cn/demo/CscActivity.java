@@ -83,39 +83,61 @@ public class CscActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_show_elva:
-                WACscProxy.showElva(showConversationFlag,null);
+            case R.id.btn_show_elva: {
+                HashMap<String, Object> map = new HashMap();
+                map.put("private_welcome_str", "hi");
+
+                HashMap<String, Object> config = new HashMap();
+                config.put("elva-custom-metadata", map);
+                WACscProxy.showElva(showConversationFlag, config);
                 break;
-            case R.id.btn_show_elva_op:
-                WACscProxy.showElvaOP(showConversationFlag,null);
+            }
+            case R.id.btn_show_elva_op: {
+                WACscProxy.showElvaOP(showConversationFlag, null);
                 break;
-            case R.id.btn_show_faqs:
-                HashMap<String, Object> config = new HashMap ();
-                config.put("showContactButtonFlag","1");
-                config.put("showConversationFlag","1");
-                //config.put("directConversation", "1");
+            }
+            case R.id.btn_show_faqs: {
+                HashMap<String, Object> config = new HashMap();
+                config.put("showContactButtonFlag", "1");
+                config.put("showConversationFlag", "1");
+                //config.put("directConversation", "1");//若打开此项则直接跳到人工客服
                 WACscProxy.showFAQs(config);
                 break;
-            case R.id.btn_show_conversation:
+            }
+            case R.id.btn_show_conversation: {
                 WACscProxy.showConversation(null);
                 break;
-            case R.id.btn_show_single_faq:
+            }
+            case R.id.btn_show_single_faq: {
                 faqId = mEtFaq.getText().toString().trim();
                 if (TextUtils.isEmpty(faqId)) {
                     showShortToast("faqId不能为空");
                 } else {
-                    WACscProxy.showSingleFAQ(faqId,null);
+                    WACscProxy.showSingleFAQ(faqId, null);
                 }
                 break;
-            case R.id.btn_show_faq_section:
+            }
+            case R.id.btn_show_faq_section: {
                 sectionPublishId = mEtSection.getText().toString().trim();
                 if (TextUtils.isEmpty(sectionPublishId)) {
                     showShortToast("sectionPublishId不能为空");
                 } else {
-                    WACscProxy.showFAQSection(sectionPublishId,null);
+                    WACscProxy.showFAQSection(sectionPublishId, null);
                 }
 
-                    break;
+                break;
+            }
+            case R.id.btn_openAiHelp: {
+                if (WACscProxy.isOpenAiHelp()) {
+                    WACscProxy.openAiHelp(null);
+                }
+                break;
+            }
+            case R.id.btn_isOpenAiHelp: {
+                String tip = WACscProxy.isOpenAiHelp() ? "已开启" : "未开启";
+                showShortToast(tip);
+                break;
+            }
             default:
                 break;
         }

@@ -20,16 +20,13 @@ buildscript {
 
 allprojects {
     repositories {
-        maven {url 'http://developer.huawei.com/repo/'}
+//        maven {url 'http://developer.huawei.com/repo/'}
         jcenter()
 
-        // 国内版SDK
-//        maven {
-//            // 测试环境
-//            url "http://172.16.100.58:8081/nexus/content/groups/WingCN/"
-//        }
         google()
         maven {
+            // 测试环境（国内仓库）
+//            url "http://172.16.100.58:8081/nexus/content/groups/WingCN/"
             // 正式环境（国内仓库）
             url "http://repo.wingsdk.cn:8081/repository/winga-cn-group/"
         }

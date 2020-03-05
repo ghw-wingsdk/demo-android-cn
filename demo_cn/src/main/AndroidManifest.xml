@@ -7,8 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -127,6 +126,20 @@
 
         <activity android:name=".ClientIdTestActivity" />
 
+        <!--QQ登录使用-->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!--注意，这里的101849537要换成app自己的appid-->
+                <data android:scheme="tencent101849537" />
+            </intent-filter>
+        </activity>
+
         <!-- sdk的appid -->
         <meta-data
             android:name="com.wa.sdk.APP_ID"
@@ -166,6 +179,16 @@
         <meta-data
             android:name="com.wa.sdk.AIHelp_appId"
             android:value="gamehollywoodhk_platform_598ee350-adbf-4a70-bef6-6d11232b7301" />
+
+        <!--渠道配置标识-->
+        <meta-data
+            android:name="com.wa.sdk.CHANNEL_CONFIG_MARK"
+            android:value="taptap" />
+
+        <!--QQ配置-->
+        <meta-data android:name="com.wa.sdk.QQ_APP_ID"
+            android:value="101849537"/>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

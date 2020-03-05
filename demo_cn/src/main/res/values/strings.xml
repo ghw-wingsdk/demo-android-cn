@@ -27,6 +27,7 @@
     <string name="baidu_login">百度登录</string>
     <string name="uc_login">UC登录</string>
     <string name="meizu_login">MEIZU登录</string>
+    <string name="qq_login">QQ登录</string>
     <string name="test_crash">Test Crash</string>
     <string name="check_update">Check Update</string>
     <string name="download_patch">Download Patch</string>
@@ -89,4 +90,6 @@
     <string name="input_sectionPublishId">请输入SectionPublishId</string>
     <string name="input_faqId">请输入faqId</string>
     <string name="wa_csc">客服系统</string>
+    <string name="openAiHelp">调用callAiHelp</string>
+    <string name="isOpenAiHelp">是否开启AiHelp</string>
 </resources>
