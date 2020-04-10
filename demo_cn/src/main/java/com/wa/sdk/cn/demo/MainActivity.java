@@ -39,6 +39,7 @@ import com.wa.sdk.common.model.WAPermissionCallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.common.utils.StringUtil;
+import com.wa.sdk.common.utils.ToastUtils;
 import com.wa.sdk.common.utils.WAUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.core.WASdkProperties;
@@ -52,6 +53,8 @@ import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WACertificationInfo;
 import com.wa.sdk.user.model.WALoginResult;
 import com.wa.sdk.wa.core.WASdkCore;
+import com.wa.sdk.wa.user.WALoginSession;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -61,6 +64,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
@@ -72,8 +77,6 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-//        WACoreProxy.setClientId("ji8857d6644f456edbcb6ba12ffc15jl");
 
 
         //开启调试模式
@@ -128,6 +131,9 @@ public class MainActivity extends BaseActivity {
         checkYSDKPerssion();
 
 
+        Button btnLogin = findViewById(R.id.btn_login);
+        login(WAConstants.CHANNEL_WA, btnLogin);
+
     }
 
     private void checkYSDKPerssion() {
@@ -177,6 +183,7 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         WACommonProxy.onResume(this);
+
 
     }
 
@@ -306,6 +313,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_csc:
                 startActivity(new Intent(this, CscActivity.class));
+                break;
+            case R.id.btn_account_manage://账户管理
+                startActivity(new Intent(this, AccountManagerActivity.class));
                 break;
             default:
                 break;

@@ -92,4 +92,8 @@
     <string name="wa_csc">客服系统</string>
     <string name="openAiHelp">调用callAiHelp</string>
     <string name="isOpenAiHelp">是否开启AiHelp</string>
+
+    <!-- 账户管理 -->
+    <string name="bind_account_cn">绑定账户</string>
+    <string name="open_account_manager_page_cn">打开SDK内置账户管理页面</string>
 </resources>

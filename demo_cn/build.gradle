@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 13
-        versionName "1.5.0"
+        versionName "2.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -169,9 +169,9 @@ dependencies {
     implementation(dependency.appcompatV7)
     implementation 'com.android.support:multidex:1.0.3'
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:1.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:2.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:1.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:2.0'
     // 网页支付模块（可选）
     implementation 'com.wa.sdkcn:wa-sdk-webpay:1.5.0'
     // aihelp模块（可选）
@@ -179,9 +179,9 @@ dependencies {
 //     应用墙模块（可选）
   //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
 //     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
-    implementation 'com.wa.sdkcn:wa-sdk-wechat:1.5.0'
+    implementation 'com.wa.sdkcn:wa-sdk-wechat:2.0'
     //     QQ模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-qq:1.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-qq:2.0'
 //     360模块（可选，不可与其他可选模块混合使用）
 //    qihoo360Implementation 'com.wa.sdkcn:wa-sdk-360:1.4.0'
     // 百度模块（可选，不可与其他可选模块混合使用）

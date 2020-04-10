@@ -257,9 +257,20 @@
 
                 <Button
                     android:id="@+id/btn_open_clientid_test"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
                     android:text="打开clientId测试页面" />
+
+                <Button
+                    android:id="@+id/btn_account_manage"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="onClick"
+                    android:text="账号管理" />
             </LinearLayout>
 
 
