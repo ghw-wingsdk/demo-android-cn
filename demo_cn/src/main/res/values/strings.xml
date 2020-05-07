@@ -92,6 +92,7 @@
     <string name="wa_csc">客服系统</string>
     <string name="openAiHelp">调用callAiHelp</string>
     <string name="isOpenAiHelp">是否开启AiHelp</string>
+    <string name="switchAiHelpVip">切换VIP</string>
 
     <!-- 账户管理 -->
     <string name="bind_account_cn">绑定账户</string>

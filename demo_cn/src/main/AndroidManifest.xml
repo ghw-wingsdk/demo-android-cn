@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wa.sdk.cn.demo">
 
     <application
@@ -137,6 +138,14 @@
             </intent-filter>
         </activity>
 
+<!--        <activity-->
+<!--            android:name="com.ljoy.chatbot.FAQActivity"-->
+<!--            android:configChanges="keyboardHidden|orientation|screenSize"-->
+<!--            android:screenOrientation="portrait"-->
+<!--            android:theme="@android:style/Theme.Holo.Light.DarkActionBar"-->
+<!--            android:windowSoftInputMode="adjustResize|stateHidden"-->
+<!--            tools:node="replace"></activity>-->
+
         <!--QQ登录使用-->
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -160,6 +169,15 @@
         <meta-data
             android:name="com.wa.sdk.APP_KEY"
             android:value="CFHF7nQCCaojCX6Sm4eT1GEIWRprimgX" />
+
+<!--        &lt;!&ndash; sdk的appid &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="com.wa.sdk.APP_ID"-->
+<!--            android:value="940fb0c1891b11eaa39d525400a8c94d" />-->
+<!--        &lt;!&ndash; sdk的appkey &ndash;&gt;-->
+<!--        <meta-data-->
+<!--            android:name="com.wa.sdk.APP_KEY"-->
+<!--            android:value="wLVJzeFm9UtQmfYR8A244GT7bOipbgGR" />-->
 
         <!-- sdk平台请求的host地址，所有请求的前面公共部分 -->
         <meta-data
@@ -191,6 +209,7 @@
         <meta-data
             android:name="com.wa.sdk.AIHelp_appId"
             android:value="gamehollywoodhk_platform_598ee350-adbf-4a70-bef6-6d11232b7301" />
+
 
         <!--渠道配置标识-->
         <meta-data

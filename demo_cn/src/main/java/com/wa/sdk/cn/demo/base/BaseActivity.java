@@ -200,7 +200,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param text
      */
     protected void showLongToast(CharSequence text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -208,7 +208,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param resId
      */
     protected void showLongToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
     }
 
     /**

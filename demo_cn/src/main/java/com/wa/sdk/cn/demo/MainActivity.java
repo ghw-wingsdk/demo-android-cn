@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -52,14 +53,14 @@ import com.wa.sdk.track.model.WAEvent;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WACertificationInfo;
 import com.wa.sdk.user.model.WALoginResult;
-import com.wa.sdk.wa.core.WASdkCore;
-import com.wa.sdk.wa.user.WALoginSession;
+
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Console;
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -84,8 +85,7 @@ public class MainActivity extends BaseActivity {
 
         WACoreProxy.initialize(this);
         WACommonProxy.onCreate(this, savedInstanceState);
-        WACoreProxy.setServerId("1");
-        WACoreProxy.setLevel(10);
+
 
         WACommonProxy.enableLogcat(this);
 
@@ -317,6 +317,9 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_account_manage://账户管理
                 startActivity(new Intent(this, AccountManagerActivity.class));
                 break;
+            case R.id.btn_open_real_name_auth://调起实名认证
+                openRealNameAuthManager();
+                break;
             default:
                 break;
         }
@@ -345,6 +348,9 @@ public class MainActivity extends BaseActivity {
                     text = "Login failed->" + text;
                 } else {
                     WACoreProxy.setGameUserId("gUid01");
+                    WACoreProxy.setServerId("serverId1");
+                    WACoreProxy.setNickname("昵称");
+                    WACoreProxy.setLevel(10);
                     text = "Login success->" + text
                             + "\nplatform:" + result.getPlatform()
                             + "\nuserId:" + result.getUserId()
@@ -483,6 +489,32 @@ public class MainActivity extends BaseActivity {
         } else {
             dialogBuilder.setMessage("当前平台不支持查询平台游戏币").show();
         }
+    }
+
+    /**
+     * 实名认证
+     */
+    private void openRealNameAuthManager() {
+        if (!WAUserProxy.canOpenRealNameAuth(this)) {
+            showLongToast("不能调起实名认证,请检查后台实名开关和是否登录,已经实名的用户不能调起");
+            return;
+        }
+        WAUserProxy.openRealNameAuthManager(MainActivity.this, new WACallback<WACertificationInfo>() {
+            @Override
+            public void onSuccess(int code, String message, WACertificationInfo result) {
+                showShortToast("实名认证成功，age：" + result.getAge());
+            }
+
+            @Override
+            public void onCancel() {
+                showShortToast("取消实名认证");
+            }
+
+            @Override
+            public void onError(int code, String message, WACertificationInfo result, Throwable throwable) {
+                showShortToast("实名认证失败，" + message);
+            }
+        });
     }
 
     /**

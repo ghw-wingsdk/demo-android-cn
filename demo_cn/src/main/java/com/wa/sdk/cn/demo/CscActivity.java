@@ -1,10 +1,12 @@
 package com.wa.sdk.cn.demo;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.wa.sdk.cn.demo.base.BaseActivity;
@@ -28,6 +30,7 @@ public class CscActivity extends BaseActivity {
     private String sectionPublishId = "";
     private EditText mEtFaq;
     private EditText mEtSection;
+    private boolean mIsVip = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +44,12 @@ public class CscActivity extends BaseActivity {
         initView();
 
         WACscProxy.setSDKLanguage("zh_CN");
+
+
+        for (String str = "_unknown"; ; str = "5") {
+            System.out.println(str);
+            return;
+        }
     }
 
     @Override
@@ -85,7 +94,10 @@ public class CscActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_show_elva: {
                 HashMap<String, Object> map = new HashMap();
-                map.put("private_welcome_str", "hi");
+                ArrayList<String> tags = new ArrayList();
+                tags.add("vip2");
+                map.put("elva-tags", tags);
+                map.put("roleName", "角色1");
 
                 HashMap<String, Object> config = new HashMap();
                 config.put("elva-custom-metadata", map);
@@ -129,7 +141,8 @@ public class CscActivity extends BaseActivity {
             }
             case R.id.btn_openAiHelp: {
                 if (WACscProxy.isOpenAiHelp()) {
-                    WACscProxy.openAiHelp(null);
+                    WACscProxy.openAiHelp(null, mIsVip);
+//                    WACscProxy.openAiHelp();
                 }
                 break;
             }
@@ -138,8 +151,25 @@ public class CscActivity extends BaseActivity {
                 showShortToast(tip);
                 break;
             }
+            case R.id.btn_switchAiHelpVip: {//切换VIP
+                switchVip(v);
+                break;
+            }
             default:
                 break;
+        }
+    }
+
+    private void switchVip(View view) {
+        Button btn = (Button) view;
+        if (mIsVip) {
+            mIsVip = false;
+            btn.setText("设置VIP");
+            showShortToast("您处于非Vip状态");
+        } else {
+            mIsVip = true;
+            btn.setText("设置非VIP");
+            showShortToast("您处于Vip状态");
         }
     }
 
@@ -155,6 +185,11 @@ public class CscActivity extends BaseActivity {
             }
         });
         mTitlebar.setTitleTextColor(R.color.color_white);
+
+        if (mIsVip) {
+            Button btn = findViewById(R.id.btn_switchAiHelpVip);
+            btn.setText("设置非VIP");
+        }
     }
 
     public void exit() {

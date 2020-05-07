@@ -23,7 +23,7 @@ android {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 13
-        versionName "2.0"
+        versionName "2.1.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -119,10 +119,10 @@ android {
 //            //resValue "string", "app_name", "meizu"
 //        }
         // 华为(打包华为渠道时需要注释掉其他渠道，华为对多渠道打包报错，暂时未找到原因)
-        huawei {
-            applicationId "com.ghw.wingcn.huawei"
-            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
-        }
+//        huawei {
+//            applicationId "com.ghw.wingcn.huawei"
+//            manifestPlaceholders.put('PACKAGE_NAME', applicationId)
+//        }
 
     }
 
@@ -168,14 +168,15 @@ dependencies {
     implementation(dependency.supportV4)
     implementation(dependency.appcompatV7)
     implementation 'com.android.support:multidex:1.0.3'
+
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:2.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:2.1.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:2.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:2.1.0'
     // 网页支付模块（可选）
     implementation 'com.wa.sdkcn:wa-sdk-webpay:1.5.0'
     // aihelp模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-aihelp:1.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-aihelp:2.1.0'
 //     应用墙模块（可选）
   //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
 //     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
