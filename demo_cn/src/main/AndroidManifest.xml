@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.wa.sdk.cn.demo">
 
     <application
@@ -192,11 +191,11 @@
         <!-- 微信 app id -->
         <meta-data
             android:name="com.wa.sdk.WEIXIN_APP_ID"
-            android:value="wx8b397e6b3e85775c" />
+            android:value="wxe5b52b0ebd5ea940" />
         <!-- 微信 secret -->
         <meta-data
             android:name="com.wa.sdk.WEIXIN_SECRET"
-            android:value="ff8e4c91da1a616b1fdd0b08015a2b6f" />
+            android:value="cea1fae574a2b41b0f9653f719f282f8" />
         <!-- 微信 END -->
 
         <!--aihelp-->

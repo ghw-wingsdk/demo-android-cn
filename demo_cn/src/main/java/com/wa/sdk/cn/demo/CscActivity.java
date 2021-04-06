@@ -1,21 +1,20 @@
 package com.wa.sdk.cn.demo;
 
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
+
 import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
-import com.wa.sdk.csc.WACscProxy;
 import com.wa.sdk.common.WACommonProxy;
+import com.wa.sdk.csc.WACscProxy;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 
 

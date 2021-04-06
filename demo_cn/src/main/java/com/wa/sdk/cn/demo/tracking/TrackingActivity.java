@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.wa.sdk.cn.demo.R;
 import com.wa.sdk.cn.demo.WADemoConfig;
@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * TrackingActivity
  * Created by hank on 16/9/6.
  */
-public class TrackingActivity extends BaseActivity implements OnPageChangeListener, OnItemClickListener
+public class TrackingActivity extends BaseActivity implements ViewPager.OnPageChangeListener, OnItemClickListener
         ,OnItemSelectedListener {
     private final String TAG = "TrackingActivity";
     private TitleBar tb = null;

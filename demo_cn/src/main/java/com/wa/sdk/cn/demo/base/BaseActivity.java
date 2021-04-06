@@ -4,17 +4,17 @@ import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.AnimRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.wa.sdk.cn.demo.Utils.ActivityManager;
 import com.wa.sdk.cn.demo.widget.LoadingDialog;
-import com.wa.sdk.common.WACommonProxy;
-import com.wa.sdk.track.WATrackProxy;
 
 
 /**
@@ -96,10 +96,10 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param popExit
      */
     public void addFragmentToStackWithAnimation(Fragment fragment,
-                                                @android.support.annotation.AnimRes int enter,
-                                                @android.support.annotation.AnimRes int exit,
-                                                @android.support.annotation.AnimRes int popEnter,
-                                                @android.support.annotation.AnimRes int popExit) {
+                                                @AnimRes int enter,
+                                                @AnimRes int exit,
+                                                @AnimRes int popEnter,
+                                                @AnimRes int popExit) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.setCustomAnimations(enter, exit, popEnter, popExit);
         ft.replace(mContainerId, fragment);

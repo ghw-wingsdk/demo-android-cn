@@ -1,8 +1,6 @@
 package com.wa.sdk.cn.demo;
 
 import android.app.Application;
-//import android.support.multidex.MultiDex;
-//import android.support.multidex.MultiDexApplication;
 
 /**
  *
@@ -15,10 +13,4 @@ public class WADemoApp extends Application {
         super.onCreate();
     }
 
-//    @Override
-//    protected void attachBaseContext(Context base) {
-//        super.attachBaseContext(base);
-//
-//        MultiDex.install(base);
-//    }
 }

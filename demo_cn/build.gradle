@@ -22,8 +22,8 @@ android {
         println("Current gradle version: " + project.gradle.gradleVersion)
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 13
-        versionName "2.1.0"
+        versionCode 14
+        versionName "2.3.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -38,31 +38,38 @@ android {
             signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             // 正式环境地址
-            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL:'https://api.wingsdk.cn/sdkapi',
-                                         SDK_TRACKING_HTTP_BASE_URL:'https://api.wingsdk.cn/data'])
+            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : 'https://api.wingsdk.cn/sdkapi',
+                                         SDK_TRACKING_HTTP_BASE_URL: 'https://api.wingsdk.cn/data'])
 
+            def build_time = getDate()
+            buildConfigField 'String', 'DEMO_BUILD_TIME', "\"${build_time}\""
+            buildConfigField 'String', 'DEMO_BUILD_ENV', "pro"
         }
 
         debug {
             signingConfig signingConfigs.config
-            android.signingConfigs {
-                debug {
-                    storeFile = file('../keystores/debug.keystore')
-                }
+            def http_host
+            def tacking_host
+
+            if (env == 'qa') {   //qa环境
+                http_host = 'http://172.16.100.53/sdk_bkd_qa/sdkapi'
+                tacking_host = 'http://172.16.100.58/data_collection_qa/data'
+            } else if (env == 'pre') { //pre环境
+                http_host = 'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi'
+                tacking_host = 'http://sdk-test2.wingsdk.cn/data_collection_qa/data'
+            } else { //pro环境
+                http_host = 'https://api.wingsdk.cn/sdkapi'
+                tacking_host = 'https://api.wingsdk.cn/data'
             }
+            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : http_host,
+                                         SDK_TRACKING_HTTP_BASE_URL: tacking_host])
 
-            /**qa环境**/
-//            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL:'http://172.16.100.53/sdk_bkd_qa/sdkapi/',
-//                                         SDK_TRACKING_HTTP_BASE_URL:'http://172.16.100.58/data_collection_qa/data'])
-
-
-            /**pre环境**/
-            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : 'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi',
-                                         SDK_TRACKING_HTTP_BASE_URL: 'http://sdk-test2.wingsdk.cn/sdk_bkd_qa/data_collection/data'])
-
-            /**pre环境**/
-//            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : 'http://sdk-test1.gamehollywood.com/sdk_bkd_qa/sdkapi',
-//                                         SDK_TRACKING_HTTP_BASE_URL: 'http://sdk-test2.gamehollywood.com/data_collection_qa/data/forward'])
+            println("------------------------env-------------------------------")
+            println("env:" + env + "\nhttp:" + http_host + "\ntacking:" + tacking_host)
+            println("------------------------env-------------------------------")
+            def build_time = getDate()
+            buildConfigField 'String', 'DEMO_BUILD_TIME', "\"${build_time}\""
+            buildConfigField 'String', 'DEMO_BUILD_ENV', "\"${env}\""
 
         }
     }
@@ -128,22 +135,22 @@ android {
 
     // 打包自动生成名字
     applicationVariants.all { variant ->
-        if(project.gradle.gradleVersion < "3.0.0") {
+        if (project.gradle.gradleVersion < "3.0.0") {
             variant.outputs.each { output ->
                 def newName
-                if (variant.buildType.name.equals('release')) {
-                    newName = 'WASdkDemo_cn_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '_build' + getDate() + '.apk'
+                if (variant.buildType.name == 'release') {
+                    newName = 'DemoCN_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '_build' + getDate() + '.apk'
                 } else {
-                    newName = 'WASdkDemo_cn_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '.apk'
+                    newName = 'DemoCN_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '.apk'
                 }
                 output.outputFile = new File(output.outputFile.parent, newName)
             }
         } else {
             variant.outputs.all {
-                if (variant.buildType.name.equals('release')) {
-                    outputFileName = 'WASdkDemo_cn_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '_build' + getDate() + '.apk'
+                if (variant.buildType.name == 'release') {
+                    outputFileName = 'DemoCN_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_env_' + env + '_repo_' + repo + '_v' + versionName + '_build' + getDate() + '.apk'
                 } else {
-                    outputFileName = 'WASdkDemo_cn_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '.apk'
+                    outputFileName = 'DemoCN_' + variant.productFlavors[0].name + "_" + variant.buildType.name + '_v' + versionName + '_env_' + env + '_repo_' + repo + '.apk'
                 }
             }
         }
@@ -154,7 +161,6 @@ android {
         abortOnError false
     }
 
-    buildToolsVersion '28.0.2'
 }
 
 //获取时间戳
@@ -165,20 +171,19 @@ def getDate() {
 }
 
 dependencies {
-    implementation(dependency.supportV4)
-    implementation(dependency.appcompatV7)
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation(dependency.androidxV4)
+    implementation(dependency.androidxV7)
 
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:2.1.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:2.3.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:2.1.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:2.3.0'
     // 网页支付模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-webpay:1.5.0'
+    implementation 'com.wa.sdkcn:wa-sdk-webpay:2.3.0'
     // aihelp模块（可选）
     implementation 'com.wa.sdkcn:wa-sdk-aihelp:2.1.0'
 //     应用墙模块（可选）
-  //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
+    //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
 //     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
     implementation 'com.wa.sdkcn:wa-sdk-wechat:2.0'
     //     QQ模块（可选）
@@ -201,8 +206,6 @@ dependencies {
 //    ysdkImplementation 'com.wa.sdkcn:wa-sdk-ysdk:1.4.0'
 //    //魅族（可选，不可与其他可选模块混合使用）
 //    meizuImplementation 'com.wa.sdkcn:wa-sdk-meizu:1.4.0'
-
-
 
 
 }

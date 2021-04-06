@@ -1,0 +1,19 @@
+ext {
+    // 编译版本配置
+    compileSdkVersion = 30
+    targetSdkVersion = 30
+    minSdkVersion = 21
+
+    //host环境：qa，pre，pro
+    env = 'pro'
+    //仓库环境  pre，pro
+    repo = 'pro'
+    // 依赖配置
+    dependency = [
+            // 公共库
+//            supportV4            : 'com.android.support:support-v4:27.1.1',
+//            appcompatV7          : 'com.android.support:appcompat-v7:27.1.1',
+            androidxV4              : 'androidx.legacy:legacy-support-v4:1.0.0',
+            androidxV7              : 'androidx.appcompat:appcompat:1.2.0',
+    ]
+}

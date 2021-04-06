@@ -8,23 +8,18 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
-import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Process;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import androidx.annotation.NonNull;
+
 import com.wa.sdk.WAConstants;
-import com.wa.sdk.aihelp.csc.WAAiHelpCsc;
 import com.wa.sdk.apw.WAApwProxy;
 import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.channels.Channel360EventInfoUtil;
@@ -33,40 +28,24 @@ import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WACommonProxy;
-import com.wa.sdk.common.WAConfig;
 import com.wa.sdk.common.WASharedPrefHelper;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAPermissionCallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.common.utils.LogUtil;
 import com.wa.sdk.common.utils.StringUtil;
-import com.wa.sdk.common.utils.ToastUtils;
-import com.wa.sdk.common.utils.WAUtil;
 import com.wa.sdk.core.WACoreProxy;
 import com.wa.sdk.core.WASdkProperties;
 import com.wa.sdk.csc.WACscProxy;
 import com.wa.sdk.pay.WAPayProxy;
 import com.wa.sdk.pay.model.WAChannelBalance;
-import com.wa.sdk.track.WAEventType;
-import com.wa.sdk.track.WATrackProxy;
-import com.wa.sdk.track.model.WAEvent;
 import com.wa.sdk.user.WAUserProxy;
 import com.wa.sdk.user.model.WACertificationInfo;
 import com.wa.sdk.user.model.WALoginResult;
 
-
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.Console;
-import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.UUID;
 
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
@@ -319,6 +298,29 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_open_real_name_auth://调起实名认证
                 openRealNameAuthManager();
+                break;
+            case R.id.btn_random_clientid:
+                String clientId = UUID.randomUUID().toString().replace("-", "");
+                WASdkProperties.getInstance().setClientId(clientId);
+                showShortToast("设置成功：\n"+clientId);
+                break;
+            case R.id.btn_version:
+                //app 信息
+                String info ;
+                String versionName = "版本名称："+BuildConfig.VERSION_NAME;
+                String versionCode = "代码版本："+BuildConfig.VERSION_CODE;
+                String buildType = "打包类型：" + BuildConfig.FLAVOR+"_"+BuildConfig.BUILD_TYPE;
+                String buildTime = "打包时间：" + BuildConfig.DEMO_BUILD_TIME;
+                String buildEnv = "HOST环境：" + BuildConfig.DEMO_BUILD_ENV;
+                info = versionName + "\n"
+                        + versionCode+ "\n"
+                        + buildType+ "\n"
+                        + buildEnv+ "\n"
+                        + buildTime+ "\n"
+                ;
+                new AlertDialog.Builder(this)
+                        .setMessage(info)
+                        .show();
                 break;
             default:
                 break;

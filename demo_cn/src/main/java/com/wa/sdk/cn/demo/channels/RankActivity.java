@@ -3,12 +3,12 @@ package com.wa.sdk.cn.demo.channels;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.viewpager.widget.ViewPager;
 
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.cn.demo.R;
@@ -26,7 +26,7 @@ import java.util.ArrayList;
  * 360 排行
  * Created by hank on 16/7/26.
  */
-public class RankActivity extends BaseActivity implements OnPageChangeListener, AdapterView.OnItemClickListener {
+public class RankActivity extends BaseActivity implements ViewPager.OnPageChangeListener, AdapterView.OnItemClickListener {
     private TitleBar mTitleBar = null;
     private ViewPager vp = null;
 
