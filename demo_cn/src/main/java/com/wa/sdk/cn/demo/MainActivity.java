@@ -50,6 +50,26 @@ import java.util.UUID;
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
 
+    private final WACallback<Boolean> mCallbackAgreementWindow = new WACallback<Boolean>() {
+        @Override
+        public void onSuccess(int code, String message, Boolean result) {
+            LogUtil.d(TAG, "openPrivacyAgreementWindow onSuccess: "+code+","+message+","+result);
+            checkYSDKPerssion();
+            showShortToast("同意协议，是否显示UI："+result);
+        }
+
+        @Override
+        public void onCancel() {
+            LogUtil.d(TAG, "openPrivacyAgreementWindow onCancel: ");
+        }
+
+        @Override
+        public void onError(int code, String message, Boolean result, Throwable throwable) {
+            LogUtil.d(TAG, "openPrivacyAgreementWindow onError: "+code+","+message+","+result);
+            showShortToast("拒绝协议");
+        }
+    };
+
     private WASharedPrefHelper mSharedPrefHelper;
     private UserModel userModel = null;
 
@@ -110,8 +130,10 @@ public class MainActivity extends BaseActivity {
         checkYSDKPerssion();
 
 
-        Button btnLogin = findViewById(R.id.btn_login);
-        login(WAConstants.CHANNEL_WA, btnLogin);
+//        Button btnLogin = findViewById(R.id.btn_login);
+//        login(WAConstants.CHANNEL_WA, btnLogin);
+
+        WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
 
     }
 
@@ -691,6 +713,9 @@ public class MainActivity extends BaseActivity {
                     mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_ENABLE_FLOW_VIEW, isChecked);
                     WACommonProxy.floatView(MainActivity.this, WAUserProxy.getCurrChannel(), isChecked);
                     break;
+                case R.id.btn_agreement_window:
+                    LogUtil.d(TAG, "onClick: 协议弹窗");
+                    WAUserProxy.openPrivacyAgreementWindow(MainActivity.this, mCallbackAgreementWindow);
                 default:
                     break;
             }

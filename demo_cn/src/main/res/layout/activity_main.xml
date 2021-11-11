@@ -313,7 +313,7 @@
 
 
                 <Button
-                    android:id="@+id/btn_test"
+                    android:id="@+id/btn_agreement_window"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -321,7 +321,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:onClick="onClick"
-                    android:text="临时测试"
+                    android:text="协议弹窗"
                     android:visibility="visible" />
             </LinearLayout>
 

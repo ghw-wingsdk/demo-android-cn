@@ -151,7 +151,8 @@ public class PaymentActivity extends BaseActivity {
             public void onError(int code, String message, WAPurchaseResult result, Throwable throwable) {
                 Log.d(TAG, "支付失败: " + message);
 //                cancelLoadingDialog();
-                showLongToast(StringUtil.isEmpty(message) ? "此时无法使用支付" : message);
+                String msg = StringUtil.isEmpty(message) ? "此时无法使用支付" : message;
+                showLongToast("CP Error 回调:" + msg);
             }
         });
     }
