@@ -28,7 +28,7 @@ allprojects {
         maven {
             // 测试环境（国内仓库）
             def target
-            if (repo == 'pre') {
+            if (repo == 'test') {
                 target = "http://172.16.100.58:8081/nexus/content/groups/WingCN/"
             } else {
                 // 正式环境（国内仓库）

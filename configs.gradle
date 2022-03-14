@@ -1,13 +1,13 @@
 ext {
     // 编译版本配置
-    compileSdkVersion = 30
-    targetSdkVersion = 30
+    compileSdkVersion = 31
+    targetSdkVersion = 31
     minSdkVersion = 21
 
     //host环境：qa，pre，pro
     env = 'pro'
-    //仓库环境  pre，pro
-    repo = 'pro'
+    //仓库环境  test，live
+    repo = 'live'
     // 依赖配置
     dependency = [
             // 公共库
@@ -17,3 +17,6 @@ ext {
             androidxV7              : 'androidx.appcompat:appcompat:1.2.0',
     ]
 }
+//仓库环境修改注意事项：
+//同步或编译前，记得清理本地的依赖缓存：C:\Users\jianjin.zhang\.gradle\caches\modules-2\files-2.1\com.wa.sdkcn
+//找到并删除所有wasdk依赖的包的缓存，项目中clean[不clean直接编译依然可能会沿用之前的依赖]
