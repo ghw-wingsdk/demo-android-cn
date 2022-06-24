@@ -50,12 +50,18 @@ import java.util.UUID;
 public class MainActivity extends BaseActivity {
     private static final String TAG = "MainActivity";
 
+    private WASharedPrefHelper mSharedPrefHelper;
+    private UserModel userModel = null;
+
     private final WACallback<Boolean> mCallbackAgreementWindow = new WACallback<Boolean>() {
         @Override
         public void onSuccess(int code, String message, Boolean result) {
             LogUtil.d(TAG, "openPrivacyAgreementWindow onSuccess: "+code+","+message+","+result);
-            checkYSDKPerssion();
             showShortToast("同意协议，是否显示UI："+result);
+            LogUtil.d(TAG, "同意协议，开始初始化。。。。WACoreProxy.initialize。。。");
+            WACoreProxy.initialize(MainActivity.this);
+
+            checkYSDKPerssion();
         }
 
         @Override
@@ -70,9 +76,6 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    private WASharedPrefHelper mSharedPrefHelper;
-    private UserModel userModel = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +85,6 @@ public class MainActivity extends BaseActivity {
         //开启调试模式
         WACoreProxy.setDebugMode(true);
 
-        WACoreProxy.initialize(this);
         WACommonProxy.onCreate(this, savedInstanceState);
 
 
@@ -127,14 +129,12 @@ public class MainActivity extends BaseActivity {
                     });
         }
 
-        checkYSDKPerssion();
-
-
 //        Button btnLogin = findViewById(R.id.btn_login);
 //        login(WAConstants.CHANNEL_WA, btnLogin);
-
+        Log.d("zii-", "onCreate: initComponents...");
+        WACoreProxy.initComponents(this);
+        Log.d("zii-", "onCreate: openPrivacyAgreementWindow");
         WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
-
     }
 
     private void checkYSDKPerssion() {
@@ -325,6 +325,10 @@ public class MainActivity extends BaseActivity {
                 String clientId = UUID.randomUUID().toString().replace("-", "");
                 WASdkProperties.getInstance().setClientId(clientId);
                 showShortToast("设置成功：\n"+clientId);
+                break;
+            case R.id.btn_agreement_window:
+                LogUtil.d("zii-", "onClick: 协议弹窗");
+                WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
                 break;
             case R.id.btn_version:
                 //app 信息
@@ -713,9 +717,6 @@ public class MainActivity extends BaseActivity {
                     mSharedPrefHelper.saveBoolean(WADemoConfig.SP_KEY_ENABLE_FLOW_VIEW, isChecked);
                     WACommonProxy.floatView(MainActivity.this, WAUserProxy.getCurrChannel(), isChecked);
                     break;
-                case R.id.btn_agreement_window:
-                    LogUtil.d(TAG, "onClick: 协议弹窗");
-                    WAUserProxy.openPrivacyAgreementWindow(MainActivity.this, mCallbackAgreementWindow);
                 default:
                     break;
             }
