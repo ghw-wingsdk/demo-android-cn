@@ -48,7 +48,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 public class MainActivity extends BaseActivity {
-    private static final String TAG = "MainActivity";
+    private static final String TAG = LogUtil.TAG;
 
     private WASharedPrefHelper mSharedPrefHelper;
     private UserModel userModel = null;
@@ -84,11 +84,9 @@ public class MainActivity extends BaseActivity {
 
         //开启调试模式
         WACoreProxy.setDebugMode(true);
+        WACommonProxy.enableLogcat(this);
 
         WACommonProxy.onCreate(this, savedInstanceState);
-
-
-        WACommonProxy.enableLogcat(this);
 
         // Demo的初始化，跟SDK无关
         WASdkDemo.getInstance().initialize(this);
@@ -131,9 +129,7 @@ public class MainActivity extends BaseActivity {
 
 //        Button btnLogin = findViewById(R.id.btn_login);
 //        login(WAConstants.CHANNEL_WA, btnLogin);
-        Log.d("zii-", "onCreate: initComponents...");
-        WACoreProxy.initComponents(this);
-        Log.d("zii-", "onCreate: openPrivacyAgreementWindow");
+        Log.d(TAG, "onCreate: openPrivacyAgreementWindow");
         WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
     }
 
