@@ -1,7 +1,7 @@
 ext {
     // 编译版本配置
-    compileSdkVersion = 31
-    targetSdkVersion = 31
+    compileSdkVersion = 33
+    targetSdkVersion = 33
     minSdkVersion = 21
 
     //host环境：qa，pre，pro

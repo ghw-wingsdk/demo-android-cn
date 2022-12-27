@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
 
 import com.wa.sdk.cn.demo.widget.LoadingDialog;
 
@@ -102,7 +103,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param text
      */
     protected void showShortToast(CharSequence text) {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        View view = getActivity().findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,text,Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -110,7 +113,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param resId
      */
     protected void showShortToast(int resId) {
-        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
+        View view = getActivity().findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,resId,Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -118,7 +123,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param text
      */
     protected void showLongToast(CharSequence text) {
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+        View view = getActivity().findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,text,Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -126,7 +133,9 @@ public class BaseFragment extends Fragment implements View.OnClickListener {
      * @param resId
      */
     protected void showLongToast(int resId) {
-        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), resId, Toast.LENGTH_SHORT).show();
+        View view = getActivity().findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,resId,Snackbar.LENGTH_LONG).show();
     }
 
     /**

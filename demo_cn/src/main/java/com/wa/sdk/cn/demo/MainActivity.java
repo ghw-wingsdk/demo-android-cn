@@ -52,6 +52,7 @@ public class MainActivity extends BaseActivity {
 
     private WASharedPrefHelper mSharedPrefHelper;
     private UserModel userModel = null;
+    private String serverId = "server1";
 
     private final WACallback<Boolean> mCallbackAgreementWindow = new WACallback<Boolean>() {
         @Override
@@ -62,6 +63,7 @@ public class MainActivity extends BaseActivity {
             WACoreProxy.initialize(MainActivity.this);
 
             checkYSDKPerssion();
+            initChannelLoginBtn();
         }
 
         @Override
@@ -84,9 +86,11 @@ public class MainActivity extends BaseActivity {
 
         //开启调试模式
         WACoreProxy.setDebugMode(true);
-        WACommonProxy.enableLogcat(this);
 
         WACommonProxy.onCreate(this, savedInstanceState);
+
+
+        WACommonProxy.enableLogcat(this);
 
         // Demo的初始化，跟SDK无关
         WASdkDemo.getInstance().initialize(this);
@@ -334,11 +338,15 @@ public class MainActivity extends BaseActivity {
                 String buildType = "打包类型：" + BuildConfig.FLAVOR+"_"+BuildConfig.BUILD_TYPE;
                 String buildTime = "打包时间：" + BuildConfig.DEMO_BUILD_TIME;
                 String buildEnv = "HOST环境：" + BuildConfig.DEMO_BUILD_ENV;
+                String isTestRepository = "是否测试仓库包：" + (BuildConfig.IS_TEST_REPOSITORY ? "是" : "否");
+                String channel = "Channel：" + WAUserProxy.getCurrChannel();
                 info = versionName + "\n"
                         + versionCode+ "\n"
                         + buildType+ "\n"
                         + buildEnv+ "\n"
                         + buildTime+ "\n"
+                        + isTestRepository + "\n"
+                        + channel+ "\n"
                 ;
                 new AlertDialog.Builder(this)
                         .setMessage(info)
@@ -371,10 +379,16 @@ public class MainActivity extends BaseActivity {
                 if (null == result) {
                     text = "Login failed->" + text;
                 } else {
-                    WACoreProxy.setGameUserId("gUid01");
-                    WACoreProxy.setServerId("serverId1");
-                    WACoreProxy.setNickname("昵称");
+                    String txServerId = serverId;
+                    String gameUserId = serverId + "-role1-" + result.getUserId();
+                    String nickname = "青铜" + serverId + "-" + result.getUserId();
+
+                    WACoreProxy.setGameUserId(gameUserId);
+                    WACoreProxy.setServerId(txServerId);
+                    WACoreProxy.setNickname(nickname);
                     WACoreProxy.setLevel(10);
+                    LogUtil.i(TAG, "区服：" + txServerId + " ; 角色ID：" + gameUserId + " ; 角色名称：" + nickname);
+
                     text = "Login success->" + text
                             + "\nplatform:" + result.getPlatform()
                             + "\nuserId:" + result.getUserId()
@@ -602,38 +616,25 @@ public class MainActivity extends BaseActivity {
         tbtnFlowView.setChecked(enableFlowView);
         tbtnFlowView.setOnCheckedChangeListener(mOnCheckedChangeListener);
 
-        Button btnChannelLogin = findViewById(R.id.btn_channel_login);
-        if (WAUserProxy.getCurrChannel().startsWith(WAConstants.CHANNEL_YSDK)) {
-            btnChannelLogin.setText(R.string.ysdk_login);
-        } else if (WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.oppo_login);
-        } else if (WAConstants.CHANNEL_VIVO.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.vivo_login);
-        } else if (WAConstants.CHANNEL_XIAOMI.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.xiaomi_login);
-        } else if (WAConstants.CHANNEL_HUAWEI.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.huawei_login);
-        } else if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.qihoo360_login);
-        } else if (WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.baidu_login);
-        } else if (WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.uc_login);
-        } else if (WAConstants.CHANNEL_MEIZU.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.meizu_login);
-        } else if (WAConstants.CHANNEL_QQ.equals(WAUserProxy.getCurrChannel())) {
-            btnChannelLogin.setText(R.string.qq_login);
-        } else {
-            btnChannelLogin.setText("None");
-            btnChannelLogin.setEnabled(false);
-        }
-
         if (mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_LOGCAT, true)) {
             WACommonProxy.enableLogcat(this);
         }
         if (mSharedPrefHelper.getBoolean(WADemoConfig.SP_KEY_ENABLE_APW, true)) {
             WAApwProxy.showEntryFlowIcon(this);
         }
+
+        final Button btnSwitchServerId = findViewById(R.id.btn_switch_serverId);
+        btnSwitchServerId.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("server1".equals(serverId)){
+                    serverId = "server2";
+                    showShortToast("已切换为'2'服，重新登录后生效 ");
+                }else {
+                    serverId = "server1";
+                    showShortToast("已切换为'1'服，重新登录后生效 ");
+                }            }
+        });
 
         final Button btn_create_real_name = findViewById(R.id.btn_create_real_name);
         btn_create_real_name.setOnClickListener(new View.OnClickListener() {
@@ -677,6 +678,34 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void initChannelLoginBtn(){
+        Button btnChannelLogin = findViewById(R.id.btn_channel_login);
+        if (WAUserProxy.getCurrChannel().startsWith(WAConstants.CHANNEL_YSDK)) {
+            btnChannelLogin.setText(R.string.ysdk_login);
+        } else if (WAConstants.CHANNEL_OPPO.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.oppo_login);
+        } else if (WAConstants.CHANNEL_VIVO.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.vivo_login);
+        } else if (WAConstants.CHANNEL_XIAOMI.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.xiaomi_login);
+        } else if (WAConstants.CHANNEL_HUAWEI.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.huawei_login);
+        } else if (WAConstants.CHANNEL_QIHU360.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.qihoo360_login);
+        } else if (WAConstants.CHANNEL_BAIDU.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.baidu_login);
+        } else if (WAConstants.CHANNEL_UC.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.uc_login);
+        } else if (WAConstants.CHANNEL_MEIZU.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.meizu_login);
+        } else if (WAConstants.CHANNEL_QQ.equals(WAUserProxy.getCurrChannel())) {
+            btnChannelLogin.setText(R.string.qq_login);
+        } else {
+            btnChannelLogin.setText("None");
+            btnChannelLogin.setEnabled(false);
+        }
     }
 
     private CompoundButton.OnCheckedChangeListener mOnCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {

@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.annotation.AnimRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import com.wa.sdk.cn.demo.Utils.ActivityManager;
 import com.wa.sdk.cn.demo.widget.LoadingDialog;
@@ -96,10 +97,10 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param popExit
      */
     public void addFragmentToStackWithAnimation(Fragment fragment,
-                                                @AnimRes int enter,
-                                                @AnimRes int exit,
-                                                @AnimRes int popEnter,
-                                                @AnimRes int popExit) {
+                                                int enter,
+                                                int exit,
+                                                int popEnter,
+                                                int popExit) {
         FragmentTransaction ft = mFragmentManager.beginTransaction();
         ft.setCustomAnimations(enter, exit, popEnter, popExit);
         ft.replace(mContainerId, fragment);
@@ -184,7 +185,9 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param text
      */
     protected void showShortToast(CharSequence text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        View view = findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,text,Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -192,7 +195,9 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param resId
      */
     protected void showShortToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+        View view = findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,resId,Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -200,7 +205,9 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param text
      */
     protected void showLongToast(CharSequence text) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
+        View view = findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,text,Snackbar.LENGTH_LONG).show();
     }
 
     /**
@@ -208,7 +215,9 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      * @param resId
      */
     protected void showLongToast(int resId) {
-        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+        View view = findViewById(android.R.id.content).getRootView();
+        Snackbar.make(view,resId,Snackbar.LENGTH_LONG).show();
     }
 
     /**
