@@ -22,8 +22,8 @@ android {
         println("Current gradle version: " + project.gradle.gradleVersion)
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 16
-        versionName "2.6.0"
+        versionCode 17
+        versionName "2.7.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -37,43 +37,16 @@ android {
             debuggable true
             signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            // 正式环境地址
-            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : 'https://api.wingsdk.cn/sdkapi',
-                                         SDK_TRACKING_HTTP_BASE_URL: 'https://api.wingsdk.cn/data'])
 
-            def build_time = getDate()
-            buildConfigField 'String', 'DEMO_BUILD_TIME', "\"${build_time}\""
-            buildConfigField 'String', 'DEMO_BUILD_ENV',"\"pro\""
-            buildConfigField 'boolean', 'IS_TEST_REPOSITORY',"${'test' == repo}"
+            setHost(it)
+            apkBuildParams(it)
         }
 
         debug {
             signingConfig signingConfigs.config
-            def http_host
-            def tacking_host
 
-            //env:host环境 qa，pre，pro，这里由config.gradle获取全局变量，不再定义
-
-            if (env == 'qa') {   //qa环境
-                http_host = 'http://172.16.100.53/sdk_bkd_qa/sdkapi'
-                tacking_host = 'http://172.16.100.58/data_collection_qa/data'
-            } else if (env == 'pre') { //pre环境
-                http_host = 'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi'
-                tacking_host = 'http://sdk-test2.wingsdk.cn/data_collection_qa/data'
-            } else { //pro环境
-                http_host = 'https://api.wingsdk.cn/sdkapi'
-                tacking_host = 'https://api.wingsdk.cn/data'
-            }
-            manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : http_host,
-                                         SDK_TRACKING_HTTP_BASE_URL: tacking_host])
-
-            println("------------------------env-------------------------------")
-            println("env:" + env + "\nhttp:" + http_host + "\ntacking:" + tacking_host)
-            println("------------------------env-------------------------------")
-            def build_time = getDate()
-            buildConfigField 'String', 'DEMO_BUILD_TIME', "\"${build_time}\""
-            buildConfigField 'String', 'DEMO_BUILD_ENV', "\"${env}\""
-            buildConfigField 'boolean', 'IS_TEST_REPOSITORY',"${'test' == repo}"
+            setHost(it)
+            apkBuildParams(it)
         }
     }
 
@@ -144,7 +117,7 @@ android {
     // 打包自动生成名字
     applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = 'DemoCN_imp_' + ('pro' == env ? '正式环境' : ('pre' == env ? 'Pre环境':'QA环境')) + '_' + ('test' == repo ?'测试仓库':'生产仓库') + '_v' + versionName + '_build' + getDate() + '.apk'
+            outputFileName = 'DemoCN_imp_' + env + '环境_' + ('test' == repo ?'测试仓库':'生产仓库') + '_v' + versionName + '_build' + getDate() + '.apk'
         }
     }
 
@@ -158,8 +131,39 @@ android {
 //获取时间戳
 def getDate() {
     def date = new Date()
-    def formattedDate = date.format('HHmm')
+    def formattedDate = date.format('MMdd_HHmm')
     return formattedDate
+}
+
+def setHost(buildType){
+    //env:host环境 qa，pre，pro，这里由config.gradle获取全局变量，不再定义
+    def http_host
+    def tacking_host
+
+    if (env == 'qa') {   //qa环境
+        http_host = 'http://172.16.100.53/sdk_bkd_qa/sdkapi'
+        tacking_host = 'http://172.16.100.58/data_collection_qa/data'
+    } else if (env == 'pre') { //pre环境
+        http_host = 'http://sdk-test1.wingsdk.cn/sdk_bkd_qa/sdkapi'
+        tacking_host = 'http://sdk-test2.wingsdk.cn/data_collection_qa/data'
+    } else { //pro环境
+        http_host = 'https://api.wingsdk.cn/sdkapi'
+        tacking_host = 'https://api.wingsdk.cn/data'
+    }
+
+    println("------------------------env-------------------------------")
+    println("env:" + env + "\nhttp:" + http_host + "\ntacking:" + tacking_host)
+    println("------------------------env-------------------------------")
+
+    buildType.manifestPlaceholders.putAll([SDK_HTTP_BASE_URL         : http_host,
+                                 SDK_TRACKING_HTTP_BASE_URL: tacking_host])
+}
+
+def apkBuildParams(buildType){
+    def build_time = getDate()
+    buildType.buildConfigField 'String', 'DEMO_BUILD_TIME', "\"${build_time}\""
+    buildType.buildConfigField 'String', 'DEMO_BUILD_ENV',"\"${env}\""
+    buildType.buildConfigField 'boolean', 'IS_TEST_REPOSITORY',"${'test' == repo}"
 }
 
 dependencies {
@@ -169,17 +173,17 @@ dependencies {
     implementation(dependency.androidxV7)
 
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:2.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:2.7.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:2.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:2.7.0'
     // 网页支付模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-webpay:2.3.0'
+    implementation 'com.wa.sdkcn:wa-sdk-webpay:2.7.0'
     // aihelp模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-aihelp:2.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-aihelp:2.7.0'
 //     微信模块（可选,不可与有微信相关的渠道混合使用，比如360）
-    implementation 'com.wa.sdkcn:wa-sdk-wechat:2.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-wechat:2.7.0'
     //     QQ模块（可选）
-    implementation 'com.wa.sdkcn:wa-sdk-qq:2.6.0'
+    implementation 'com.wa.sdkcn:wa-sdk-qq:2.7.0'
 //     应用墙模块（可选）
     //  implementation 'com.wa.sdkcn:wa-sdk-apw:1.4.0'
 //     360模块（可选，不可与其他可选模块混合使用）

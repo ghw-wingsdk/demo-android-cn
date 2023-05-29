@@ -1,16 +1,15 @@
 package com.wa.sdk.cn.demo.base;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import com.wa.sdk.cn.demo.widget.LoadingDialog;

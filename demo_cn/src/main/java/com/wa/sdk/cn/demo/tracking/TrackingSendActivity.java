@@ -1,24 +1,22 @@
 package com.wa.sdk.cn.demo.tracking;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.wa.sdk.cn.demo.R;
 import com.wa.sdk.cn.demo.WADemoConfig;
 import com.wa.sdk.cn.demo.base.BaseActivity;
 import com.wa.sdk.cn.demo.base.BaseFragment;
-import com.wa.sdk.cn.demo.tracking.fragment.CustomEventFragment;
 import com.wa.sdk.cn.demo.tracking.fragment.DefaultEventFragment;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.utils.StringUtil;
 import com.wa.sdk.track.model.WAEvent;
 
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * TrackingSend
@@ -65,7 +63,7 @@ public class TrackingSendActivity extends BaseActivity {
             fragment.setArguments(defaultEvent);
 //        }
 
-        FragmentManager fm = getFragmentManager();
+        FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fl_tracking_channel_container, fragment);
         transaction.commit();
@@ -158,35 +156,20 @@ public class TrackingSendActivity extends BaseActivity {
     }
 
     public void onParameterChanged(String key, boolean isKey, Object oldValue, Object newValue) {
+        if(isKey) {
+            if(StringUtil.isEmpty(key)) {
+                mDefaultEventValues.put(String.valueOf(newValue), "");
+            } else {
+                Object value = mDefaultEventValues.get(key);
+                mDefaultEventValues.remove(key);
+                mDefaultEventValues.put(String.valueOf(newValue), value);
+            }
+        } else {
+            if(null == newValue) { // newValue 为null，删除
+                mDefaultEventValues.remove(key);
+            } else {
         mDefaultEventValues.put(key, newValue);
-//        Map<String, Object> afValues = mEventValueMap.get(channel);
-//        if(null == afValues) {
-//            afValues = new HashMap<>();
-//        }
-//        if(isKey) {
-//            if(null == oldValue || StringUtil.isEmpty(String.valueOf(oldValue))) {
-//                afValues.put(String.valueOf(newValue), "");
-//            } else if(afValues.containsKey(key)){
-//                Object value = afValues.get(key);
-//                afValues.remove(key);
-//                afValues.put(String.valueOf(newValue), value);
-//            } else {
-//                afValues.put(String.valueOf(newValue), "");
-//            }
-//        } else {
-//            if(null == newValue) { // newValue 为null，删除
-//                if(afValues.containsKey(key)) {
-//                    afValues.remove(key);
-//                }
-//            } else {
-//                afValues.put(key, newValue);
-//            }
-//        }
-//
-//        if(afValues.isEmpty()) {
-//            mEventValueMap.remove(channel);
-//        } else {
-//            mEventValueMap.put(channel, afValues);
-//        }
+            }
+        }
     }
 }

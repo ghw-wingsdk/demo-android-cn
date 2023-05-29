@@ -5,8 +5,9 @@ apply plugin: 'maven'
 buildscript {
     repositories {
         maven { url 'http://developer.huawei.com/repo/' }
-        jcenter()
+        mavenCentral()
         google()
+        jcenter()
     }
     dependencies {
 //        classpath 'com.android.tools.build:gradle:2.1.3'
@@ -22,9 +23,9 @@ buildscript {
 allprojects {
     repositories {
 //        maven {url 'http://developer.huawei.com/repo/'}
-        jcenter()
-
+        mavenCentral()
         google()
+        jcenter()
         maven {
             // 测试环境（国内仓库）
             def target

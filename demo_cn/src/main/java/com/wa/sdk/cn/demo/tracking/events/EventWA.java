@@ -89,7 +89,7 @@ public class EventWA extends Event {
             eventModel.addEventValue(WAEventParameterName.AMOUNT, 100000);
             eventModel.addEventValue(WAEventParameterName.CURRENT_AMOUNT, 200000);
         } else if (position == 10) {    // TODO IMPORT_USER
-
+            eventModel.addEventValue(WAEventParameterName.IS_FIRST_ENTER, 0);
         } else if (position == 11) {    // TODO CUSTOM_EVENT_PREFIX
             eventModel.addEventValue("to_level", 141);
             eventModel.addEventValue("fight_force", 1232320);
