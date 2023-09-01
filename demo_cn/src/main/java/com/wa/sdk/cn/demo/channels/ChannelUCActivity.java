@@ -3,13 +3,12 @@ package com.wa.sdk.cn.demo.channels;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.util.Log;
 import android.view.View;
 
 import com.wa.sdk.cn.demo.PaymentActivity;
 import com.wa.sdk.cn.demo.R;
+import com.wa.sdk.cn.demo.WASdkDemo;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
@@ -68,7 +67,7 @@ public class ChannelUCActivity extends BaseActivity {
         WAUserProxy.login(this, WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
 
                 // TODO 提交游戏角色数据信息 (必接)
                 long time = Long.parseLong(String.valueOf(new Date().getTime()).substring(0, 10));
@@ -120,7 +119,7 @@ public class ChannelUCActivity extends BaseActivity {
 
     /** TODO 退出账号 */
     private void logout() {
-        UserModel.getInstance().clear();
+        WASdkDemo.getInstance().logout();
         WAUserProxy.logout(this);
     }
 

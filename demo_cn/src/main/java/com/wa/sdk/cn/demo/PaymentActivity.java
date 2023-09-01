@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
@@ -77,7 +76,7 @@ public class PaymentActivity extends BaseActivity {
                 List<String> waProductIdList = new ArrayList<>();
                 for (WASkuDetails waSkudetails : result.getSkuList()) {
                     if(waSkudetails!=null && !StringUtil.isEmpty(waSkudetails.getSku()))
-                    waProductIdList.add(waSkudetails.getSku());
+                        waProductIdList.add(waSkudetails.getSku());
                 }
 
                 if (waProductIdList.size() > 0){
@@ -89,7 +88,7 @@ public class PaymentActivity extends BaseActivity {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                             TextView tv = (TextView)view;
-                            if (UserModel.getInstance().isLogin())
+                            if (WASdkDemo.getInstance().isLogin())
                                 payUI(tv.getText().toString(), "extInfotest");
                             else
                                 showShortToast("请先登录");

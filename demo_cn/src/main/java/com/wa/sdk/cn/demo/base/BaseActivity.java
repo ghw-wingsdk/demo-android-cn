@@ -1,11 +1,14 @@
 package com.wa.sdk.cn.demo.base;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -13,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.snackbar.Snackbar;
-
 import com.wa.sdk.cn.demo.Utils.ActivityManager;
 import com.wa.sdk.cn.demo.widget.LoadingDialog;
 
@@ -30,6 +32,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected int mContainerId = 0;
 
     protected LoadingDialog mLoadingDialog = null;
+    protected boolean mEnableToastLog = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -175,7 +178,7 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
      */
     public void dismissLoadingDialog() {
         if(null != mLoadingDialog && mLoadingDialog.isShowing()) {
-            mLoadingDialog.cancel();
+            mLoadingDialog.dismiss();
         }
         mLoadingDialog = null;
     }
@@ -187,7 +190,8 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected void showShortToast(CharSequence text) {
 //        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
         View view = findViewById(android.R.id.content).getRootView();
-        Snackbar.make(view,text,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, text, Snackbar.LENGTH_SHORT).show();
+        logToast(TextUtils.isEmpty(text) ? "" : text.toString());
     }
 
     /**
@@ -197,7 +201,8 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected void showShortToast(int resId) {
 //        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
         View view = findViewById(android.R.id.content).getRootView();
-        Snackbar.make(view,resId,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(view, resId, Snackbar.LENGTH_SHORT).show();
+        logToast(getString(resId));
     }
 
     /**
@@ -207,7 +212,8 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected void showLongToast(CharSequence text) {
 //        Toast.makeText(this, text, Toast.LENGTH_LONG).show();
         View view = findViewById(android.R.id.content).getRootView();
-        Snackbar.make(view,text,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, text, Snackbar.LENGTH_LONG).show();
+        logToast(TextUtils.isEmpty(text) ? "" : text.toString());
     }
 
     /**
@@ -217,7 +223,8 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
     protected void showLongToast(int resId) {
 //        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
         View view = findViewById(android.R.id.content).getRootView();
-        Snackbar.make(view,resId,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(view, resId, Snackbar.LENGTH_LONG).show();
+        logToast(getString(resId));
     }
 
     /**
@@ -272,12 +279,27 @@ public class BaseActivity extends FragmentActivity implements View.OnClickListen
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             flags |= View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
         }
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             flags |= View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                     | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                     | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_FULLSCREEN;
         }
         getWindow().getDecorView().setSystemUiVisibility(flags);
+    }
+
+    private void logToast(String text) {
+        if (mEnableToastLog) {
+            Log.d("Demo", text);
+        }
+    }
+
+    protected void hideSoftKeyboard(){
+        // Check if no view has focus:
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

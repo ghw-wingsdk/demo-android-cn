@@ -3,7 +3,6 @@ package com.wa.sdk.cn.demo;
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -51,7 +50,6 @@ public class MainActivity extends BaseActivity {
     private static final String TAG = LogUtil.TAG;
 
     private WASharedPrefHelper mSharedPrefHelper;
-    private UserModel userModel = null;
     private String serverId = "server1";
 
     private final WACallback<Boolean> mCallbackAgreementWindow = new WACallback<Boolean>() {
@@ -83,6 +81,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mEnableToastLog = true;
 
         //开启调试模式
         WACoreProxy.setDebugMode(true);
@@ -94,8 +93,6 @@ public class MainActivity extends BaseActivity {
 
         // Demo的初始化，跟SDK无关
         WASdkDemo.getInstance().initialize(this);
-
-        userModel = UserModel.getInstance();
 
         mSharedPrefHelper = WASharedPrefHelper.newInstance(this, WADemoConfig.SP_CONFIG_FILE_DEMO);
         initView();
@@ -133,7 +130,6 @@ public class MainActivity extends BaseActivity {
 
 //        Button btnLogin = findViewById(R.id.btn_login);
 //        login(WAConstants.CHANNEL_WA, btnLogin);
-        Log.d(TAG, "onCreate: openPrivacyAgreementWindow");
         WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
     }
 
@@ -298,8 +294,8 @@ public class MainActivity extends BaseActivity {
                 startActivity(new Intent(this, TrackingActivity.class));
                 break;
             case R.id.btn_logout: // 登出
-                if (userModel.isLogin()) {
-                    userModel.clear();
+                if (WASdkDemo.getInstance().isLogin()) {
+                    WASdkDemo.getInstance().logout();
                     WAUserProxy.logout(this);
                     showShortToast("退出登录成功");
                 } else {
@@ -324,10 +320,12 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_random_clientid:
                 String clientId = UUID.randomUUID().toString().replace("-", "");
                 WASdkProperties.getInstance().setClientId(clientId);
-                showShortToast("设置成功：\n"+clientId);
+                showShortToast("设置成功：\n" + clientId);
+                break;
+            case R.id.btn_account_deletion:
+                startActivity(new Intent(MainActivity.this, UserDeletionActivity.class));
                 break;
             case R.id.btn_agreement_window:
-                LogUtil.d("zii-", "onClick: 协议弹窗");
                 WAUserProxy.openPrivacyAgreementWindow(this, mCallbackAgreementWindow);
                 break;
             case R.id.btn_version:
@@ -373,35 +371,30 @@ public class MainActivity extends BaseActivity {
         WAUserProxy.login(this, channel, new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                userModel.setDatas(result);
                 button.setEnabled(true);
                 String text = "code:" + code + "\nmessage:" + message;
-                if (null == result) {
-                    text = "Login failed->" + text;
-                } else {
-                    String txServerId = serverId;
-                    String gameUserId = serverId + "-role1-" + result.getUserId();
-                    String nickname = "青铜" + serverId + "-" + result.getUserId();
+                String txServerId = serverId;
+                String gameUserId = serverId + "-role1-" + result.getUserId();
+                String nickname = "青铜" + serverId + "-" + result.getUserId();
 
-                    WACoreProxy.setGameUserId(gameUserId);
-                    WACoreProxy.setServerId(txServerId);
-                    WACoreProxy.setNickname(nickname);
-                    WACoreProxy.setLevel(10);
-                    LogUtil.i(TAG, "区服：" + txServerId + " ; 角色ID：" + gameUserId + " ; 角色名称：" + nickname);
+                WACoreProxy.setGameUserId(gameUserId);
+                WACoreProxy.setServerId(txServerId);
+                WACoreProxy.setNickname(nickname);
+                WACoreProxy.setLevel(10);
+                LogUtil.i(TAG, "区服：" + txServerId + " ; 角色ID：" + gameUserId + " ; 角色名称：" + nickname);
 
-                    text = "Login success->" + text
-                            + "\nplatform:" + result.getPlatform()
-                            + "\nuserId:" + result.getUserId()
-                            + "\ntoken:" + result.getToken()
-                            + "\nplatformUserId:" + result.getPlatformUserId()
-                            + "\nplatformToken:" + result.getPlatformToken()
-                            + "\nisBindMobile: " + result.isBindMobile()
-                            + "\nisFistLogin: " + result.isFirstLogin();
-                }
+                text = "Login success->" + text
+                        + "\nplatform:" + result.getPlatform()
+                        + "\nuserId:" + result.getUserId()
+                        + "\ntoken:" + result.getToken()
+                        + "\nplatformUserId:" + result.getPlatformUserId()
+                        + "\nplatformToken:" + result.getPlatformToken()
+                        + "\nisBindMobile: " + result.isBindMobile()
+                        + "\nisFistLogin: " + result.isFirstLogin();
 
                 LogUtil.i(LogUtil.TAG, text);
                 showShortToast(text);
-
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 //360
                 if (WAUserProxy.getCurrChannel().equals(WAConstants.CHANNEL_QIHU360)) {
                     Channel360EventInfoUtil.getInstance().submitRoleData(MainActivity.this);
@@ -447,6 +440,17 @@ public class MainActivity extends BaseActivity {
             public void onError(int code, String message, WALoginResult result, Throwable throwable) {
                 showShortToast(message);
                 button.setEnabled(true);
+                if (code == WACallback.CODE_ACCOUNT_IN_DELETION_BUFFER_DAYS) {
+                    // 正在删除中的账号，会返回删除状态，删除时间，及UserID
+                    WASdkDemo.getInstance().updateLoginAccount(result);
+                    String message1 = "code:" + code
+                            + "\nmessage:" + message
+                            + "\nuserId:" + result.getUserId()
+                            + "\ndeleteDate:" + result.getDeleteDate();
+                    // 正在删除中的账号，会返回删除状态，删除时间，及UserID
+                    WASdkDemo.getInstance().updateLoginAccount(result);
+                    new AlertDialog.Builder(MainActivity.this).setMessage(message1).show();
+                }
             }
         }, "{\"enableCache\":" + (enableLoginCache ? "true" : "false") + ", \"extInfo\":\"\"}");
     }
@@ -457,11 +461,11 @@ public class MainActivity extends BaseActivity {
      * @param button 按钮View
      */
     private void switchAccount(final View button) {
-//        userModel.clear();
+//         WASdkDemo.getInstance().clear();
         WAUserProxy.switchAccount(this, WAConstants.CHANNEL_WA, new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                userModel.setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 showShortToast(message);
                 button.setEnabled(true);
             }
@@ -481,17 +485,14 @@ public class MainActivity extends BaseActivity {
     }
 
     private void queryChannelBalance() {
-        if (!userModel.isLogin()) {
+        if (!WASdkDemo.getInstance().isLogin()) {
             showShortToast("没有登录，请先登录");
             return;
         }
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         dialogBuilder.setTitle("游戏币查询结果");
-        dialogBuilder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+        dialogBuilder.setPositiveButton("确定", (dialogInterface, i) -> {
 
-            }
         });
         final String channel = WAUserProxy.getCurrChannel();
         if (WAConstants.CHANNEL_YSDK.equals(channel)) {
@@ -499,11 +500,11 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onSuccess(int code, String message, WAChannelBalance result) {
                     dialogBuilder.setMessage("查询游戏币成功：\nchannel: " + result.getChannel()
-                            + "\nbalance(游戏币数): " + result.getBalance()
-                            + "\ngenBalance（赠送游戏币数）: " + result.getGenBalance()
-                            + "\nsaveAmount（累计充值游戏币数）: " + result.getSaveAmount()
-                            + "\nfistSave（第一次充值，1 是， 0 否）: " + result.getFirstSave()
-                            + "\nrawData（原始数据）: " + result.getRawData())
+                                    + "\nbalance(游戏币数): " + result.getBalance()
+                                    + "\ngenBalance（赠送游戏币数）: " + result.getGenBalance()
+                                    + "\nsaveAmount（累计充值游戏币数）: " + result.getSaveAmount()
+                                    + "\nfistSave（第一次充值，1 是， 0 否）: " + result.getFirstSave()
+                                    + "\nrawData（原始数据）: " + result.getRawData())
                             .show();
                 }
 
@@ -515,12 +516,7 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onError(int code, String message, WAChannelBalance result, Throwable throwable) {
                     dialogBuilder.setMessage("查询游戏币失败：\ncode: " + code + "\nmessage: " + message)
-                            .setNegativeButton("重新查询", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    queryChannelBalance();
-                                }
-                            })
+                            .setNegativeButton("重新查询", (dialogInterface, i) -> queryChannelBalance())
                             .show();
                 }
             });
@@ -562,30 +558,18 @@ public class MainActivity extends BaseActivity {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.warming)
                 .setMessage(R.string.test_crash_warming)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Util.testCrash();
-                    }
-                })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                .setPositiveButton(R.string.ok, (dialog, which) -> Util.testCrash())
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
 
-                    }
                 })
                 .show();
     }
 
     private void initView() {
+        mContainerId = R.id.fl_container;
 
         TitleBar tb = findViewById(R.id.tb_main);
-        tb.setRightButton(android.R.drawable.ic_menu_close_clear_cancel, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exitGame();
-            }
-        });
+        tb.setRightButton(android.R.drawable.ic_menu_close_clear_cancel, v -> exitGame());
         tb.setTitleText(R.string.app_name);
 
 
@@ -624,22 +608,18 @@ public class MainActivity extends BaseActivity {
         }
 
         final Button btnSwitchServerId = findViewById(R.id.btn_switch_serverId);
-        btnSwitchServerId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ("server1".equals(serverId)){
-                    serverId = "server2";
-                    showShortToast("已切换为'2'服，重新登录后生效 ");
-                }else {
-                    serverId = "server1";
-                    showShortToast("已切换为'1'服，重新登录后生效 ");
-                }            }
+        btnSwitchServerId.setOnClickListener(v -> {
+            if ("server1".equals(serverId)) {
+                serverId = "server2";
+                showShortToast("已切换为'2'服，重新登录后生效 ");
+            } else {
+                serverId = "server1";
+                showShortToast("已切换为'1'服，重新登录后生效 ");
+            }
         });
 
         final Button btn_create_real_name = findViewById(R.id.btn_create_real_name);
-        btn_create_real_name.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btn_create_real_name.setOnClickListener(v -> {
 //                WAEvent.Builder builder = new WAEvent.Builder();
 //                builder.setDefaultEventName(WAEventType.USER_CREATED);
 //                Map<String, Object> eventValues = new HashMap<>();
@@ -649,34 +629,28 @@ public class MainActivity extends BaseActivity {
 //                builder.setDefaultEventValues(eventValues);
 //                WATrackProxy.trackEvent(MainActivity.this, builder.build());
 
-                WAUserProxy.queryUserCertificationInfo(MainActivity.this, WAConstants.CHANNEL_WA, new WACallback<WACertificationInfo>() {
-                    @Override
-                    public void onSuccess(int code, String message, WACertificationInfo result) {
-                        LogUtil.d(TAG, "Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
-                        showShortToast("Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
-                    }
+            WAUserProxy.queryUserCertificationInfo(MainActivity.this, WAConstants.CHANNEL_WA, new WACallback<WACertificationInfo>() {
+                @Override
+                public void onSuccess(int code, String message, WACertificationInfo result) {
+                    LogUtil.d(TAG, "Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
+                    showShortToast("Age:" + result.getAge() + ", UserRealNameStatus:" + result.getUserRealNameStatus());
+                }
 
-                    @Override
-                    public void onCancel() {
+                @Override
+                public void onCancel() {
 
-                    }
+                }
 
-                    @Override
-                    public void onError(int code, String message, WACertificationInfo result, Throwable throwable) {
+                @Override
+                public void onError(int code, String message, WACertificationInfo result, Throwable throwable) {
 
-                    }
-                });
-            }
+                }
+            });
         });
 
 
         final Button btnOpenClientId = findViewById(R.id.btn_open_clientid_test);
-        btnOpenClientId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.this.startActivity(new Intent(MainActivity.this, ClientIdTestActivity.class));
-            }
-        });
+        btnOpenClientId.setOnClickListener(v -> MainActivity.this.startActivity(new Intent(MainActivity.this, ClientIdTestActivity.class)));
 
     }
 

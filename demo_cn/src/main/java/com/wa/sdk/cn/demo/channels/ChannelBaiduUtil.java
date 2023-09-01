@@ -3,7 +3,7 @@ package com.wa.sdk.cn.demo.channels;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.wa.sdk.cn.demo.model.UserModel;
+import com.wa.sdk.cn.demo.WASdkDemo;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
 import com.wa.sdk.common.utils.LogUtil;
@@ -31,7 +31,7 @@ public class ChannelBaiduUtil {
             public void onSuccess(int code, String message, WALoginResult result) {
                 // 登录成功,不管之前是什么登录状态,游戏内部都要切换成新的用户
                 LogUtil.e(LogUtil.TAG, "百度--账号切换成功");
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 setSessionInvalidListener(activity);
                 String text = "code:" + code + "\nmessage:" + message;
                 if (null == result) {

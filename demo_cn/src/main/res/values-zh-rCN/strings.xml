@@ -65,12 +65,16 @@
     <string name="rank">排行</string>
     <string name="logout">登出</string>
     <string name="exit_game">退出游戏</string>
-
     <string name="show_float_view">显示悬浮窗</string>
     <string name="hidden_float_view">隐藏悬浮窗</string>
-
     <string name="rank_friend">好友排行</string>
     <string name="global_rank">全球排行</string>
     <string name="global_rank_ui">全球排行(UI)</string>
-
+    <!--  账号删除  -->
+    <string name="account_deletion">账号删除</string>
+    <string name="account_deletion_request_ui">申请账号删除UI</string>
+    <string name="account_deletion_request">申请账号删除</string>
+    <string name="account_deletion_cancel">取消申请</string>
+    <string name="account_deletion_can_identify">是否可身份确认</string>
+    <string name="account_deletion_identify_account">身份确认</string>
 </resources>

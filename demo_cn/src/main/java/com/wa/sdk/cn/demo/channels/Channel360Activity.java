@@ -8,8 +8,8 @@ import android.view.View;
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.cn.demo.PaymentActivity;
 import com.wa.sdk.cn.demo.R;
+import com.wa.sdk.cn.demo.WASdkDemo;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WAActivityAdPage;
@@ -117,7 +117,7 @@ public class Channel360Activity extends BaseActivity {
         WAUserProxy.login(this, WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 cancelLoadingDialog();
 
                 /**
@@ -138,23 +138,23 @@ public class Channel360Activity extends BaseActivity {
                  * 帮派称号ID partyroleid 必填 int 帮派会长/帮主必传 1，其他可自定义， 不能为空，不能为 null，若无，传入 0
                  * 帮派称号名称 partyrolename 必填 string 不能为空，不能为 null，若无，传入 “无”
                  * 他的好友 friendlist 必填
-                   关系角色 ID(roleid) int 传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
-                   亲密度(intimacy) int 必须为数字，不能为空，不能为 null，若无，传入 0
-                   关系 ID(nexusid) int 必须为数字，不能为空，不能为 null，若无，传入 0
-                   关系名称 (nexusname) string 预定字段:以下对应方式为 nexusid:nexusnam: 1:夫妻，2:结拜，3:情侣，4:师徒 ，5: 仇人;其余关系从 6 开始自定义编号
-                   传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
-                   示例: [{"roleid":1,"intimacy":"0","nexusid": "600","nexusname":"情侣 "},{"roleid":2,"intimacy":"0","nexusid ":"200","nexusname":"仇人"}]
+                 关系角色 ID(roleid) int 传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
+                 亲密度(intimacy) int 必须为数字，不能为空，不能为 null，若无，传入 0
+                 关系 ID(nexusid) int 必须为数字，不能为空，不能为 null，若无，传入 0
+                 关系名称 (nexusname) string 预定字段:以下对应方式为 nexusid:nexusnam: 1:夫妻，2:结拜，3:情侣，4:师徒 ，5: 仇人;其余关系从 6 开始自定义编号
+                 传入用户的所有好友角色 id 列表，不能 为空，必须与角色 id(roleid)格式保 持一致，不能为 null，若无，传入“无”
+                 示例: [{"roleid":1,"intimacy":"0","nexusid": "600","nexusname":"情侣 "},{"roleid":2,"intimacy":"0","nexusid ":"200","nexusname":"仇人"}]
                  *
                  * 职业称号ID professionroleid 选填 int 不能为空，不能为 null，若无，传入 0
                  * 职业称号 rofessionrolename 选填 string 不能为空，不能为 null，若无，传入"无"
                  * 账号余额 balance 选填
-                   货币 ID(balanceid) int、货币名称 (balancename) string、货币数额 (balancenum) int，
-                   不能为空，不能为 null，若无，传入 0 int 的传参必须为数字
-                   示例: [{"balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"},{" balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"}]
+                 货币 ID(balanceid) int、货币名称 (balancename) string、货币数额 (balancenum) int，
+                 不能为空，不能为 null，若无，传入 0 int 的传参必须为数字
+                 示例: [{"balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"},{" balanceid":1,"balancename":"\u91d1\u5e01","balancenum":"600"}]
                  * 排行榜列表 ranking 选填
-                   榜单 ID(listid) int、榜单名称 (listname) string、传入角色当前排名 (num) int、排名指标 ID (coin) int、排名指标名称 Value(cost) string
-                   不能为空，int 必须为数字，不能为 null， 若无，传入 “无”
-                   示例: [{"listid":1,"listname":"\u91d1\u5e01 ","num":"600","coin":"XX","cost":"XX "},{"listid":1,"listname":"\u91d1\u5e01","num":"600","coin":"XX","cost":"XX"}]
+                 榜单 ID(listid) int、榜单名称 (listname) string、传入角色当前排名 (num) int、排名指标 ID (coin) int、排名指标名称 Value(cost) string
+                 不能为空，int 必须为数字，不能为 null， 若无，传入 “无”
+                 示例: [{"listid":1,"listname":"\u91d1\u5e01 ","num":"600","coin":"XX","cost":"XX "},{"listid":1,"listname":"\u91d1\u5e01","num":"600","coin":"XX","cost":"XX"}]
                  */
                 HashMap<String, Object> dataMap = new HashMap();
                 dataMap.put("type", "enterServer");         // 上传数据时角色状态更新
@@ -439,7 +439,7 @@ public class Channel360Activity extends BaseActivity {
 
     /** TODO 退出账号 */
     private void logout() {
-        UserModel.getInstance().clear();
+        WASdkDemo.getInstance().logout();
         WAUserProxy.logout(this);
     }
 

@@ -5,8 +5,8 @@ import android.content.Context;
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.common.WASharedPrefHelper;
 import com.wa.sdk.common.utils.StringUtil;
-import com.wa.sdk.user.model.WALoginResult;
 import com.wa.sdk.user.WAUserProxy;
+import com.wa.sdk.user.model.WALoginResult;
 
 /**
  * Created by yinglovezhuzhu@gmail.com on 2016/1/21.
@@ -83,9 +83,13 @@ public class WASdkDemo {
      * @param flowType
      */
     public void setLoginFlowType(int flowType) {
-        if(WAConstants.LOGIN_FLOW_TYPE_DEFAULT == flowType || WAConstants.LOGIN_FLOW_TYPE_REBIND == flowType) {
+        if (WAConstants.LOGIN_FLOW_TYPE_DEFAULT == flowType || WAConstants.LOGIN_FLOW_TYPE_REBIND == flowType) {
             mDemoSharedPrefHelper.saveInt(WADemoConfig.SP_KEY_LOGIN_FLOW_TYPE, flowType);
             WAUserProxy.setLoginFlowType(flowType);
         }
+    }
+
+    public void logout() {
+        mLoginAccount = null;
     }
 }

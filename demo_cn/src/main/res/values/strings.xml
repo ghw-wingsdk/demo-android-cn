@@ -76,7 +76,7 @@
     <string name="rank_friend">Friend Rank</string>
     <string name="global_rank">Global Rank</string>
     <string name="global_rank_ui">Global Rank UI</string>
-<string name="cls">"com.ddtankfcb.angame.wxapi.WXEntryActivity"</string>
+    <string name="cls">"com.ddtankfcb.angame.wxapi.WXEntryActivity"</string>
 
     <!-- 客服系统-->
     <string name="showElva">启动机器人客服界面</string>
@@ -93,8 +93,14 @@
     <string name="openAiHelp">调用callAiHelp</string>
     <string name="isOpenAiHelp">是否开启AiHelp</string>
     <string name="switchAiHelpVip">切换VIP</string>
-
     <!-- 账户管理 -->
     <string name="bind_account_cn">绑定账户</string>
     <string name="open_account_manager_page_cn">打开SDK内置账户管理页面</string>
+    <!--  账号删除  -->
+    <string name="account_deletion">Account Deletion</string>
+    <string name="account_deletion_request_ui">Request Account Deletion UI</string>
+    <string name="account_deletion_request">Request Account Deletion</string>
+    <string name="account_deletion_cancel">Cancel Account Deletion</string>
+    <string name="account_deletion_can_identify">Can Identify</string>
+    <string name="account_deletion_identify_account">Identify Account</string>
 </resources>

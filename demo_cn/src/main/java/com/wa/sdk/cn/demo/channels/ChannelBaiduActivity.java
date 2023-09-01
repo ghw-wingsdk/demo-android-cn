@@ -9,8 +9,8 @@ import android.widget.Button;
 import com.wa.sdk.WAActivityAnalytics;
 import com.wa.sdk.cn.demo.PaymentActivity;
 import com.wa.sdk.cn.demo.R;
+import com.wa.sdk.cn.demo.WASdkDemo;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.tracking.TrackingActivity;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WAActivityAdPage;
@@ -152,7 +152,7 @@ public class ChannelBaiduActivity extends BaseActivity {
         WAUserProxy.login(this, WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 setSuspendWindowChangeAccountListener();
                 setSessionInvalidListener();
                 String text = "code:" + code + "\nmessage:" + message;
@@ -218,7 +218,7 @@ public class ChannelBaiduActivity extends BaseActivity {
             public void onSuccess(int code, String message, WALoginResult result) {
                 // 登录成功,不管之前是什么登录状态,游戏内部都要切换成新的用户
                 LogUtil.e(LogUtil.TAG, "百度--账号切换成功");
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 setSessionInvalidListener();
                 String text = "code:" + code + "\nmessage:" + message;
                 if (null == result) {
@@ -297,7 +297,7 @@ public class ChannelBaiduActivity extends BaseActivity {
 
     /** TODO 退出账号 */
     private void logout() {
-        UserModel.getInstance().clear();
+        WASdkDemo.getInstance().logout();
         WAUserProxy.logout(this);
     }
 

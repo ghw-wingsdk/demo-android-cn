@@ -35,9 +35,6 @@ public class CscActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Demo的初始化，跟SDK无关
-        WASdkDemo.getInstance().initialize(this);
-
         setContentView(R.layout.activity_csc);
 
         mTitlebar = findViewById(R.id.tb_csc);
@@ -81,7 +78,7 @@ public class CscActivity extends BaseActivity {
         } else {
             mLanguage = "zh-CN";
         }
-        mTvLanguage.setText("当前语言："+mLanguage);
+        mTvLanguage.setText("当前语言：" + mLanguage);
         WACscProxy.setSDKLanguage(mLanguage);
     }
 

@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
 import com.wa.sdk.common.model.WAResult;
@@ -72,7 +71,7 @@ public class AccountManagerActivity extends BaseActivity {
                 WAUserProxy.openAccountCenter(AccountManagerActivity.this, new WAAccountCallback() {
                     @Override
                     public void onLoginAccountChanged(WALoginResult result) {
-                        UserModel.getInstance().setDatas(result);
+                        WASdkDemo.getInstance().updateLoginAccount(result);
                         String text = "code:" + result.getCode() + "\nmessage:" + result.getMessage();
                         if (null == result) {
                             text = "Login failed->" + text;
@@ -127,7 +126,7 @@ public class AccountManagerActivity extends BaseActivity {
                 WAUserProxy.openAccountSwitchManager(AccountManagerActivity.this, new WACallback<WALoginResult>() {
                     @Override
                     public void onSuccess(int code, String message, WALoginResult result) {
-                        UserModel.getInstance().setDatas(result);
+                        WASdkDemo.getInstance().updateLoginAccount(result);
                         String text = "code:" + result.getCode() + "\nmessage:" + result.getMessage();
                         if (null == result) {
                             text = "Login failed->" + text;

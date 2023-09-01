@@ -8,8 +8,8 @@ import android.widget.Button;
 import com.wa.sdk.WAConstants;
 import com.wa.sdk.cn.demo.PaymentActivity;
 import com.wa.sdk.cn.demo.R;
+import com.wa.sdk.cn.demo.WASdkDemo;
 import com.wa.sdk.cn.demo.base.BaseActivity;
-import com.wa.sdk.cn.demo.model.UserModel;
 import com.wa.sdk.cn.demo.widget.TitleBar;
 import com.wa.sdk.common.WACommonProxy;
 import com.wa.sdk.common.model.WACallback;
@@ -124,7 +124,7 @@ public class ChannelYSDKActivity extends BaseActivity {
         WAUserProxy.login(this, WAUserProxy.getCurrChannel(), new WACallback<WALoginResult>() {
             @Override
             public void onSuccess(int code, String message, WALoginResult result) {
-                UserModel.getInstance().setDatas(result);
+                WASdkDemo.getInstance().updateLoginAccount(result);
                 String text = "code:" + code + "\nmessage:" + message;
                 if (null == result) {
                     text = "Login failed->" + text;
@@ -164,7 +164,7 @@ public class ChannelYSDKActivity extends BaseActivity {
 
     /** TODO 退出账号 */
     private void logout() {
-        UserModel.getInstance().clear();
+        WASdkDemo.getInstance().logout();
         WAUserProxy.logout(this);
     }
 

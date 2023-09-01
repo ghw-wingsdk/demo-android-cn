@@ -22,8 +22,8 @@ android {
         println("Current gradle version: " + project.gradle.gradleVersion)
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 17
-        versionName "2.7.0"
+        versionCode 18
+        versionName "2.8.0"
         multiDexEnabled true
         signingConfig signingConfigs.config
 
@@ -173,9 +173,9 @@ dependencies {
     implementation(dependency.androidxV7)
 
     // 基础模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-base:2.7.0'
+    implementation 'com.wa.sdkcn:wa-sdk-base:2.8.0'
     // 核心模块（必选）
-    implementation 'com.wa.sdkcn:wa-sdk-core:2.7.0'
+    implementation 'com.wa.sdkcn:wa-sdk-core:2.8.0'
     // 网页支付模块（可选）
     implementation 'com.wa.sdkcn:wa-sdk-webpay:2.7.0'
     // aihelp模块（可选）
